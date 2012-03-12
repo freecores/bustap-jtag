@@ -1,8 +1,25 @@
-module virtual_jtag_addr_mask(mask_out0,mask_out1,mask_out2,mask_out3,
-							  mask_out4,mask_out5,mask_out6,mask_out7,
-							  mask_out8,mask_out9,mask_out10,mask_out11,
-							  mask_out12,mask_out13,mask_out14,mask_out15
-							  );
+//**************************************************************
+// Module             : virtual_jtag_addr_mask.v
+// Platform           : Windows xp sp2
+// Simulator          : Modelsim 6.5b
+// Synthesizer        : QuartusII 10.1 sp1
+// Place and Route    : QuartusII 10.1 sp1
+// Targets device     : Cyclone III
+// Author             : Bibo Yang  (ash_riple@hotmail.com)
+// Organization       : www.opencores.org
+// Revision           : 2.0 
+// Date               : 2012/03/12
+// Description        : addr mask input from debug host via
+//                      Virtual JTAG.
+//**************************************************************
+
+`timescale 1ns/1ns
+
+module virtual_jtag_addr_mask(mask_out0 ,mask_out1 ,mask_out2 ,mask_out3 ,
+                              mask_out4 ,mask_out5 ,mask_out6 ,mask_out7 ,
+                              mask_out8 ,mask_out9 ,mask_out10,mask_out11,
+                              mask_out12,mask_out13,mask_out14,mask_out15
+                             );
 
 parameter addr_width  = 32,
           mask_index  = 4, //2**mask_index=mask_num

@@ -1,3 +1,20 @@
+//**************************************************************
+// Module             : virtual_jtag_adda_fifo.v
+// Platform           : Windows xp sp2
+// Simulator          : Modelsim 6.5b
+// Synthesizer        : QuartusII 10.1 sp1
+// Place and Route    : QuartusII 10.1 sp1
+// Targets device     : Cyclone III
+// Author             : Bibo Yang  (ash_riple@hotmail.com)
+// Organization       : www.opencores.org
+// Revision           : 2.0 
+// Date               : 2012/03/12
+// Description        : addr/data capture output to debug host
+//                      via Virtual JTAG.
+//**************************************************************
+
+`timescale 1ns/1ns
+
 module virtual_jtag_adda_fifo(clk,wr_en,data_in);
 
 parameter data_width  = 32,
