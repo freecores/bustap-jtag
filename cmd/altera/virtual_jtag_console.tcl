@@ -1,5 +1,15 @@
+##**************************************************************
+## Module             : virtual_jtag_consile.tcl
+## Platform           : Windows xp sp2
+## Author             : Bibo Yang  (ash_riple@hotmail.com)
+## Organization       : www.opencores.org
+## Revision           : 2.1 
+## Date               : 2012/03/15
+## Description        : Tcl/Tk GUI for the up_monitor
+##**************************************************************
+
 proc reset_fifo {{jtag_index_0 0}} {
-	device_lock -timeout 10000
+	device_lock -timeout 5
 	device_virtual_ir_shift -instance_index $jtag_index_0 -ir_value 2 -no_captured_ir_value 
 	device_virtual_dr_shift -instance_index $jtag_index_0  -length 32 -dr_value 00000000 -value_in_hex -no_captured_dr_value 
 	device_unlock
@@ -8,7 +18,7 @@ proc reset_fifo {{jtag_index_0 0}} {
 
 proc query_usedw {{jtag_index_0 0}} {
 	global fifoUsedw
-	device_lock -timeout 10000
+	device_lock -timeout 5
 	device_virtual_ir_shift -instance_index $jtag_index_0 -ir_value 1 -no_captured_ir_value
 	set usedw [device_virtual_dr_shift -instance_index $jtag_index_0 -length 9 -value_in_hex]
 	device_unlock
@@ -20,26 +30,26 @@ proc query_usedw {{jtag_index_0 0}} {
 }
 
 proc read_fifo {{jtag_index_0 0}} {
-	device_lock -timeout 10000
+	device_lock -timeout 5
 	device_virtual_ir_shift -instance_index $jtag_index_0 -ir_value 1 -no_captured_ir_value
 	device_virtual_ir_shift -instance_index $jtag_index_0 -ir_value 3 -no_captured_ir_value
-	set fifo_data [device_virtual_dr_shift -instance_index $jtag_index_0 -length 48 -value_in_hex]
+	set fifo_data [device_virtual_dr_shift -instance_index $jtag_index_0 -length 50 -value_in_hex]
 	device_unlock
 	return $fifo_data
 }
 
-proc config_addr {{jtag_index_1 1} {mask_1 100000000}} {
-	device_lock -timeout 10000
+proc config_addr {{jtag_index_1 1} {mask_1 0100000000}} {
+	device_lock -timeout 5
 	device_virtual_ir_shift -instance_index $jtag_index_1 -ir_value 1 -no_captured_ir_value
-	set addr_mask [device_virtual_dr_shift -instance_index $jtag_index_1 -dr_value $mask_1 -length 36 -value_in_hex]
+	set addr_mask [device_virtual_dr_shift -instance_index $jtag_index_1 -dr_value $mask_1 -length 40 -value_in_hex]
 	device_unlock
 	return $addr_mask
 }
 
-proc config_trig {{jtag_index_2 2} {trig_1 0000000000000}} {
-	device_lock -timeout 10000
+proc config_trig {{jtag_index_2 2} {trig_1 00000000000000}} {
+	device_lock -timeout 5
 	device_virtual_ir_shift -instance_index $jtag_index_2 -ir_value 1 -no_captured_ir_value
-	set addr_trig [device_virtual_dr_shift -instance_index $jtag_index_2 -dr_value $trig_1 -length 50 -value_in_hex]
+	set addr_trig [device_virtual_dr_shift -instance_index $jtag_index_2 -dr_value $trig_1 -length 56 -value_in_hex]
 	device_unlock
 	return $addr_trig
 } 
@@ -47,7 +57,7 @@ proc config_trig {{jtag_index_2 2} {trig_1 0000000000000}} {
 proc open_jtag_device {{test_cable "USB-Blaster [USB-0]"} {test_device "@2: EP2SGX90 (0x020E30DD)"}} {
 	open_device -hardware_name $test_cable -device_name $test_device
 	# Retrieve device id code.
-	device_lock -timeout 10000
+	device_lock -timeout 5
 	device_ir_shift -ir_value 6 -no_captured_ir_value
 	set idcode "0x[device_dr_shift -length 32 -value_in_hex]"
 	device_unlock
@@ -96,12 +106,11 @@ proc select_device {{cableNum 1} {deviceNum 1}} {
 	$log insert end "Selected Device: $test_device\n"
 	set jtagIdCode [open_jtag_device $test_cable $test_device]
 	$log insert end "Device ID code : $jtagIdCode\n"
-	updateAddrConfig
 	reset_fifo 0
 	query_usedw 0
 }
 
-proc inclusiveAddrConfig {} {
+proc updateAddrConfig {} {
 	global address_span1
 	global address_span2
 	global address_span3
@@ -110,14 +119,6 @@ proc inclusiveAddrConfig {} {
 	global address_span6
 	global address_span7
 	global address_span8
-	for {set i 1} {$i<=8} {incr i} {
-		set mask [format "%1X" [expr $i-1]]
-		append mask [set address_span$i]
-		config_addr 1 $mask
-	}
-}
-
-proc exclusiveAddrConfig {} {
 	global address_span9
 	global address_span10
 	global address_span11
@@ -126,14 +127,33 @@ proc exclusiveAddrConfig {} {
 	global address_span14
 	global address_span15
 	global address_span16
-	for {set i 9} {$i<=16} {incr i} {
-		set mask [format "%1X" [expr $i-1]]
+	global address_span_en1
+	global address_span_en2
+	global address_span_en3
+	global address_span_en4
+	global address_span_en5
+	global address_span_en6
+	global address_span_en7
+	global address_span_en8
+	global address_span_en9
+	global address_span_en10
+	global address_span_en11
+	global address_span_en12
+	global address_span_en13
+	global address_span_en14
+	global address_span_en15
+	global address_span_en16
+	global addr_wren
+	global addr_rden
+	for {set i 1} {$i<=16} {incr i} {
+		set    mask [format "%1X" [expr $i-1]]
+		append mask [format "%1X" [expr $addr_wren*8+$addr_rden*4+[set address_span_en$i]]]
 		append mask [set address_span$i]
 		config_addr 1 $mask
 	}
 }
 
-proc updateAddrConfig {} {
+proc initAddrConfig {} {
 	global log
 	global address_span1
 	global address_span2
@@ -159,44 +179,34 @@ proc updateAddrConfig {} {
 	}
 }
 
-proc enableTrigger {} {
+proc updateTrigger {{trigCmd 0}} {
 	global triggerAddr
 	global triggerData
-	# enable but stop triggering
-	set triggerValue 2
-	append triggerValue $triggerAddr
-	append triggerValue $triggerData
-	config_trig 2 $triggerValue
-}
-
-proc disableTrigger {} {
-	global triggerAddr
-	global triggerData
-	# disable and stop triggering
-	set triggerValue 0
+	global trig_wren
+	global trig_rden
+	global trig_aden
+	global trig_daen
+	set    triggerValue [format "%1X" [expr $trig_aden*8+$trig_daen*4+0]]
+	append triggerValue [format "%1X" [expr $trig_wren*8+$trig_rden*4+$trigCmd]]
 	append triggerValue $triggerAddr
 	append triggerValue $triggerData
 	config_trig 2 $triggerValue
 }
 
 proc startTrigger {} {
-	global triggerAddr
-	global triggerData
-	# enable and start triggering
-	set triggerValue 3
-	append triggerValue $triggerAddr
-	append triggerValue $triggerData
-	config_trig 2 $triggerValue
-}
-
-proc stopTrigger {} {
-	global triggerAddr
-	global triggerData
-	# enable and stop triggering
-	set triggerValue 2
-	append triggerValue $triggerAddr
-	append triggerValue $triggerData
-	config_trig 2 $triggerValue
+	global trig_wren
+	global trig_rden
+	global trig_aden
+	global trig_daen
+	set trigEnable [expr $trig_wren+$trig_rden+$trig_aden+$trig_daen]
+	if {$trigEnable>0} {
+		updateTrigger 2
+		reset_fifo 0
+		query_usedw 0
+		updateTrigger 3
+	} else {
+		updateTrigger 0
+	}
 }
 
 proc reset_fifo_ptr {} {
@@ -214,7 +224,18 @@ proc read_fifo_content {} {
 	$log insert end "\n****************************************\n"
 	for {set i 0} {$i<$fifoUsedw} {incr i} {
 		set fifoContent [read_fifo 0]
-		$log insert end "wr [string range $fifoContent 0 3] [string range $fifoContent 4 11]\n"
+		set ok_trig [expr [format "%d" 0x[string index $fifoContent 0]]/2]
+		set wr_cptr [expr [format "%d" 0x[string index $fifoContent 0]]%2]
+		set ad_cptr [string range $fifoContent 1  4]
+		set da_cptr [string range $fifoContent 5 12]
+		if $ok_trig {
+			$log insert end "@@@@@@@@@@@@@@@@@@@@\n"
+		}
+		if $wr_cptr {
+			$log insert end "wr $ad_cptr $da_cptr\n"
+		} else {
+			$log insert end "rd $ad_cptr $da_cptr\n"
+		}
 	}
 	query_usedw 0
 }
@@ -236,90 +257,138 @@ set exit_console 0
 
 # set the main window
 toplevel .console
-wm title .console "Virtual JTAG: uP transaction monitor"
+wm title .console "www.OpenCores.org: uP Transaction Monitor"
 pack propagate .console true
 
-# set the JTAG utility
+# set the www.OpenCores.org logo
 frame .console.fig -bg white
 pack .console.fig -expand true -fill both
+image create photo logo -format gif -file "../common/OpenCores.gif"
+label .console.fig.logo -image logo -bg white
+pack .console.fig.logo
 
-button .console.fig.scan -text {Scan JTAG Chain} -command {scan_chain}
-button .console.fig.select -text {Select JTAG Device :} -command {select_device $cableNum $deviceNum}
-button .console.fig.deselect -text {DeSelect JTAG Device} -command {close_jtag_device}
-label .console.fig.cable -text {Cable No.}
-label .console.fig.devic -text {Device No.}
-entry .console.fig.cable_num -textvariable cableNum -width 2
-entry .console.fig.devic_num -textvariable deviceNum -width 2
-pack 	.console.fig.scan .console.fig.select \
-	.console.fig.cable .console.fig.cable_num \
-       	.console.fig.devic .console.fig.devic_num \
-	.console.fig.deselect \
-	-side left -ipadx 10
+# set the JTAG utility
+frame .console.jtag -relief groove -borderwidth 5
+pack .console.jtag
+button .console.jtag.scan -text {Scan JTAG Chain} -command {scan_chain}
+button .console.jtag.select -text {Select JTAG Device :} -command {select_device $cableNum $deviceNum}
+button .console.jtag.deselect -text {DeSelect JTAG Device} -command {close_jtag_device}
+label .console.jtag.cable -text {Cable @}
+label .console.jtag.devic -text {Device @}
+entry .console.jtag.cable_num -textvariable cableNum -width 5
+entry .console.jtag.devic_num -textvariable deviceNum -width 5
+pack .console.jtag.scan .console.jtag.select \
+     .console.jtag.cable .console.jtag.cable_num \
+     .console.jtag.devic .console.jtag.devic_num \
+     .console.jtag.deselect \
+     -side left -ipadx 0
 
 # set the inclusive address entries
 frame .console.f1 -relief groove -borderwidth 5
 pack .console.f1
-entry .console.f1.address_span1 -textvariable address_span1 -width 5
-entry .console.f1.address_span2 -textvariable address_span2 -width 5
-entry .console.f1.address_span3 -textvariable address_span3 -width 5
-entry .console.f1.address_span4 -textvariable address_span4 -width 5
-entry .console.f1.address_span5 -textvariable address_span5 -width 5
-entry .console.f1.address_span6 -textvariable address_span6 -width 5
-entry .console.f1.address_span7 -textvariable address_span7 -width 5
-entry .console.f1.address_span8 -textvariable address_span8 -width 5
-button .console.f1.config -text {Included Address Filter} -command {inclusiveAddrConfig}
-pack .console.f1.address_span1 .console.f1.address_span2 .console.f1.address_span3 .console.f1.address_span4 \
-     .console.f1.address_span5 .console.f1.address_span6 .console.f1.address_span7 .console.f1.address_span8 \
-     .console.f1.config -side left -ipadx 10
+label .console.f1.incl_addr -text {Inclusive Addr:}
+entry .console.f1.address_span1 -textvariable address_span1 -width 8
+entry .console.f1.address_span2 -textvariable address_span2 -width 8
+entry .console.f1.address_span3 -textvariable address_span3 -width 8
+entry .console.f1.address_span4 -textvariable address_span4 -width 8
+entry .console.f1.address_span5 -textvariable address_span5 -width 8
+entry .console.f1.address_span6 -textvariable address_span6 -width 8
+entry .console.f1.address_span7 -textvariable address_span7 -width 8
+entry .console.f1.address_span8 -textvariable address_span8 -width 8
+checkbutton .console.f1.address_span_en1 -variable address_span_en1
+checkbutton .console.f1.address_span_en2 -variable address_span_en2
+checkbutton .console.f1.address_span_en3 -variable address_span_en3
+checkbutton .console.f1.address_span_en4 -variable address_span_en4
+checkbutton .console.f1.address_span_en5 -variable address_span_en5
+checkbutton .console.f1.address_span_en6 -variable address_span_en6
+checkbutton .console.f1.address_span_en7 -variable address_span_en7
+checkbutton .console.f1.address_span_en8 -variable address_span_en8
+pack .console.f1.incl_addr \
+     .console.f1.address_span_en1 .console.f1.address_span1 \
+     .console.f1.address_span_en2 .console.f1.address_span2 \
+     .console.f1.address_span_en3 .console.f1.address_span3 \
+     .console.f1.address_span_en4 .console.f1.address_span4 \
+     .console.f1.address_span_en5 .console.f1.address_span5 \
+     .console.f1.address_span_en6 .console.f1.address_span6 \
+     .console.f1.address_span_en7 .console.f1.address_span7 \
+     .console.f1.address_span_en8 .console.f1.address_span8 \
+     -side left -ipadx 0
 
 # set the exclusive address entries
 frame .console.f2 -relief groove -borderwidth 5
 pack .console.f2
-entry .console.f2.address_span9  -textvariable address_span9  -width 5
-entry .console.f2.address_span10 -textvariable address_span10 -width 5
-entry .console.f2.address_span11 -textvariable address_span11 -width 5
-entry .console.f2.address_span12 -textvariable address_span12 -width 5
-entry .console.f2.address_span13 -textvariable address_span13 -width 5
-entry .console.f2.address_span14 -textvariable address_span14 -width 5
-entry .console.f2.address_span15 -textvariable address_span15 -width 5
-entry .console.f2.address_span16 -textvariable address_span16 -width 5
-button .console.f2.config -text {Excluded Address Filter} -command {exclusiveAddrConfig}
-pack .console.f2.address_span9  .console.f2.address_span10 .console.f2.address_span11 .console.f2.address_span12 \
-     .console.f2.address_span13 .console.f2.address_span14 .console.f2.address_span15 .console.f2.address_span16 \
-     .console.f2.config -side left -ipadx 10
+label .console.f2.excl_addr -text {Exclusive Addr:}
+entry .console.f2.address_span9  -textvariable address_span9  -width 8
+entry .console.f2.address_span10 -textvariable address_span10 -width 8
+entry .console.f2.address_span11 -textvariable address_span11 -width 8
+entry .console.f2.address_span12 -textvariable address_span12 -width 8
+entry .console.f2.address_span13 -textvariable address_span13 -width 8
+entry .console.f2.address_span14 -textvariable address_span14 -width 8
+entry .console.f2.address_span15 -textvariable address_span15 -width 8
+entry .console.f2.address_span16 -textvariable address_span16 -width 8
+checkbutton .console.f2.address_span_en9  -variable address_span_en9
+checkbutton .console.f2.address_span_en10 -variable address_span_en10
+checkbutton .console.f2.address_span_en11 -variable address_span_en11
+checkbutton .console.f2.address_span_en12 -variable address_span_en12
+checkbutton .console.f2.address_span_en13 -variable address_span_en13
+checkbutton .console.f2.address_span_en14 -variable address_span_en14
+checkbutton .console.f2.address_span_en15 -variable address_span_en15
+checkbutton .console.f2.address_span_en16 -variable address_span_en16
+pack .console.f2.excl_addr \
+     .console.f2.address_span_en9  .console.f2.address_span9  \
+     .console.f2.address_span_en10 .console.f2.address_span10 \
+     .console.f2.address_span_en11 .console.f2.address_span11 \
+     .console.f2.address_span_en12 .console.f2.address_span12 \
+     .console.f2.address_span_en13 .console.f2.address_span13 \
+     .console.f2.address_span_en14 .console.f2.address_span14 \
+     .console.f2.address_span_en15 .console.f2.address_span15 \
+     .console.f2.address_span_en16 .console.f2.address_span16 \
+     -side left -ipadx 0
+
+initAddrConfig
+
+# set the address configuration buttons
+frame .console.addr_cnfg -relief groove -borderwidth 5
+pack .console.addr_cnfg
+checkbutton .console.addr_cnfg.wren -text {WR} -variable addr_wren
+checkbutton .console.addr_cnfg.rden -text {RD} -variable addr_rden
+button .console.addr_cnfg.config -text {Apply Address Filter} -command {updateAddrConfig}
+pack .console.addr_cnfg.wren .console.addr_cnfg.rden .console.addr_cnfg.config \
+     -side left -ipadx 0
 
 # set the transaction trigger controls
-frame .console.f3 -relief groove -borderwidth 5
-pack .console.f3
-button .console.f3.enabletrig -text {Enable Trigger} -command {enableTrigger}
-button .console.f3.disabletrig -text {Disable Trigger} -command {disableTrigger}
-button .console.f3.starttrig -text {Start Trigger} -command {startTrigger}
-button .console.f3.stoptrig -text {Stop Trigger} -command {stopTrigger}
-entry .console.f3.trigvalue_addr -textvar triggerAddr -width 2
+frame .console.trig -relief groove -borderwidth 5
+pack .console.trig
+button .console.trig.starttrig -text {Apply Trigger Condition} -command {startTrigger}
+entry .console.trig.trigvalue_addr -textvar triggerAddr -width 4
 set triggerAddr ffff
-entry .console.f3.trigvalue_data -textvar triggerData -width 6
+entry .console.trig.trigvalue_data -textvar triggerData -width 8
 set triggerData a5a5a5a5
-label .console.f3.trigaddr -text {@Address :}
-label .console.f3.trigdata -text {@Data :}
-pack .console.f3.enabletrig .console.f3.starttrig .console.f3.trigaddr .console.f3.trigvalue_addr \
-     .console.f3.trigdata .console.f3.trigvalue_data .console.f3.stoptrig .console.f3.disabletrig \
-     -side left -ipadx 8
+checkbutton .console.trig.trigaddr -text {@Addr:} -variable trig_aden
+checkbutton .console.trig.trigdata -text {@Data:} -variable trig_daen
+checkbutton .console.trig.wren -text {@WR} -variable trig_wren
+checkbutton .console.trig.rden -text {@RD} -variable trig_rden
+pack .console.trig.wren .console.trig.rden \
+     .console.trig.trigaddr .console.trig.trigvalue_addr \
+     .console.trig.trigdata .console.trig.trigvalue_data \
+     .console.trig.starttrig \
+     -side left -ipadx 0
 
 # set the control buttons
-frame .console.f0 -relief groove -borderwidth 5
-pack .console.f0
-button .console.f0.reset -text {Reset FIFO} -command {reset_fifo_ptr}
-button .console.f0.loop -text {Query Used Word} -command {query_fifo_usedw}
-label .console.f0.usedw  -textvariable fifoUsedw -relief sunken
-button .console.f0.read	-text {Read FIFO} -command {read_fifo_content}
-button .console.f0.clear -text {Clear Log} -command {clear_log}
-button .console.f0.quit -text {Quit} -command {quit}
-pack .console.f0.reset .console.f0.loop .console.f0.usedw .console.f0.read .console.f0.clear .console.f0.quit \
-     -side left -ipadx 10
+frame .console.fifo -relief groove -borderwidth 5
+pack .console.fifo
+button .console.fifo.reset -text {Reset FIFO} -command {reset_fifo_ptr}
+button .console.fifo.loop -text {Query Used Word} -command {query_fifo_usedw}
+label .console.fifo.usedw  -textvariable fifoUsedw -relief sunken -width 4
+button .console.fifo.read	-text {Read FIFO} -command {read_fifo_content}
+button .console.fifo.clear -text {Clear Log} -command {clear_log}
+button .console.fifo.quit -text {Quit} -command {quit}
+pack .console.fifo.reset .console.fifo.loop .console.fifo.usedw .console.fifo.read .console.fifo.clear .console.fifo.quit \
+     -side left -ipadx 0
 
 # set the log window
 frame .console.log -relief groove -borderwidth 5
-set log [text .console.log.text -width 80 -height 40 \
+set log [text .console.log.text -width 80 -height 25 \
 	-borderwidth 2 -relief sunken -setgrid true \
 	-yscrollcommand {.console.log.scroll set}]
 scrollbar .console.log.scroll -command {.console.log.text yview}

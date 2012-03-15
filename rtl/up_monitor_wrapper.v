@@ -7,10 +7,11 @@
 // Targets device     : Cyclone III
 // Author             : Bibo Yang  (ash_riple@hotmail.com)
 // Organization       : www.opencores.org
-// Revision           : 2.0 
-// Date               : 2012/03/12
+// Revision           : 2.1 
+// Date               : 2012/03/15
 // Description        : Common CPU interface to pipelined access
 //                      interface converter.
+//                      @Note: Implementation dependent.
 //**************************************************************
 
 `timescale 1ns/1ns
@@ -19,32 +20,50 @@ module up_monitor_wrapper (up_clk,up_wbe,up_csn,up_addr,up_data_io);
 
 // common CPU bus interface
 input        up_clk;
-input        up_wbe,up_csn;
+input        up_wbe,up_csn;  // negative logic
 input [15:2] up_addr;
 input [31:0] up_data_io;
 
-// prepare for generating wr_en pulse
-reg up_wr_d1, up_wr_d2, up_wr_d3;
+// filter out glitches on the line with extra 4 clocks
+reg up_wbe_d1, up_wbe_d2, up_wbe_d3, up_wbe_d4;
+reg up_csn_d1, up_csn_d2, up_csn_d3, up_csn_d4;
 always @(posedge up_clk) begin
-	up_wr_d1 <= !up_wbe & !up_csn;
-	up_wr_d2 <= up_wr_d1;
-	up_wr_d3 <= up_wr_d2;
+	up_wbe_d1 <= up_wbe;
+	up_wbe_d2 <= up_wbe_d1;
+	up_wbe_d3 <= up_wbe_d2;
+	up_wbe_d4 <= up_wbe_d3;
+	up_csn_d1 <= up_csn;
+	up_csn_d2 <= up_csn_d1;
+	up_csn_d3 <= up_csn_d2;
+	up_csn_d4 <= up_csn_d3;
+end
+reg wr_en_filtered, wr_en_filtered_d1;
+always @(posedge up_clk) begin
+	// negative logic changed to positive logic, with filter
+	wr_en_filtered    <= (!up_wbe_d2 & !up_wbe_d3 & !up_wbe_d4) & (!up_csn_d2 & !up_csn_d3 & !up_csn_d4);
+	wr_en_filtered_d1 <= wr_en_filtered;
+end
+reg rd_en_filtered, rd_en_filtered_d1;
+always @(posedge up_clk) begin
+	// negative logic changed to positive logic, with filter
+	rd_en_filtered    <= (up_wbe_d2 & up_wbe_d3 & up_wbe_d4) & (!up_csn_d2 & !up_csn_d3 & !up_csn_d4);
+	rd_en_filtered_d1 <= rd_en_filtered;
 end
 
-// prepare for generating rd_en pulse
-reg up_rd_d1, up_rd_d2, up_rd_d3;
-always @(posedge up_clk) begin
-	up_rd_d1 <= up_wbe & !up_csn;
-	up_rd_d2 <= up_rd_d1;
-	up_rd_d3 <= up_rd_d2;
+// latch the data at rising edge of up_csn(negative logic)
+reg [15:2] up_addr_latch;
+reg [31:0] up_data_latch;
+always @(posedge up_csn) begin
+	up_addr_latch <= up_addr;
+	up_data_latch <= up_data_io;
 end
 
 // map to pipelined access interface
 wire        clk     = up_clk;
-wire        wr_en   = up_wr_d2 & !up_wr_d3;
-wire        rd_en   = up_rd_d2 & !up_rd_d3;
-wire [15:2] addr_in = up_addr;
-wire [31:0] data_in = up_data_io;
+wire        wr_en   = !wr_en_filtered & wr_en_filtered_d1;  // falling edge of write_enable(positive logic)
+wire        rd_en   = !rd_en_filtered & rd_en_filtered_d1;  // falling edge of read_enable(positive logic)
+wire [15:2] addr_in = up_addr_latch;
+wire [31:0] data_in = up_data_latch;
 
 up_monitor inst (
 	.clk(clk),

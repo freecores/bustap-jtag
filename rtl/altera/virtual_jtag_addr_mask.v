@@ -7,8 +7,8 @@
 // Targets device     : Cyclone III
 // Author             : Bibo Yang  (ash_riple@hotmail.com)
 // Organization       : www.opencores.org
-// Revision           : 2.0 
-// Date               : 2012/03/12
+// Revision           : 2.1 
+// Date               : 2012/03/15
 // Description        : addr mask input from debug host via
 //                      Virtual JTAG.
 //**************************************************************
@@ -21,54 +21,54 @@ module virtual_jtag_addr_mask(mask_out0 ,mask_out1 ,mask_out2 ,mask_out3 ,
                               mask_out12,mask_out13,mask_out14,mask_out15
                              );
 
-parameter addr_width  = 32,
-          mask_index  = 4, //2**mask_index=mask_num
-          mask_num    = 16;
+parameter mask_index  = 4, //2**mask_index=mask_num
+          mask_enabl  = 4,
+          addr_width  = 32;
 
-output [addr_width-1:0] mask_out0;
-output [addr_width-1:0] mask_out1;
-output [addr_width-1:0] mask_out2;
-output [addr_width-1:0] mask_out3;
-output [addr_width-1:0] mask_out4;
-output [addr_width-1:0] mask_out5;
-output [addr_width-1:0] mask_out6;
-output [addr_width-1:0] mask_out7;
-output [addr_width-1:0] mask_out8;
-output [addr_width-1:0] mask_out9;
-output [addr_width-1:0] mask_out10;
-output [addr_width-1:0] mask_out11;
-output [addr_width-1:0] mask_out12;
-output [addr_width-1:0] mask_out13;
-output [addr_width-1:0] mask_out14;
-output [addr_width-1:0] mask_out15;
+output [mask_enabl+addr_width-1:0] mask_out0;
+output [mask_enabl+addr_width-1:0] mask_out1;
+output [mask_enabl+addr_width-1:0] mask_out2;
+output [mask_enabl+addr_width-1:0] mask_out3;
+output [mask_enabl+addr_width-1:0] mask_out4;
+output [mask_enabl+addr_width-1:0] mask_out5;
+output [mask_enabl+addr_width-1:0] mask_out6;
+output [mask_enabl+addr_width-1:0] mask_out7;
+output [mask_enabl+addr_width-1:0] mask_out8;
+output [mask_enabl+addr_width-1:0] mask_out9;
+output [mask_enabl+addr_width-1:0] mask_out10;
+output [mask_enabl+addr_width-1:0] mask_out11;
+output [mask_enabl+addr_width-1:0] mask_out12;
+output [mask_enabl+addr_width-1:0] mask_out13;
+output [mask_enabl+addr_width-1:0] mask_out14;
+output [mask_enabl+addr_width-1:0] mask_out15;
 
-reg [addr_width-1:0] mask_out0;
-reg [addr_width-1:0] mask_out1;
-reg [addr_width-1:0] mask_out2;
-reg [addr_width-1:0] mask_out3;
-reg [addr_width-1:0] mask_out4;
-reg [addr_width-1:0] mask_out5;
-reg [addr_width-1:0] mask_out6;
-reg [addr_width-1:0] mask_out7;
-reg [addr_width-1:0] mask_out8;
-reg [addr_width-1:0] mask_out9;
-reg [addr_width-1:0] mask_out10;
-reg [addr_width-1:0] mask_out11;
-reg [addr_width-1:0] mask_out12;
-reg [addr_width-1:0] mask_out13;
-reg [addr_width-1:0] mask_out14;
-reg [addr_width-1:0] mask_out15;
+reg [mask_enabl+addr_width-1:0] mask_out0;
+reg [mask_enabl+addr_width-1:0] mask_out1;
+reg [mask_enabl+addr_width-1:0] mask_out2;
+reg [mask_enabl+addr_width-1:0] mask_out3;
+reg [mask_enabl+addr_width-1:0] mask_out4;
+reg [mask_enabl+addr_width-1:0] mask_out5;
+reg [mask_enabl+addr_width-1:0] mask_out6;
+reg [mask_enabl+addr_width-1:0] mask_out7;
+reg [mask_enabl+addr_width-1:0] mask_out8;
+reg [mask_enabl+addr_width-1:0] mask_out9;
+reg [mask_enabl+addr_width-1:0] mask_out10;
+reg [mask_enabl+addr_width-1:0] mask_out11;
+reg [mask_enabl+addr_width-1:0] mask_out12;
+reg [mask_enabl+addr_width-1:0] mask_out13;
+reg [mask_enabl+addr_width-1:0] mask_out14;
+reg [mask_enabl+addr_width-1:0] mask_out15;
 
 wire tdi, tck, cdr, cir, e1dr, e2dr, pdr, sdr, udr, uir;
 reg  tdo;
-reg  [mask_index+addr_width-1:0] mask_instr_reg;
+reg  [mask_index+mask_enabl+addr_width-1:0] mask_instr_reg;
 reg  bypass_reg;
 
 wire [1:0] ir_in;
 wire mask_instr = ~ir_in[1] &  ir_in[0]; // 1
 
-wire [mask_index-1:0] mask_id = mask_instr_reg[(mask_index+addr_width-1):addr_width];
-wire [addr_width-1:0] mask_is = mask_instr_reg[(addr_width-1):0];
+wire [mask_index-1           :0] mask_id = mask_instr_reg[(mask_index+mask_enabl+addr_width-1):(mask_enabl+addr_width)];
+wire [mask_enabl+addr_width-1:0] mask_is = mask_instr_reg[                                     (mask_enabl+addr_width-1):0];
 
 always @(posedge tck)
 begin
@@ -114,7 +114,7 @@ always @ (posedge tck)
   if ( mask_instr && cdr )
     mask_instr_reg <= mask_instr_reg;
   else if ( mask_instr && sdr )
-    mask_instr_reg <= {tdi, mask_instr_reg[mask_index+addr_width-1:1]};
+    mask_instr_reg <= {tdi, mask_instr_reg[mask_index+mask_enabl+addr_width-1:1]};
 
 /* Bypass register */
 always @ (posedge tck)

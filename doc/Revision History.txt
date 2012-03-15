@@ -1,0 +1,7 @@
+
+1.0 Code base as published on EDN.
+
+2.0 Code base for 2.x development. Added pipelined bus access capture support.
+
+2.1 Added new features: 1. Multiple address filter selection; 2. Read access capture support; 3. Full trigger condition support; 4. Updated GUI; 5. Updated wrapper example with glitch filter and stable address/data capture.
+
