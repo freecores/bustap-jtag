@@ -1,5 +1,5 @@
 ##**************************************************************
-## Module             : virtual_jtag_consile.tcl
+## Module             : virtual_jtag_console.tcl
 ## Platform           : Windows xp sp2
 ## Author             : Bibo Yang  (ash_riple@hotmail.com)
 ## Organization       : www.opencores.org
@@ -38,20 +38,33 @@ proc read_fifo {{jtag_index_0 0}} {
 	return $fifo_data
 }
 
-proc config_addr {{jtag_index_1 1} {mask_1 0100000000}} {
-	device_lock -timeout 5
-	device_virtual_ir_shift -instance_index $jtag_index_1 -ir_value 1 -no_captured_ir_value
-	set addr_mask [device_virtual_dr_shift -instance_index $jtag_index_1 -dr_value $mask_1 -length 40 -value_in_hex]
-	device_unlock
-	return $addr_mask
+proc config_addr {{jtag_index_1 1} {mask 0100000000} {mask_id 1}} {
+	global log
+	set mask_leng [string length $mask]
+	if {$mask_leng!=10} {
+		$log insert end "\nError: Wrong address mask length @$mask_id: [expr $mask_leng-2]. Expects: 8.\n"
+
+	} else {
+		device_lock -timeout 5
+		device_virtual_ir_shift -instance_index $jtag_index_1 -ir_value 1 -no_captured_ir_value
+		set addr_mask [device_virtual_dr_shift -instance_index $jtag_index_1 -dr_value $mask -length 40 -value_in_hex]
+		device_unlock
+		return $addr_mask
+	}
 }
 
-proc config_trig {{jtag_index_2 2} {trig_1 00000000000000}} {
-	device_lock -timeout 5
-	device_virtual_ir_shift -instance_index $jtag_index_2 -ir_value 1 -no_captured_ir_value
-	set addr_trig [device_virtual_dr_shift -instance_index $jtag_index_2 -dr_value $trig_1 -length 56 -value_in_hex]
-	device_unlock
-	return $addr_trig
+proc config_trig {{jtag_index_2 2} {trig 00000000000000}} {
+	global log
+	set trig_leng [string length $trig]
+	if {$trig_leng!=14} {
+		$log insert end "\nError: Wrong trigger condition length: [expr $trig_leng-2]. Expects: 4+8.\n"
+	} else {
+		device_lock -timeout 5
+		device_virtual_ir_shift -instance_index $jtag_index_2 -ir_value 1 -no_captured_ir_value
+		set addr_trig [device_virtual_dr_shift -instance_index $jtag_index_2 -dr_value $trig -length 56 -value_in_hex]
+		device_unlock
+		return $addr_trig
+	}
 } 
 
 proc open_jtag_device {{test_cable "USB-Blaster [USB-0]"} {test_device "@2: EP2SGX90 (0x020E30DD)"}} {
@@ -149,7 +162,7 @@ proc updateAddrConfig {} {
 		set    mask [format "%1X" [expr $i-1]]
 		append mask [format "%1X" [expr $addr_wren*8+$addr_rden*4+[set address_span_en$i]]]
 		append mask [set address_span$i]
-		config_addr 1 $mask
+		config_addr 1 $mask $i
 	}
 }
 
