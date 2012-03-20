@@ -13,6 +13,7 @@
 //                      via Virtual JTAG.
 //**************************************************************
 
+`include "../../sim/altera/jtag_sim_define.h"
 `timescale 1ns/1ns
 
 module virtual_jtag_adda_trig(trig_out);
@@ -92,8 +93,8 @@ sld_virtual_jtag	sld_virtual_jtag_component (
 		sld_virtual_jtag_component.sld_auto_instance_index = "NO",
 		sld_virtual_jtag_component.sld_instance_index = 2,
 		sld_virtual_jtag_component.sld_ir_width = 2,
-		sld_virtual_jtag_component.sld_sim_action = "((1,1,1,2))",
-		sld_virtual_jtag_component.sld_sim_n_scan = 1,
-		sld_virtual_jtag_component.sld_sim_total_length = 2;
+		sld_virtual_jtag_component.sld_sim_action       = `TRIG_SLD_SIM_ACTION,
+		sld_virtual_jtag_component.sld_sim_n_scan       = `TRIG_SLD_SIM_N_SCAN,
+		sld_virtual_jtag_component.sld_sim_total_length = `TRIG_SLD_SIM_T_LENG;
 		
 endmodule
