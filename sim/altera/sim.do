@@ -11,9 +11,9 @@ vlog -work work ../../rtl/up_monitor_wrapper.v
 
 # compile altera virtual jtag files
 source virtual_jtag_stimulus.tcl
-vlog -work work ../../rtl/altera/virtual_jtag_adda_fifo.v
-vlog -work work ../../rtl/altera/virtual_jtag_adda_trig.v
-vlog -work work ../../rtl/altera/virtual_jtag_addr_mask.v
+vlog -work work ../../rtl/altera/virtual_jtag_adda_fifo.v +incdir+../../rtl/altera
+vlog -work work ../../rtl/altera/virtual_jtag_adda_trig.v +incdir+../../rtl/altera
+vlog -work work ../../rtl/altera/virtual_jtag_addr_mask.v +incdir+../../rtl/altera
 vlog -work work altera_mf.v
 
 # compile testbench files
@@ -35,7 +35,7 @@ gcc -shared -Bsymbolic -o up_bfm_c.dll up_bfm_c.o \
     up_bfm_sv.obj -L $::env(MODEL_TECH) -lmtipli
 
 # compile jtag bfms files
-vlog -work work -sv jtag_bfm_sv.v
+vlog -work work -sv jtag_bfm_sv.v +incdir+../../rtl/altera
 
 vsim -novopt \
      -sv_lib up_bfm_c \

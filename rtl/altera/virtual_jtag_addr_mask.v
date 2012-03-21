@@ -13,7 +13,7 @@
 //                      Virtual JTAG.
 //**************************************************************
 
-`include "../../sim/altera/jtag_sim_define.h"
+`include "jtag_sim_define.h"
 `timescale 1ns/1ns
 
 module virtual_jtag_addr_mask(mask_out0 ,mask_out1 ,mask_out2 ,mask_out3 ,
@@ -165,8 +165,14 @@ sld_virtual_jtag	sld_virtual_jtag_component (
 		sld_virtual_jtag_component.sld_auto_instance_index = "NO",
 		sld_virtual_jtag_component.sld_instance_index = 1,
 		sld_virtual_jtag_component.sld_ir_width = 2,
+		`ifdef USE_SIM_STIMULUS
 		sld_virtual_jtag_component.sld_sim_action       = `ADDR_SLD_SIM_ACTION,
 		sld_virtual_jtag_component.sld_sim_n_scan       = `ADDR_SLD_SIM_N_SCAN,
 		sld_virtual_jtag_component.sld_sim_total_length = `ADDR_SLD_SIM_T_LENG;
+		`else
+		sld_virtual_jtag_component.sld_sim_action       = "((1,1,1,2))",
+		sld_virtual_jtag_component.sld_sim_n_scan       = 1,
+		sld_virtual_jtag_component.sld_sim_total_length = 2;
+		`endif
 		
 endmodule

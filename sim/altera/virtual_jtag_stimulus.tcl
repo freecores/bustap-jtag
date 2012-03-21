@@ -380,6 +380,7 @@ proc generate_stimulus {} {
 	set    trig_sim_num [expr $trig_sim_num+1]
 	set    trig_sim_len [expr $trig_sim_len+2]
 	$log delete 1.0 end
+	$log insert end "`define USE_SIM_STIMULUS\n\n"
 	$log insert end "`define FIFO_SLD_SIM_ACTION $fifo_sim_act\n"
 	$log insert end "`define FIFO_SLD_SIM_N_SCAN $fifo_sim_num\n"
 	$log insert end "`define FIFO_SLD_SIM_T_LENG $fifo_sim_len\n\n"
@@ -390,7 +391,7 @@ proc generate_stimulus {} {
 	$log insert end "`define TRIG_SLD_SIM_N_SCAN $trig_sim_num\n"
 	$log insert end "`define TRIG_SLD_SIM_T_LENG $trig_sim_len\n\n"
 
-	set fileId [open jtag_sim_define.h w]
+	set fileId [open ../../rtl/altera/jtag_sim_define.h w]
 	puts $fileId [$log get 1.0 end]
 	close $fileId
 }
