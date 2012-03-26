@@ -41,13 +41,19 @@ add wave -noupdate -format Literal /up_monitor_tb/MON_LO/inst/u_virtual_jtag_add
 add wave -noupdate -format Logic /up_monitor_tb/MON_LO/inst/u_virtual_jtag_adda_fifo/rd_en
 add wave -noupdate -format Literal /up_monitor_tb/MON_LO/inst/u_virtual_jtag_adda_fifo/data_out
 add wave -noupdate -divider {New Divider}
+add wave -noupdate -format Literal /up_monitor_tb/MON_LO/inst/pretrig_num
+add wave -noupdate -format Literal /up_monitor_tb/MON_LO/inst/pretrig_cnt
+add wave -noupdate -format Logic /up_monitor_tb/MON_LO/inst/pretrig_full
+add wave -noupdate -format Logic /up_monitor_tb/MON_LO/inst/pretrig_wr
+add wave -noupdate -format Logic /up_monitor_tb/MON_LO/inst/pretrig_rd
+add wave -noupdate -divider {New Divider}
 add wave -noupdate -format Logic /up_monitor_tb/MON_LO/inst/u_virtual_jtag_adda_fifo/sld_virtual_jtag_component/user_input/vj_sim_done
 add wave -noupdate -format Logic /up_monitor_tb/MON_LO/inst/u_virtual_jtag_adda_trig/sld_virtual_jtag_component/user_input/vj_sim_done
 add wave -noupdate -format Logic /up_monitor_tb/MON_LO/inst/u_virtual_jtag_addr_mask/sld_virtual_jtag_component/user_input/vj_sim_done
 add wave -noupdate -divider {New Divider}
 add wave -noupdate -divider {New Divider}
 TreeUpdate [SetDefaultTree]
-WaveRestoreCursors {{Cursor 1} {388925000 ps} 0}
+WaveRestoreCursors {{Cursor 1} {11169937 ps} 0}
 configure wave -namecolwidth 147
 configure wave -valuecolwidth 100
 configure wave -justifyvalue left
@@ -62,4 +68,4 @@ configure wave -griddelta 40
 configure wave -timeline 0
 configure wave -timelineunits ps
 update
-WaveRestoreZoom {0 ps} {14421760 ps}
+WaveRestoreZoom {0 ps} {10500 ns}

@@ -16,26 +16,37 @@
 `include "jtag_sim_define.h"
 `timescale 1ns/1ns
 
-module virtual_jtag_adda_trig(trig_out);
+module virtual_jtag_adda_trig(trig_out, pnum_out);
 
 parameter trig_width  = 32;
+parameter pnum_width  = 10;
 
 output [trig_width-1:0] trig_out;
+output [pnum_width-1:0] pnum_out;
 
 reg [trig_width-1:0] trig_out;
+reg [pnum_width-1:0] pnum_out;
 
 wire tdi, tck, cdr, cir, e1dr, e2dr, pdr, sdr, udr, uir;
 reg  tdo;
 reg  [trig_width-1:0] trig_instr_reg;
+reg  [pnum_width-1:0] pnum_instr_reg;
 reg  bypass_reg;
 
 wire [1:0] ir_in;
 wire trig_instr = ~ir_in[1] &  ir_in[0]; // 1
+wire pnum_instr =  ir_in[1] & ~ir_in[0]; // 2
 
 always @(posedge tck)
 begin
   if (trig_instr && e1dr)
     trig_out <= trig_instr_reg;
+end
+
+always @(posedge tck)
+begin
+  if (pnum_instr && e1dr)
+    pnum_out <= pnum_instr_reg;
 end
 
 /* trig_instr Instruction Handler */		
@@ -45,15 +56,24 @@ always @ (posedge tck)
   else if ( trig_instr && sdr )
     trig_instr_reg <= {tdi, trig_instr_reg[trig_width-1:1]};
 
+/* pnum_instr Instruction Handler */		
+always @ (posedge tck)
+  if ( pnum_instr && cdr )
+    pnum_instr_reg <= pnum_instr_reg;
+  else if ( pnum_instr && sdr )
+    pnum_instr_reg <= {tdi, pnum_instr_reg[pnum_width-1:1]};
+
 /* Bypass register */
 always @ (posedge tck)
   bypass_reg <= tdi;
 
 /* Node TDO Output */
-always @ ( trig_instr, trig_instr_reg, bypass_reg )
+always @ ( trig_instr, trig_instr_reg, pnum_instr, pnum_instr_reg, bypass_reg )
 begin
-  if (trig_instr)
+  if      (trig_instr)
     tdo <= trig_instr_reg[0];
+  else if (pnum_instr)
+    tdo <= pnum_instr_reg[0];
   else
     tdo <= bypass_reg;// Used to maintain the continuity of the scan chain.
 end

@@ -53,7 +53,7 @@ proc config_addr {{jtag_index_1 1} {mask 0100000000} {mask_id 1}} {
 	}
 }
 
-proc config_trig {{jtag_index_2 2} {trig 00000000000000}} {
+proc config_trig {{jtag_index_2 2} {trig 00000000000000} {pnum 0}} {
 	global log
 	set trig_leng [string length $trig]
 	if {$trig_leng!=14} {
@@ -62,6 +62,8 @@ proc config_trig {{jtag_index_2 2} {trig 00000000000000}} {
 		device_lock -timeout 5
 		device_virtual_ir_shift -instance_index $jtag_index_2 -ir_value 1 -no_captured_ir_value
 		set addr_trig [device_virtual_dr_shift -instance_index $jtag_index_2 -dr_value $trig -length 56 -value_in_hex]
+		device_virtual_ir_shift -instance_index $jtag_index_2 -ir_value 2 -no_captured_ir_value
+		set addr_trig [device_virtual_dr_shift -instance_index $jtag_index_2 -dr_value $pnum -length 10]
 		device_unlock
 		return $addr_trig
 	}
@@ -185,16 +187,36 @@ proc initAddrConfig {} {
 	global address_span15
 	global address_span16
 	for {set i 1} {$i<=8} {incr i} {
-		set address_span$i ffff0000
+		if {[set address_span$i]==""} {
+			set address_span$i ffff0000
+	}
 	}
 	for {set i 9} {$i<=16} {incr i} {
-		set address_span$i 00000000
+		if {[set address_span$i]==""} {
+			set address_span$i 00000000
+	}
+}
+}
+
+proc initTrigConfig {} {
+	global triggerAddr
+	global triggerData
+	global triggerPnum
+	if {[set triggerAddr]==""} {
+		set triggerAddr ffff
+	}
+	if {[set triggerData]==""} {
+		set triggerData a5a5a5a5
+	}
+	if {[set triggerPnum]==""} {
+		set triggerPnum 0
 	}
 }
 
 proc updateTrigger {{trigCmd 0}} {
 	global triggerAddr
 	global triggerData
+	global triggerPnum
 	global trig_wren
 	global trig_rden
 	global trig_aden
@@ -203,7 +225,7 @@ proc updateTrigger {{trigCmd 0}} {
 	append triggerValue [format "%1X" [expr $trig_wren*8+$trig_rden*4+$trigCmd]]
 	append triggerValue $triggerAddr
 	append triggerValue $triggerData
-	config_trig 2 $triggerValue
+	config_trig 2 $triggerValue $triggerPnum
 }
 
 proc startTrigger {} {
@@ -357,7 +379,6 @@ pack .console.f2.excl_addr \
      .console.f2.address_span_en15 .console.f2.address_span15 \
      .console.f2.address_span_en16 .console.f2.address_span16 \
      -side left -ipadx 0
-
 initAddrConfig
 
 # set the address configuration buttons
@@ -374,18 +395,20 @@ frame .console.trig -relief groove -borderwidth 5
 pack .console.trig
 button .console.trig.starttrig -text {Apply Trigger Condition} -command {startTrigger}
 entry .console.trig.trigvalue_addr -textvar triggerAddr -width 4
-set triggerAddr ffff
 entry .console.trig.trigvalue_data -textvar triggerData -width 8
-set triggerData a5a5a5a5
 checkbutton .console.trig.trigaddr -text {@Addr:} -variable trig_aden
 checkbutton .console.trig.trigdata -text {@Data:} -variable trig_daen
 checkbutton .console.trig.wren -text {@WR} -variable trig_wren
 checkbutton .console.trig.rden -text {@RD} -variable trig_rden
-pack .console.trig.wren .console.trig.rden \
+label .console.trig.pnum -text {Pre-Capture:}
+entry .console.trig.trigvalue_pnum -textvar triggerPnum -width 4
+pack .console.trig.pnum .console.trig.trigvalue_pnum \
+     .console.trig.wren .console.trig.rden \
      .console.trig.trigaddr .console.trig.trigvalue_addr \
      .console.trig.trigdata .console.trig.trigvalue_data \
      .console.trig.starttrig \
      -side left -ipadx 0
+initTrigConfig
 
 # set the control buttons
 frame .console.fifo -relief groove -borderwidth 5

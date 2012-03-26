@@ -114,7 +114,7 @@ proc config_addr {{jtag_index_1 1} {mask 0100000000} {mask_id 1}} {
 	}
 }
 
-proc config_trig {{jtag_index_2 2} {trig 00000000000000}} {
+proc config_trig {{jtag_index_2 2} {trig 00000000000000} {pnum 0}} {
 	global log
 	set trig_leng [string length $trig]
 	if {$trig_leng!=14} {
@@ -123,6 +123,8 @@ proc config_trig {{jtag_index_2 2} {trig 00000000000000}} {
 		#device_lock -timeout 5
 		#device_virtual_ir_shift -instance_index $jtag_index_2 -ir_value 1 -no_captured_ir_value
 		#set addr_trig [device_virtual_dr_shift -instance_index $jtag_index_2 -dr_value $trig -length 56 -value_in_hex]
+		#device_virtual_ir_shift -instance_index $jtag_index_2 -ir_value 2 -no_captured_ir_value
+		#set addr_trig [device_virtual_dr_shift -instance_index $jtag_index_2 -dr_value $pnum -length 10]
 		#device_unlock
 		global trig_sim_act
 		global trig_sim_num
@@ -133,6 +135,12 @@ proc config_trig {{jtag_index_2 2} {trig 00000000000000}} {
 		append trig_sim_act (0,2,$trig,[format "%X" 56]),
 		set    trig_sim_num [expr $trig_sim_num+1]
 		set    trig_sim_len [expr $trig_sim_len+56]
+		append trig_sim_act (0,1,2,[format "%X" 2]),
+		set    trig_sim_num [expr $trig_sim_num+1]
+		set    trig_sim_len [expr $trig_sim_len+2]
+		append trig_sim_act (0,2,[format "%X" $pnum],[format "%X" 10]),
+		set    trig_sim_num [expr $trig_sim_num+1]
+		set    trig_sim_len [expr $trig_sim_len+10]
 		return 0
 	}
 } 
@@ -269,17 +277,22 @@ proc initAddrConfig {} {
 proc initTrigConfig {} {
 	global triggerAddr
 	global triggerData
+	global triggerPnum
 	if {[set triggerAddr]==""} {
 		set triggerAddr ffff
 	}
 	if {[set triggerData]==""} {
 		set triggerData a5a5a5a5
 	}
+	if {[set triggerPnum]==""} {
+		set triggerPnum 0
+	}
 }
 
 proc updateTrigger {{trigCmd 0}} {
 	global triggerAddr
 	global triggerData
+	global triggerPnum
 	global trig_wren
 	global trig_rden
 	global trig_aden
@@ -288,7 +301,7 @@ proc updateTrigger {{trigCmd 0}} {
 	append triggerValue [format "%1X" [expr $trig_wren*8+$trig_rden*4+$trigCmd]]
 	append triggerValue $triggerAddr
 	append triggerValue $triggerData
-	config_trig 2 $triggerValue
+	config_trig 2 $triggerValue $triggerPnum
 }
 
 proc startTrigger {} {
@@ -299,8 +312,8 @@ proc startTrigger {} {
 	set trigEnable [expr $trig_wren+$trig_rden+$trig_aden+$trig_daen]
 	if {$trigEnable>0} {
 		updateTrigger 2
-		#reset_fifo 0
-		#query_usedw 0
+		reset_fifo 0
+		query_usedw 0
 		updateTrigger 3
 	} else {
 		updateTrigger 0
@@ -319,7 +332,7 @@ proc query_fifo_usedw {} {
 proc read_fifo_content {} {
 	global log
 	global fifoUsedw
-	#$log insert end "\n****************************************\n"
+	$log insert end "\n****************************************\n"
 	for {set i 0} {$i<$fifoUsedw} {incr i} {
 		set fifoContent [read_fifo 0]
 		set ok_trig [expr [format "%d" 0x[string index $fifoContent 0]]/2]
@@ -515,7 +528,10 @@ checkbutton .console.trig.trigaddr -text {@Addr:} -variable trig_aden
 checkbutton .console.trig.trigdata -text {@Data:} -variable trig_daen
 checkbutton .console.trig.wren -text {@WR} -variable trig_wren
 checkbutton .console.trig.rden -text {@RD} -variable trig_rden
-pack .console.trig.wren .console.trig.rden \
+label .console.trig.pnum -text {Pre-Capture:}
+entry .console.trig.trigvalue_pnum -textvar triggerPnum -width 4
+pack .console.trig.pnum .console.trig.trigvalue_pnum \
+     .console.trig.wren .console.trig.rden \
      .console.trig.trigaddr .console.trig.trigvalue_addr \
      .console.trig.trigdata .console.trig.trigvalue_data \
      .console.trig.starttrig \

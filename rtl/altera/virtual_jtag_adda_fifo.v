@@ -16,7 +16,7 @@
 `include "jtag_sim_define.h"
 `timescale 1ns/1ns
 
-module virtual_jtag_adda_fifo(clk,wr_en,data_in);
+module virtual_jtag_adda_fifo(clk,wr_in,data_in,rd_in);
 
 parameter data_width  = 32,
           fifo_depth  = 256,
@@ -25,7 +25,7 @@ parameter data_width  = 32,
           al_empt_val = 0;
 
 input clk;
-input wr_en;
+input wr_in, rd_in;
 input [data_width-1:0] data_in;
 
 wire tdi, tck, cdr, cir, e1dr, e2dr, pdr, sdr, udr, uir;
@@ -50,7 +50,8 @@ wire al_full;
 reg read_instr_d1;
 reg read_instr_d2;
 reg read_instr_d3;
-wire rd_en = read_instr_d2 & !read_instr_d3;
+wire rd_en = rd_in | (read_instr_d2 & !read_instr_d3);
+wire wr_en = wr_in;
 always @(posedge clk or posedge reset)
 begin
   if (reset)

@@ -54,6 +54,12 @@ reg         trig_cond_ok,trig_cond_ok_d1;
 // for capture storage
 wire [49:0] capture_in;
 wire        capture_wr;
+// for pretrigger capture
+wire [9:0] pretrig_num;
+reg  [9:0] pretrig_cnt;
+wire pretrig_full;
+wire pretrig_wr;
+reg  pretrig_wr_d1,pretrig_rd;
 
 /////////////////////////////////////////////////
 // Capture logic main
@@ -118,9 +124,31 @@ begin
 end
 wire trig_cond_ok_pulse = trig_cond_ok & !trig_cond_ok_d1;
 
-// generate capture wr-in
+// generate capture wr_in
 assign capture_in = {trig_cond_ok_pulse,wr_en_d1,addr_in_d1[15:2],2'b00,data_in_d1[31:0]};
 assign capture_wr =  trig_cond_ok_pulse | (addr_mask_ok & trig_cond_ok);
+
+// generate pre-trigger wr_in
+assign pretrig_full = (pretrig_cnt >= pretrig_num) || trig_cond_ok;
+assign pretrig_wr = (!trig_en || (trig_en && !trig_set))? 1'b0 : (trig_cond_ok? 1'b0 : addr_mask_ok);
+always @(posedge clk)
+begin
+	if      (!trig_en || (trig_en && !trig_set)) begin
+		pretrig_cnt  <= 10'd0;
+		pretrig_wr_d1<= 1'b0;
+		pretrig_rd   <= 1'b0;
+	end
+	else if (!pretrig_full) begin
+		pretrig_cnt  <=  pretrig_cnt + addr_mask_ok;
+		pretrig_wr_d1<= 1'b0;
+		pretrig_rd   <= 1'b0;
+	end
+	else if (pretrig_full) begin
+		pretrig_cnt  <= pretrig_cnt;
+		pretrig_wr_d1<= pretrig_wr;
+		pretrig_rd   <= pretrig_wr_d1;
+	end
+end
 
 /////////////////////////////////////////////////
 // Instantiate vendor specific JTAG functions
@@ -129,8 +157,9 @@ assign capture_wr =  trig_cond_ok_pulse | (addr_mask_ok & trig_cond_ok);
 // index 0, instantiate capture fifo, as output
 virtual_jtag_adda_fifo u_virtual_jtag_adda_fifo (
 	.clk(clk),
-	.wr_en(capture_wr),
-	.data_in(capture_in)
+	.wr_in(capture_wr || pretrig_wr),
+	.data_in(capture_in),
+	.rd_in(pretrig_rd)
 	);
 defparam
 	u_virtual_jtag_adda_fifo.data_width	= 50,
@@ -167,9 +196,11 @@ defparam
 
 // index 2, instantiate capture trigger, as input
 virtual_jtag_adda_trig u_virtual_jtag_adda_trig (
-	.trig_out(trig_cond)
+	.trig_out(trig_cond),
+	.pnum_out(pretrig_num)
 	);
 defparam
-	u_virtual_jtag_adda_trig.trig_width	= 56;
+	u_virtual_jtag_adda_trig.trig_width	= 56,
+	u_virtual_jtag_adda_trig.pnum_width	= 10;
 
 endmodule
