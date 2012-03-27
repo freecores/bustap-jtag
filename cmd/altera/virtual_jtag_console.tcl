@@ -33,7 +33,7 @@ proc read_fifo {{jtag_index_0 0}} {
 	device_lock -timeout 5
 	device_virtual_ir_shift -instance_index $jtag_index_0 -ir_value 1 -no_captured_ir_value
 	device_virtual_ir_shift -instance_index $jtag_index_0 -ir_value 3 -no_captured_ir_value
-	set fifo_data [device_virtual_dr_shift -instance_index $jtag_index_0 -length 50 -value_in_hex]
+	set fifo_data [device_virtual_dr_shift -instance_index $jtag_index_0 -length 82 -value_in_hex]
 	device_unlock
 	return $fifo_data
 }
@@ -261,15 +261,16 @@ proc read_fifo_content {} {
 		set fifoContent [read_fifo 0]
 		set ok_trig [expr [format "%d" 0x[string index $fifoContent 0]]/2]
 		set wr_cptr [expr [format "%d" 0x[string index $fifoContent 0]]%2]
-		set ad_cptr [string range $fifoContent 1  4]
-		set da_cptr [string range $fifoContent 5 12]
+		set tm_cptr [format "%d"       0x[string range $fifoContent  1  8]]
+		set ad_cptr                      [string range $fifoContent  9 12]
+		set da_cptr                      [string range $fifoContent 13 20]
 		if $ok_trig {
 			$log insert end "@@@@@@@@@@@@@@@@@@@@\n"
 		}
 		if $wr_cptr {
-			$log insert end "wr $ad_cptr $da_cptr\n"
+			$log insert end "wr $ad_cptr $da_cptr @$tm_cptr\n"
 		} else {
-			$log insert end "rd $ad_cptr $da_cptr\n"
+			$log insert end "rd $ad_cptr $da_cptr @$tm_cptr\n"
 		}
 	}
 	query_usedw 0

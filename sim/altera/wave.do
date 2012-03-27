@@ -47,13 +47,15 @@ add wave -noupdate -format Logic /up_monitor_tb/MON_LO/inst/pretrig_full
 add wave -noupdate -format Logic /up_monitor_tb/MON_LO/inst/pretrig_wr
 add wave -noupdate -format Logic /up_monitor_tb/MON_LO/inst/pretrig_rd
 add wave -noupdate -divider {New Divider}
+add wave -noupdate -format Literal -radix unsigned /up_monitor_tb/MON_LO/inst/inter_cap_cnt
+add wave -noupdate -divider {New Divider}
 add wave -noupdate -format Logic /up_monitor_tb/MON_LO/inst/u_virtual_jtag_adda_fifo/sld_virtual_jtag_component/user_input/vj_sim_done
 add wave -noupdate -format Logic /up_monitor_tb/MON_LO/inst/u_virtual_jtag_adda_trig/sld_virtual_jtag_component/user_input/vj_sim_done
 add wave -noupdate -format Logic /up_monitor_tb/MON_LO/inst/u_virtual_jtag_addr_mask/sld_virtual_jtag_component/user_input/vj_sim_done
 add wave -noupdate -divider {New Divider}
 add wave -noupdate -divider {New Divider}
 TreeUpdate [SetDefaultTree]
-WaveRestoreCursors {{Cursor 1} {11169937 ps} 0}
+WaveRestoreCursors {{Cursor 1} {8603967 ps} 0}
 configure wave -namecolwidth 147
 configure wave -valuecolwidth 100
 configure wave -justifyvalue left

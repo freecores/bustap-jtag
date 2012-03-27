@@ -64,7 +64,7 @@ proc read_fifo {{jtag_index_0 0}} {
 	#device_lock -timeout 5
 	#device_virtual_ir_shift -instance_index $jtag_index_0 -ir_value 1 -no_captured_ir_value
 	#device_virtual_ir_shift -instance_index $jtag_index_0 -ir_value 3 -no_captured_ir_value
-	#set fifo_data [device_virtual_dr_shift -instance_index $jtag_index_0 -length 50 -value_in_hex]
+	#set fifo_data [device_virtual_dr_shift -instance_index $jtag_index_0 -length 82 -value_in_hex]
 	#device_unlock
 	global sim_started
 	if {$sim_started==0} {
@@ -77,10 +77,10 @@ proc read_fifo {{jtag_index_0 0}} {
 		append fifo_sim_act (0,1,3,[format "%X" 2]),
 		set    fifo_sim_num [expr $fifo_sim_num+1]
 		set    fifo_sim_len [expr $fifo_sim_len+2]
-		append fifo_sim_act (0,2,0,[format "%X" 50]),
+		append fifo_sim_act (0,2,0,[format "%X" 82]),
 		set    fifo_sim_num [expr $fifo_sim_num+1]
-		set    fifo_sim_len [expr $fifo_sim_len+50]
-		return 0000000000000
+		set    fifo_sim_len [expr $fifo_sim_len+82]
+		return 000000000000000000000
 	} else {
 		force -freeze /up_monitor_tb/MON_LO/inst/u_virtual_jtag_adda_fifo/rd_en 1 -cancel 10ns
 		run 20ns
@@ -337,15 +337,16 @@ proc read_fifo_content {} {
 		set fifoContent [read_fifo 0]
 		set ok_trig [expr [format "%d" 0x[string index $fifoContent 0]]/2]
 		set wr_cptr [expr [format "%d" 0x[string index $fifoContent 0]]%2]
-		set ad_cptr [string range $fifoContent 1  4]
-		set da_cptr [string range $fifoContent 5 12]
+		set tm_cptr [format "%d"       0x[string range $fifoContent  1  8]]
+		set ad_cptr                      [string range $fifoContent  9 12]
+		set da_cptr                      [string range $fifoContent 13 20]
 		if $ok_trig {
 			$log insert end "@@@@@@@@@@@@@@@@@@@@\n"
 		}
 		if $wr_cptr {
-			$log insert end "wr $ad_cptr $da_cptr\n"
+			$log insert end "wr $ad_cptr $da_cptr @$tm_cptr\n"
 		} else {
-			$log insert end "rd $ad_cptr $da_cptr\n"
+			$log insert end "rd $ad_cptr $da_cptr @$tm_cptr\n"
 		}
 	}
 	query_usedw 0

@@ -52,7 +52,7 @@ wire [15:0] trig_addr = trig_cond[47:32];
 wire [31:0] trig_data = trig_cond[31:0];
 reg         trig_cond_ok,trig_cond_ok_d1;
 // for capture storage
-wire [49:0] capture_in;
+wire [81:0] capture_in;
 wire        capture_wr;
 // for pretrigger capture
 wire [9:0] pretrig_num;
@@ -60,6 +60,8 @@ reg  [9:0] pretrig_cnt;
 wire pretrig_full;
 wire pretrig_wr;
 reg  pretrig_wr_d1,pretrig_rd;
+// for inter capture timer
+reg [31:0] inter_cap_cnt;
 
 /////////////////////////////////////////////////
 // Capture logic main
@@ -125,7 +127,7 @@ end
 wire trig_cond_ok_pulse = trig_cond_ok & !trig_cond_ok_d1;
 
 // generate capture wr_in
-assign capture_in = {trig_cond_ok_pulse,wr_en_d1,addr_in_d1[15:2],2'b00,data_in_d1[31:0]};
+assign capture_in = {trig_cond_ok_pulse,wr_en_d1,inter_cap_cnt,addr_in_d1[15:2],2'b00,data_in_d1[31:0]};
 assign capture_wr =  trig_cond_ok_pulse | (addr_mask_ok & trig_cond_ok);
 
 // generate pre-trigger wr_in
@@ -150,6 +152,17 @@ begin
 	end
 end
 
+// generate interval counter
+always @(posedge clk)
+begin
+	if      (capture_wr || pretrig_wr)
+		inter_cap_cnt <= 32'd0;
+	else if (inter_cap_cnt[31])
+		inter_cap_cnt <= 32'd3000000000;
+	else
+		inter_cap_cnt <= inter_cap_cnt + 32'd1;
+end
+
 /////////////////////////////////////////////////
 // Instantiate vendor specific JTAG functions
 /////////////////////////////////////////////////
@@ -162,7 +175,7 @@ virtual_jtag_adda_fifo u_virtual_jtag_adda_fifo (
 	.rd_in(pretrig_rd)
 	);
 defparam
-	u_virtual_jtag_adda_fifo.data_width	= 50,
+	u_virtual_jtag_adda_fifo.data_width	= 82,
 	u_virtual_jtag_adda_fifo.fifo_depth	= 512,
 	u_virtual_jtag_adda_fifo.addr_width	= 9,
 	u_virtual_jtag_adda_fifo.al_full_val	= 511,

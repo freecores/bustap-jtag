@@ -6,8 +6,8 @@ vlib work
 set sim_started 0
 
 # compile vendor independent files
-vlog -work work ../../rtl/up_monitor.v
-vlog -work work ../../rtl/up_monitor_wrapper.v
+vlog -work work ../../rtl/up_monitor.v +initreg+0
+vlog -work work ../../rtl/up_monitor_wrapper.v +initreg+0
 
 # compile altera virtual jtag files
 source virtual_jtag_stimulus.tcl
