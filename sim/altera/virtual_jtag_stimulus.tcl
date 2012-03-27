@@ -114,7 +114,7 @@ proc config_addr {{jtag_index_1 1} {mask 0100000000} {mask_id 1}} {
 	}
 }
 
-proc config_trig {{jtag_index_2 2} {trig 00000000000000} {pnum 0}} {
+proc config_trig {{jtag_index_2 2} {trig 00000000000000} {pnum 000}} {
 	global log
 	set trig_leng [string length $trig]
 	if {$trig_leng!=14} {
@@ -124,7 +124,7 @@ proc config_trig {{jtag_index_2 2} {trig 00000000000000} {pnum 0}} {
 		#device_virtual_ir_shift -instance_index $jtag_index_2 -ir_value 1 -no_captured_ir_value
 		#set addr_trig [device_virtual_dr_shift -instance_index $jtag_index_2 -dr_value $trig -length 56 -value_in_hex]
 		#device_virtual_ir_shift -instance_index $jtag_index_2 -ir_value 2 -no_captured_ir_value
-		#set addr_trig [device_virtual_dr_shift -instance_index $jtag_index_2 -dr_value $pnum -length 10]
+		#set addr_trig [device_virtual_dr_shift -instance_index $jtag_index_2 -dr_value $pnum -length 10 -value_in_hex]
 		#device_unlock
 		global trig_sim_act
 		global trig_sim_num
@@ -138,7 +138,7 @@ proc config_trig {{jtag_index_2 2} {trig 00000000000000} {pnum 0}} {
 		append trig_sim_act (0,1,2,[format "%X" 2]),
 		set    trig_sim_num [expr $trig_sim_num+1]
 		set    trig_sim_len [expr $trig_sim_len+2]
-		append trig_sim_act (0,2,[format "%X" $pnum],[format "%X" 10]),
+		append trig_sim_act (0,2,$pnum,[format "%X" 10]),
 		set    trig_sim_num [expr $trig_sim_num+1]
 		set    trig_sim_len [expr $trig_sim_len+10]
 		return 0
@@ -301,7 +301,7 @@ proc updateTrigger {{trigCmd 0}} {
 	append triggerValue [format "%1X" [expr $trig_wren*8+$trig_rden*4+$trigCmd]]
 	append triggerValue $triggerAddr
 	append triggerValue $triggerData
-	config_trig 2 $triggerValue $triggerPnum
+	config_trig 2 $triggerValue [format "%1X" $triggerPnum]
 }
 
 proc startTrigger {} {
