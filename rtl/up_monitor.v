@@ -128,7 +128,7 @@ wire trig_cond_ok_pulse = trig_cond_ok & !trig_cond_ok_d1;
 
 // generate capture wr_in
 assign capture_in = {trig_cond_ok_pulse,wr_en_d1,inter_cap_cnt,addr_in_d1[15:2],2'b00,data_in_d1[31:0]};
-assign capture_wr =  trig_cond_ok_pulse | (addr_mask_ok & trig_cond_ok);
+assign capture_wr =  trig_cond_ok_pulse || (addr_mask_ok && trig_cond_ok);
 
 // generate pre-trigger wr_in
 assign pretrig_full = (pretrig_cnt >= pretrig_num) || trig_cond_ok;

@@ -74,6 +74,11 @@ assign up_data_i  = up_data_io;
 // start cpu bfm C model
 reg up_start;
 initial begin
+	up_wbe_o  = 1'b1;
+	up_csn_o  = 1'b1;
+	up_addr_o = 'd0;
+	up_data_o = 'd0;
+
 	@(posedge up_start);
 	#100 up_bfm_c(5);
 end
