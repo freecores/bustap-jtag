@@ -7,8 +7,8 @@
 // Targets device     : Cyclone III
 // Author             : Bibo Yang  (ash_riple@hotmail.com)
 // Organization       : www.opencores.org
-// Revision           : 2.1 
-// Date               : 2012/03/15
+// Revision           : 2.2 
+// Date               : 2012/03/28
 // Description        : Top level glue logic to group together 
 //                      the JTAG input and output modules.
 //**************************************************************

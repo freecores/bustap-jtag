@@ -7,8 +7,8 @@
 // Targets device     : Cyclone III
 // Author             : Bibo Yang  (ash_riple@hotmail.com)
 // Organization       : www.opencores.org
-// Revision           : 2.1 
-// Date               : 2012/03/15
+// Revision           : 2.2 
+// Date               : 2012/03/28
 // Description        : addr/data capture output to debug host
 //                      via Virtual JTAG.
 //**************************************************************
@@ -85,7 +85,7 @@ scfifo  jtag_fifo (
         jtag_fifo.lpm_width = data_width,
         jtag_fifo.lpm_numwords = fifo_depth,
         jtag_fifo.lpm_widthu = addr_width,
-        jtag_fifo.intended_device_family = "Stratix II",
+        jtag_fifo.intended_device_family = "Cyclone III",
         jtag_fifo.almost_full_value = al_full_val,
         jtag_fifo.almost_empty_value = al_empt_val,
         jtag_fifo.lpm_type = "scfifo",

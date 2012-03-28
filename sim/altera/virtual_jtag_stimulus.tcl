@@ -3,9 +3,9 @@
 ## Platform           : Windows xp sp2
 ## Author             : Bibo Yang  (ash_riple@hotmail.com)
 ## Organization       : www.opencores.org
-## Revision           : 2.1 
-## Date               : 2012/03/15
-## Description        : Tcl/Tk GUI for the up_monitor
+## Revision           : 2.2 
+## Date               : 2012/03/28
+## Description        : Tcl/Tk GUI for the simulation stimulus
 ##**************************************************************
 
 proc reset_fifo {{jtag_index_0 0}} {
@@ -301,7 +301,7 @@ proc updateTrigger {{trigCmd 0}} {
 	append triggerValue [format "%1X" [expr $trig_wren*8+$trig_rden*4+$trigCmd]]
 	append triggerValue $triggerAddr
 	append triggerValue $triggerData
-	config_trig 2 $triggerValue [format "%1X" $triggerPnum]
+	config_trig 2 $triggerValue [format "%03X" $triggerPnum]
 }
 
 proc startTrigger {} {

@@ -3,8 +3,8 @@
 ## Platform           : Windows xp sp2
 ## Author             : Bibo Yang  (ash_riple@hotmail.com)
 ## Organization       : www.opencores.org
-## Revision           : 2.1 
-## Date               : 2012/03/15
+## Revision           : 2.2 
+## Date               : 2012/03/28
 ## Description        : Tcl/Tk GUI for the up_monitor
 ##**************************************************************
 
@@ -62,11 +62,17 @@ proc config_trig {{jtag_index_2 2} {trig 00000000000000} {pnum 000}} {
 		device_lock -timeout 5
 		device_virtual_ir_shift -instance_index $jtag_index_2 -ir_value 1 -no_captured_ir_value
 		set addr_trig [device_virtual_dr_shift -instance_index $jtag_index_2 -dr_value $trig -length 56 -value_in_hex]
-		device_virtual_ir_shift -instance_index $jtag_index_2 -ir_value 2 -no_captured_ir_value
-		set addr_trig [device_virtual_dr_shift -instance_index $jtag_index_2 -dr_value $pnum -length 10 -value_in_hex]
 		device_unlock
-		return $addr_trig
 	}
+	if {[format "%d" 0x$pnum]>=511} {
+		$log insert end "\nError: Wrong trigger pre-capture value: [format "%d" 0x$pnum]. Expects: 0~510.\n"
+	} else {
+		device_lock -timeout 5
+		device_virtual_ir_shift -instance_index $jtag_index_2 -ir_value 2 -no_captured_ir_value
+		set pnum_trig [device_virtual_dr_shift -instance_index $jtag_index_2 -dr_value $pnum -length 10 -value_in_hex]
+		device_unlock
+	}
+	return $addr_trig
 } 
 
 proc open_jtag_device {{test_cable "USB-Blaster [USB-0]"} {test_device "@2: EP2SGX90 (0x020E30DD)"}} {
@@ -225,7 +231,7 @@ proc updateTrigger {{trigCmd 0}} {
 	append triggerValue [format "%1X" [expr $trig_wren*8+$trig_rden*4+$trigCmd]]
 	append triggerValue $triggerAddr
 	append triggerValue $triggerData
-	config_trig 2 $triggerValue [format "%1X" $triggerPnum]
+	config_trig 2 $triggerValue [format "%03X" $triggerPnum]
 }
 
 proc startTrigger {} {

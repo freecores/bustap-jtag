@@ -7,8 +7,8 @@
 // Targets device     : 
 // Author             : Bibo Yang  (ash_riple@hotmail.com)
 // Organization       : www.opencores.org
-// Revision           : 2.1 
-// Date               : 2012/03/19
+// Revision           : 2.2 
+// Date               : 2012/03/28
 // Description        : up_monitor testbench at both pin level 
 //                      and transaction level
 //**************************************************************
