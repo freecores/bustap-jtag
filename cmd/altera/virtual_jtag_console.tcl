@@ -239,6 +239,10 @@ proc startTrigger {} {
 	global trig_rden
 	global trig_aden
 	global trig_daen
+	global log
+	if {[expr $trig_wren+$trig_rden]==2} {
+		$log insert end "\nWarning: @WR & @RD, unreachable trigger condition.\n"
+	}
 	set trigEnable [expr $trig_wren+$trig_rden+$trig_aden+$trig_daen]
 	if {$trigEnable>0} {
 		updateTrigger 2
