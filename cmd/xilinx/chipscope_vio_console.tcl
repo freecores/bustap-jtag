@@ -579,7 +579,7 @@ pack propagate .mainframe true
 # set the www.OpenCores.org logo
 frame .mainframe.fig -bg white
 pack .mainframe.fig -expand true -fill both
-image create photo logo -format gif -file "../common/Lenovo.gif"
+image create photo logo -format gif -file "../common/OpenCores.gif"
 label .mainframe.fig.logo -image logo -bg white
 pack .mainframe.fig.logo
 
