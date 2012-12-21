@@ -1,27 +1,36 @@
 //**************************************************************
 // Module             : up_monitor.v
-// Platform           : Windows xp sp2
+// Platform           : Windows xp sp2, Ubuntu 10.04
 // Simulator          : Modelsim 6.5b
-// Synthesizer        : QuartusII 10.1 sp1
-// Place and Route    : QuartusII 10.1 sp1
-// Targets device     : Cyclone III
+// Synthesizer        : QuartusII 10.1 sp1, PlanAhead 14.2
+// Place and Route    : QuartusII 10.1 sp1, PlanAhead 14.2
+// Targets device     : Cyclone III, Zynq-7000
 // Author             : Bibo Yang  (ash_riple@hotmail.com)
 // Organization       : www.opencores.org
-// Revision           : 2.2 
-// Date               : 2012/03/28
-// Description        : Top level glue logic to group together 
+// Revision           : 2.3 
+// Date               : 2012/11/19
+// Description        : Top level: transaction record generation
+//                      and glue logic to group together 
 //                      the JTAG input and output modules.
 //**************************************************************
 
 `timescale 1ns/1ns
+`include "vendor.h"
 
 module up_monitor (
-	input        clk,
-	input        wr_en,rd_en,
-	input [15:2] addr_in,
-	input [31:0] data_in
+        `ifdef XILINX `ifdef AXI_IP
+        icontrol0, icontrol1, icontrol2,
+        `endif `endif
+	clk,
+	wr_en,rd_en,
+	addr_in,
+	data_in
 );
 
+input        clk;
+input        wr_en,rd_en;
+input [15:2] addr_in;
+input [31:0] data_in;
 /////////////////////////////////////////////////
 // Registers and wires announcment
 /////////////////////////////////////////////////
@@ -166,7 +175,7 @@ end
 /////////////////////////////////////////////////
 // Instantiate vendor specific JTAG functions
 /////////////////////////////////////////////////
-
+`ifdef ALTERA
 // index 0, instantiate capture fifo, as output
 virtual_jtag_adda_fifo u_virtual_jtag_adda_fifo (
 	.clk(clk),
@@ -215,5 +224,81 @@ virtual_jtag_adda_trig u_virtual_jtag_adda_trig (
 defparam
 	u_virtual_jtag_adda_trig.trig_width	= 56,
 	u_virtual_jtag_adda_trig.pnum_width	= 10;
+`endif
+
+`ifdef XILINX
+
+`ifdef AXI_IP
+// external ICON
+inout [35:0] icontrol0, icontrol1, icontrol2;
+`else
+// internal ICON
+wire [35:0] icontrol0, icontrol1, icontrol2;
+`endif
+
+// index 0, instantiate capture fifo, as output
+chipscope_vio_adda_fifo u_chipscope_vio_adda_fifo (
+	.wr_in(capture_wr || pretrig_wr),
+	.data_in(capture_in),
+	.rd_in(pretrig_rd),
+	.clk(clk),
+	.icon_ctrl(icontrol0)
+	);
+defparam
+	u_chipscope_vio_adda_fifo.data_width	= 82,
+	u_chipscope_vio_adda_fifo.addr_width	= 10,
+	u_chipscope_vio_adda_fifo.al_full_val	= 511;
+
+// index 1, instantiate capture mask, as input
+chipscope_vio_addr_mask u_chipscope_vio_addr_mask (
+	// inclusive
+	.mask_out0(addr_mask0),
+	.mask_out1(addr_mask1),
+	.mask_out2(addr_mask2),
+	.mask_out3(addr_mask3),
+	.mask_out4(addr_mask4),
+	.mask_out5(addr_mask5),
+	.mask_out6(addr_mask6),
+	.mask_out7(addr_mask7),
+	// exclusive
+	.mask_out8(addr_mask8),
+	.mask_out9(addr_mask9),
+	.mask_out10(addr_mask10),
+	.mask_out11(addr_mask11),
+	.mask_out12(addr_mask12),
+	.mask_out13(addr_mask13),
+	.mask_out14(addr_mask14),
+	.mask_out15(addr_mask15),
+        .clk(clk),
+	.icon_ctrl(icontrol1)
+	);
+defparam
+	u_chipscope_vio_addr_mask.mask_index	= 4,
+	u_chipscope_vio_addr_mask.mask_enabl	= 4,
+	u_chipscope_vio_addr_mask.addr_width	= 32;
+
+// index 2, instantiate capture trigger, as input
+chipscope_vio_adda_trig u_chipscope_vio_adda_trig (
+	.trig_out(trig_cond),
+	.pnum_out(pretrig_num),
+        .clk(clk),
+	.icon_ctrl(icontrol2)
+	);
+defparam
+	u_chipscope_vio_adda_trig.trig_width	= 56,
+	u_chipscope_vio_adda_trig.pnum_width	= 10;
+
+`ifdef AXI_IP
+// external ICON
+`else
+// internal ICON
+chipscope_icon u_chipscope_icon (
+	.CONTROL0(icontrol0),
+	.CONTROL1(icontrol1),
+	.CONTROL2(icontrol2)
+	);
+`endif
+
+`endif
 
 endmodule

@@ -5,3 +5,6 @@
 
 2.1 Added new features: 1. Multiple address filter selection; 2. Read access capture support; 3. Full trigger condition support; 4. Updated GUI; 5. Updated wrapper example with glitch filter and stable address/data capture.
 
+2.2 Added new features: 1. Multiple capture filter selection in the Tk GUI. 2. Read transaction capture. 3. Adjustable pre-trigger capture. 4. Capture content with transaction timing information. 
+
+2.3 Added support for Xilinx Devices with Chipscope VIO.

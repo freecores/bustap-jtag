@@ -32,6 +32,7 @@ set_global_assignment -name LAST_QUARTUS_VERSION "10.1 SP1"
 set_global_assignment -name ENABLE_ADVANCED_IO_TIMING OFF
 set_global_assignment -name PROJECT_OUTPUT_DIRECTORY output
 
+set_global_assignment -name VERILOG_FILE vendor.h
 set_global_assignment -name VERILOG_FILE ../../rtl/up_monitor_wrapper.v
 set_global_assignment -name VERILOG_FILE ../../rtl/up_monitor.v
 set_global_assignment -name VERILOG_FILE ../../rtl/altera/virtual_jtag_addr_mask.v
