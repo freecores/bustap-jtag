@@ -9,14 +9,21 @@
 ##**************************************************************
 
 proc reset_fifo {{jtag_index_0 0}} {
+  global test_cable
+  global test_device
+  open_device -hardware_name $test_cable -device_name $test_device
 	device_lock -timeout 5
 	device_virtual_ir_shift -instance_index $jtag_index_0 -ir_value 2 -no_captured_ir_value 
 	device_virtual_dr_shift -instance_index $jtag_index_0  -length 32 -dr_value 00000000 -value_in_hex -no_captured_dr_value 
 	device_unlock
+  close_device
 	return 0
 }
 
 proc query_usedw {{jtag_index_0 0}} {
+  global test_cable
+  global test_device
+  open_device -hardware_name $test_cable -device_name $test_device
 	global fifoUsedw
 	device_lock -timeout 5
 	device_virtual_ir_shift -instance_index $jtag_index_0 -ir_value 1 -no_captured_ir_value
@@ -26,42 +33,54 @@ proc query_usedw {{jtag_index_0 0}} {
 		append tmp $usedw
 		set usedw [format "%i" $tmp]
 	set fifoUsedw $usedw
+  close_device
 	return $usedw
 }
 
 proc read_fifo {{jtag_index_0 0}} {
+  global test_cable
+  global test_device
+  open_device -hardware_name $test_cable -device_name $test_device
 	device_lock -timeout 5
 	device_virtual_ir_shift -instance_index $jtag_index_0 -ir_value 1 -no_captured_ir_value
 	device_virtual_ir_shift -instance_index $jtag_index_0 -ir_value 3 -no_captured_ir_value
-	set fifo_data [device_virtual_dr_shift -instance_index $jtag_index_0 -length 82 -value_in_hex]
+	set fifo_data [device_virtual_dr_shift -instance_index $jtag_index_0 -length 98 -value_in_hex]
 	device_unlock
+  close_device
 	return $fifo_data
 }
 
 proc config_addr {{jtag_index_1 1} {mask 0100000000} {mask_id 1}} {
+  global test_cable
+  global test_device
+  open_device -hardware_name $test_cable -device_name $test_device
 	global log
 	set mask_leng [string length $mask]
 	if {$mask_leng!=10} {
 		$log insert end "\nError: Wrong address mask length @$mask_id: [expr $mask_leng-2]. Expects: 8.\n"
-
+                set addr_mask 0000000000
 	} else {
 		device_lock -timeout 5
 		device_virtual_ir_shift -instance_index $jtag_index_1 -ir_value 1 -no_captured_ir_value
 		set addr_mask [device_virtual_dr_shift -instance_index $jtag_index_1 -dr_value $mask -length 40 -value_in_hex]
 		device_unlock
-		return $addr_mask
 	}
+  close_device
+        return $addr_mask
 }
 
 proc config_trig {{jtag_index_2 2} {trig 00000000000000} {pnum 000}} {
+  global test_cable
+  global test_device
+  open_device -hardware_name $test_cable -device_name $test_device
 	global log
 	set trig_leng [string length $trig]
-	if {$trig_leng!=14} {
-		$log insert end "\nError: Wrong trigger condition length: [expr $trig_leng-2]. Expects: 4+8.\n"
+	if {$trig_leng!=18} {
+		$log insert end "\nError: Wrong trigger condition length: [expr $trig_leng-2]. Expects: 8+8.\n"
 	} else {
 		device_lock -timeout 5
 		device_virtual_ir_shift -instance_index $jtag_index_2 -ir_value 1 -no_captured_ir_value
-		set addr_trig [device_virtual_dr_shift -instance_index $jtag_index_2 -dr_value $trig -length 56 -value_in_hex]
+		set addr_trig [device_virtual_dr_shift -instance_index $jtag_index_2 -dr_value $trig -length 72 -value_in_hex]
 		device_unlock
 	}
 	if {[format "%d" 0x$pnum]>=511} {
@@ -72,16 +91,18 @@ proc config_trig {{jtag_index_2 2} {trig 00000000000000} {pnum 000}} {
 		set pnum_trig [device_virtual_dr_shift -instance_index $jtag_index_2 -dr_value $pnum -length 10 -value_in_hex]
 		device_unlock
 	}
+  close_device
 	return $addr_trig
 } 
 
 proc open_jtag_device {{test_cable "USB-Blaster [USB-0]"} {test_device "@2: EP2SGX90 (0x020E30DD)"}} {
-	open_device -hardware_name $test_cable -device_name $test_device
+  open_device -hardware_name $test_cable -device_name $test_device
 	# Retrieve device id code.
 	device_lock -timeout 5
 	device_ir_shift -ir_value 6 -no_captured_ir_value
 	set idcode "0x[device_dr_shift -length 32 -value_in_hex]"
 	device_unlock
+  close_device
 	return $idcode
 }
 
@@ -120,6 +141,8 @@ proc scan_chain {} {
 proc select_device {{cableNum 1} {deviceNum 1}} {
 	global log
 	global device_list
+        global test_cable
+        global test_device
 	$log insert end "\n****************************************\n"
 	set test_cable [lindex $device_list [expr 2*$cableNum-2]]
 	$log insert end "Selected Cable : $test_cable\n"
@@ -127,6 +150,7 @@ proc select_device {{cableNum 1} {deviceNum 1}} {
 	$log insert end "Selected Device: $test_device\n"
 	set jtagIdCode [open_jtag_device $test_cable $test_device]
 	$log insert end "Device ID code : $jtagIdCode\n"
+
 	reset_fifo 0
 	query_usedw 0
 }
