@@ -3,8 +3,8 @@
 ## Platform           : Windows xp sp2
 ## Author             : Bibo Yang  (ash_riple@hotmail.com)
 ## Organization       : www.opencores.org
-## Revision           : 2.2 
-## Date               : 2012/03/28
+## Revision           : 2.5
+## Date               : 2014/02/08
 ## Description        : Tcl/Tk GUI for the up_monitor
 ##**************************************************************
 
@@ -192,16 +192,21 @@ proc initAddrConfig {} {
 	global address_span14
 	global address_span15
 	global address_span16
-	for {set i 1} {$i<=8} {incr i} {
+	for {set i 1} {$i<=8} {set i [expr $i+2]} {
 		if {[set address_span$i]==""} {
-			set address_span$i ffff0000
+			set address_span$i fffffffc
+	}
+        }
+	for {set i 2} {$i<=8} {set i [expr $i+2]} {
+		if {[set address_span$i]==""} {
+			set address_span$i 00000000
 	}
 	}
 	for {set i 9} {$i<=16} {incr i} {
 		if {[set address_span$i]==""} {
-			set address_span$i 00000000
+			set address_span$i ffffffff
 	}
-}
+        }
 }
 
 proc initTrigConfig {} {
@@ -209,7 +214,7 @@ proc initTrigConfig {} {
 	global triggerData
 	global triggerPnum
 	if {[set triggerAddr]==""} {
-		set triggerAddr ffff
+		set triggerAddr 00000000
 	}
 	if {[set triggerData]==""} {
 		set triggerData a5a5a5a5
@@ -272,15 +277,15 @@ proc read_fifo_content {} {
 		set ok_trig [expr [format "%d" 0x[string index $fifoContent 0]]/2]
 		set wr_cptr [expr [format "%d" 0x[string index $fifoContent 0]]%2]
 		set tm_cptr [format "%d"       0x[string range $fifoContent  1  8]]
-		set ad_cptr                      [string range $fifoContent  9 12]
-		set da_cptr                      [string range $fifoContent 13 20]
+		set ad_cptr                      [string range $fifoContent  9 16]
+		set da_cptr                      [string range $fifoContent 17 24]
 		if $ok_trig {
 			$log insert end "@@@@@@@@@@@@@@@@@@@@\n"
 		}
 		if $wr_cptr {
-			$log insert end "wr $ad_cptr $da_cptr @$tm_cptr\n"
+			$log insert end "wr 0x$ad_cptr 0x$da_cptr @$tm_cptr\n"
 		} else {
-			$log insert end "rd $ad_cptr $da_cptr @$tm_cptr\n"
+			$log insert end "rd 0x$ad_cptr 0x$da_cptr @$tm_cptr\n"
 		}
 	}
 	query_usedw 0
@@ -293,7 +298,8 @@ proc clear_log {} {
 
 proc quit {} {
 	global exit_console
-	destroy .console
+	destroy .mainframe
+        destroy .
 	set exit_console 1
 }
 
@@ -302,146 +308,155 @@ init_tk
 set exit_console 0
 
 # set the main window
-toplevel .console
-wm title .console "www.OpenCores.org: uP Transaction Monitor"
-pack propagate .console true
+wm withdraw .
+toplevel .mainframe
+wm title .mainframe "www.OpenCores.org: uP Transaction Monitor"
+pack propagate .mainframe true
 
 # set the www.OpenCores.org logo
-frame .console.fig -bg white
-pack .console.fig -expand true -fill both
+frame .mainframe.fig -bg white
+pack .mainframe.fig -expand true -fill both
 image create photo logo -format gif -file "../common/OpenCores.gif"
-label .console.fig.logo -image logo -bg white
-pack .console.fig.logo
+label .mainframe.fig.logo -image logo -bg white
+pack .mainframe.fig.logo
 
 # set the JTAG utility
-frame .console.jtag -relief groove -borderwidth 5
-pack .console.jtag
-button .console.jtag.scan -text {Scan JTAG Chain} -command {scan_chain}
-button .console.jtag.select -text {Select JTAG Device :} -command {select_device $cableNum $deviceNum}
-button .console.jtag.deselect -text {DeSelect JTAG Device} -command {close_jtag_device}
-label .console.jtag.cable -text {Cable @}
-label .console.jtag.devic -text {Device @}
-entry .console.jtag.cable_num -textvariable cableNum -width 5
-entry .console.jtag.devic_num -textvariable deviceNum -width 5
-pack .console.jtag.scan .console.jtag.select \
-     .console.jtag.cable .console.jtag.cable_num \
-     .console.jtag.devic .console.jtag.devic_num \
-     .console.jtag.deselect \
+frame .mainframe.jtag -relief groove -borderwidth 5
+pack .mainframe.jtag
+button .mainframe.jtag.scan -text {Scan JTAG Chain} -command {scan_chain}
+button .mainframe.jtag.select -text {Select JTAG Device :} -command {select_device $cableNum $deviceNum}
+button .mainframe.jtag.deselect -text {DeSelect JTAG Device} -command {close_jtag_device}
+label .mainframe.jtag.cable -text {Cable @}
+label .mainframe.jtag.devic -text {Device @}
+entry .mainframe.jtag.cable_num -textvariable cableNum -width 5
+entry .mainframe.jtag.devic_num -textvariable deviceNum -width 5
+pack .mainframe.jtag.scan .mainframe.jtag.select \
+     .mainframe.jtag.cable .mainframe.jtag.cable_num \
+     .mainframe.jtag.devic .mainframe.jtag.devic_num \
+     .mainframe.jtag.deselect \
      -side left -ipadx 0
 
 # set the inclusive address entries
-frame .console.f1 -relief groove -borderwidth 5
-pack .console.f1
-label .console.f1.incl_addr -text {Inclusive Addr:}
-entry .console.f1.address_span1 -textvariable address_span1 -width 8
-entry .console.f1.address_span2 -textvariable address_span2 -width 8
-entry .console.f1.address_span3 -textvariable address_span3 -width 8
-entry .console.f1.address_span4 -textvariable address_span4 -width 8
-entry .console.f1.address_span5 -textvariable address_span5 -width 8
-entry .console.f1.address_span6 -textvariable address_span6 -width 8
-entry .console.f1.address_span7 -textvariable address_span7 -width 8
-entry .console.f1.address_span8 -textvariable address_span8 -width 8
-checkbutton .console.f1.address_span_en1 -variable address_span_en1
-checkbutton .console.f1.address_span_en2 -variable address_span_en2
-checkbutton .console.f1.address_span_en3 -variable address_span_en3
-checkbutton .console.f1.address_span_en4 -variable address_span_en4
-checkbutton .console.f1.address_span_en5 -variable address_span_en5
-checkbutton .console.f1.address_span_en6 -variable address_span_en6
-checkbutton .console.f1.address_span_en7 -variable address_span_en7
-checkbutton .console.f1.address_span_en8 -variable address_span_en8
-pack .console.f1.incl_addr \
-     .console.f1.address_span_en1 .console.f1.address_span1 \
-     .console.f1.address_span_en2 .console.f1.address_span2 \
-     .console.f1.address_span_en3 .console.f1.address_span3 \
-     .console.f1.address_span_en4 .console.f1.address_span4 \
-     .console.f1.address_span_en5 .console.f1.address_span5 \
-     .console.f1.address_span_en6 .console.f1.address_span6 \
-     .console.f1.address_span_en7 .console.f1.address_span7 \
-     .console.f1.address_span_en8 .console.f1.address_span8 \
+frame .mainframe.f1 -relief groove -borderwidth 5
+pack .mainframe.f1
+label .mainframe.f1.incl_addr -text {Inclusive Addr:}
+entry .mainframe.f1.address_span1 -textvariable address_span1 -width 8
+entry .mainframe.f1.address_span2 -textvariable address_span2 -width 8
+entry .mainframe.f1.address_span3 -textvariable address_span3 -width 8
+entry .mainframe.f1.address_span4 -textvariable address_span4 -width 8
+entry .mainframe.f1.address_span5 -textvariable address_span5 -width 8
+entry .mainframe.f1.address_span6 -textvariable address_span6 -width 8
+entry .mainframe.f1.address_span7 -textvariable address_span7 -width 8
+entry .mainframe.f1.address_span8 -textvariable address_span8 -width 8
+checkbutton .mainframe.f1.address_span_en1 -variable address_span_en1
+checkbutton .mainframe.f1.address_span_en2 -variable address_span_en2
+checkbutton .mainframe.f1.address_span_en3 -variable address_span_en3
+checkbutton .mainframe.f1.address_span_en4 -variable address_span_en4
+checkbutton .mainframe.f1.address_span_en5 -variable address_span_en5
+checkbutton .mainframe.f1.address_span_en6 -variable address_span_en6
+checkbutton .mainframe.f1.address_span_en7 -variable address_span_en7
+checkbutton .mainframe.f1.address_span_en8 -variable address_span_en8
+label .mainframe.f1.address_span_text1 -text {H:}
+label .mainframe.f1.address_span_text2 -text {L:}
+label .mainframe.f1.address_span_text3 -text {H:}
+label .mainframe.f1.address_span_text4 -text {L:}
+label .mainframe.f1.address_span_text5 -text {H:}
+label .mainframe.f1.address_span_text6 -text {L:}
+label .mainframe.f1.address_span_text7 -text {H:}
+label .mainframe.f1.address_span_text8 -text {L:}
+pack .mainframe.f1.incl_addr \
+     .mainframe.f1.address_span_en1 .mainframe.f1.address_span_text1 .mainframe.f1.address_span1 .mainframe.f1.address_span_text2 .mainframe.f1.address_span2 \
+     .mainframe.f1.address_span_en3 .mainframe.f1.address_span_text3 .mainframe.f1.address_span3 .mainframe.f1.address_span_text4 .mainframe.f1.address_span4 \
+     .mainframe.f1.address_span_en5 .mainframe.f1.address_span_text5 .mainframe.f1.address_span5 .mainframe.f1.address_span_text6 .mainframe.f1.address_span6 \
+     .mainframe.f1.address_span_en7 .mainframe.f1.address_span_text7 .mainframe.f1.address_span7 .mainframe.f1.address_span_text8 .mainframe.f1.address_span8 \
      -side left -ipadx 0
 
 # set the exclusive address entries
-frame .console.f2 -relief groove -borderwidth 5
-pack .console.f2
-label .console.f2.excl_addr -text {Exclusive Addr:}
-entry .console.f2.address_span9  -textvariable address_span9  -width 8
-entry .console.f2.address_span10 -textvariable address_span10 -width 8
-entry .console.f2.address_span11 -textvariable address_span11 -width 8
-entry .console.f2.address_span12 -textvariable address_span12 -width 8
-entry .console.f2.address_span13 -textvariable address_span13 -width 8
-entry .console.f2.address_span14 -textvariable address_span14 -width 8
-entry .console.f2.address_span15 -textvariable address_span15 -width 8
-entry .console.f2.address_span16 -textvariable address_span16 -width 8
-checkbutton .console.f2.address_span_en9  -variable address_span_en9
-checkbutton .console.f2.address_span_en10 -variable address_span_en10
-checkbutton .console.f2.address_span_en11 -variable address_span_en11
-checkbutton .console.f2.address_span_en12 -variable address_span_en12
-checkbutton .console.f2.address_span_en13 -variable address_span_en13
-checkbutton .console.f2.address_span_en14 -variable address_span_en14
-checkbutton .console.f2.address_span_en15 -variable address_span_en15
-checkbutton .console.f2.address_span_en16 -variable address_span_en16
-pack .console.f2.excl_addr \
-     .console.f2.address_span_en9  .console.f2.address_span9  \
-     .console.f2.address_span_en10 .console.f2.address_span10 \
-     .console.f2.address_span_en11 .console.f2.address_span11 \
-     .console.f2.address_span_en12 .console.f2.address_span12 \
-     .console.f2.address_span_en13 .console.f2.address_span13 \
-     .console.f2.address_span_en14 .console.f2.address_span14 \
-     .console.f2.address_span_en15 .console.f2.address_span15 \
-     .console.f2.address_span_en16 .console.f2.address_span16 \
+frame .mainframe.f2 -relief groove -borderwidth 5
+pack .mainframe.f2
+label .mainframe.f2.excl_addr -text {Exclusive Addr:}
+entry .mainframe.f2.address_span9  -textvariable address_span9  -width 8
+entry .mainframe.f2.address_span10 -textvariable address_span10 -width 8
+entry .mainframe.f2.address_span11 -textvariable address_span11 -width 8
+entry .mainframe.f2.address_span12 -textvariable address_span12 -width 8
+entry .mainframe.f2.address_span13 -textvariable address_span13 -width 8
+entry .mainframe.f2.address_span14 -textvariable address_span14 -width 8
+entry .mainframe.f2.address_span15 -textvariable address_span15 -width 8
+entry .mainframe.f2.address_span16 -textvariable address_span16 -width 8
+checkbutton .mainframe.f2.address_span_en9  -variable address_span_en9
+checkbutton .mainframe.f2.address_span_en10 -variable address_span_en10
+checkbutton .mainframe.f2.address_span_en11 -variable address_span_en11
+checkbutton .mainframe.f2.address_span_en12 -variable address_span_en12
+checkbutton .mainframe.f2.address_span_en13 -variable address_span_en13
+checkbutton .mainframe.f2.address_span_en14 -variable address_span_en14
+checkbutton .mainframe.f2.address_span_en15 -variable address_span_en15
+checkbutton .mainframe.f2.address_span_en16 -variable address_span_en16
+label .mainframe.f2.address_span_text1 -text {H:}
+label .mainframe.f2.address_span_text2 -text {L:}
+label .mainframe.f2.address_span_text3 -text {H:}
+label .mainframe.f2.address_span_text4 -text {L:}
+label .mainframe.f2.address_span_text5 -text {H:}
+label .mainframe.f2.address_span_text6 -text {L:}
+label .mainframe.f2.address_span_text7 -text {H:}
+label .mainframe.f2.address_span_text8 -text {L:}
+pack .mainframe.f2.excl_addr \
+     .mainframe.f2.address_span_en9  .mainframe.f2.address_span_text1 .mainframe.f2.address_span9  .mainframe.f2.address_span_text2 .mainframe.f2.address_span10 \
+     .mainframe.f2.address_span_en11 .mainframe.f2.address_span_text3 .mainframe.f2.address_span11 .mainframe.f2.address_span_text4 .mainframe.f2.address_span12 \
+     .mainframe.f2.address_span_en13 .mainframe.f2.address_span_text5 .mainframe.f2.address_span13 .mainframe.f2.address_span_text6 .mainframe.f2.address_span14 \
+     .mainframe.f2.address_span_en15 .mainframe.f2.address_span_text7 .mainframe.f2.address_span15 .mainframe.f2.address_span_text8 .mainframe.f2.address_span16 \
      -side left -ipadx 0
 initAddrConfig
 
 # set the address configuration buttons
-frame .console.addr_cnfg -relief groove -borderwidth 5
-pack .console.addr_cnfg
-checkbutton .console.addr_cnfg.wren -text {WR} -variable addr_wren
-checkbutton .console.addr_cnfg.rden -text {RD} -variable addr_rden
-button .console.addr_cnfg.config -text {Apply Address Filter} -command {updateAddrConfig}
-pack .console.addr_cnfg.wren .console.addr_cnfg.rden .console.addr_cnfg.config \
+frame .mainframe.addr_cnfg -relief groove -borderwidth 5
+pack .mainframe.addr_cnfg
+checkbutton .mainframe.addr_cnfg.wren -text {WR} -variable addr_wren
+checkbutton .mainframe.addr_cnfg.rden -text {RD} -variable addr_rden
+button .mainframe.addr_cnfg.config -text {Apply Address Filter} -command {updateAddrConfig}
+pack .mainframe.addr_cnfg.wren .mainframe.addr_cnfg.rden .mainframe.addr_cnfg.config \
      -side left -ipadx 0
 
 # set the transaction trigger controls
-frame .console.trig -relief groove -borderwidth 5
-pack .console.trig
-button .console.trig.starttrig -text {Apply Trigger Condition} -command {startTrigger}
-entry .console.trig.trigvalue_addr -textvar triggerAddr -width 4
-entry .console.trig.trigvalue_data -textvar triggerData -width 8
-checkbutton .console.trig.trigaddr -text {@Addr:} -variable trig_aden
-checkbutton .console.trig.trigdata -text {@Data:} -variable trig_daen
-checkbutton .console.trig.wren -text {@WR} -variable trig_wren
-checkbutton .console.trig.rden -text {@RD} -variable trig_rden
-label .console.trig.pnum -text {Pre-Capture:}
-entry .console.trig.trigvalue_pnum -textvar triggerPnum -width 4
-pack .console.trig.pnum .console.trig.trigvalue_pnum \
-     .console.trig.wren .console.trig.rden \
-     .console.trig.trigaddr .console.trig.trigvalue_addr \
-     .console.trig.trigdata .console.trig.trigvalue_data \
-     .console.trig.starttrig \
+frame .mainframe.trig -relief groove -borderwidth 5
+pack .mainframe.trig
+button .mainframe.trig.starttrig -text {Apply Trigger Condition} -command {startTrigger}
+entry .mainframe.trig.trigvalue_addr -textvar triggerAddr -width 8
+entry .mainframe.trig.trigvalue_data -textvar triggerData -width 8
+checkbutton .mainframe.trig.trigaddr -text {@Addr:} -variable trig_aden
+checkbutton .mainframe.trig.trigdata -text {@Data:} -variable trig_daen
+checkbutton .mainframe.trig.wren -text {@WR} -variable trig_wren
+checkbutton .mainframe.trig.rden -text {@RD} -variable trig_rden
+label .mainframe.trig.pnum -text {Pre-Capture:}
+entry .mainframe.trig.trigvalue_pnum -textvar triggerPnum -width 4
+pack .mainframe.trig.pnum .mainframe.trig.trigvalue_pnum \
+     .mainframe.trig.wren .mainframe.trig.rden \
+     .mainframe.trig.trigaddr .mainframe.trig.trigvalue_addr \
+     .mainframe.trig.trigdata .mainframe.trig.trigvalue_data \
+     .mainframe.trig.starttrig \
      -side left -ipadx 0
 initTrigConfig
 
 # set the control buttons
-frame .console.fifo -relief groove -borderwidth 5
-pack .console.fifo
-button .console.fifo.reset -text {Reset FIFO} -command {reset_fifo_ptr}
-button .console.fifo.loop -text {Query Used Word} -command {query_fifo_usedw}
-label .console.fifo.usedw  -textvariable fifoUsedw -relief sunken -width 4
-button .console.fifo.read	-text {Read FIFO} -command {read_fifo_content}
-button .console.fifo.clear -text {Clear Log} -command {clear_log}
-button .console.fifo.quit -text {Quit} -command {quit}
-pack .console.fifo.reset .console.fifo.loop .console.fifo.usedw .console.fifo.read .console.fifo.clear .console.fifo.quit \
+frame .mainframe.fifo -relief groove -borderwidth 5
+pack .mainframe.fifo
+button .mainframe.fifo.reset -text {Reset FIFO} -command {reset_fifo_ptr}
+button .mainframe.fifo.loop -text {Query Used Word} -command {query_fifo_usedw}
+label .mainframe.fifo.usedw  -textvariable fifoUsedw -relief sunken -width 4
+button .mainframe.fifo.read	-text {Read FIFO} -command {read_fifo_content}
+button .mainframe.fifo.clear -text {Clear Log} -command {clear_log}
+button .mainframe.fifo.quit -text {Quit} -command {quit}
+pack .mainframe.fifo.reset .mainframe.fifo.loop .mainframe.fifo.usedw .mainframe.fifo.read .mainframe.fifo.clear .mainframe.fifo.quit \
      -side left -ipadx 0
 
 # set the log window
-frame .console.log -relief groove -borderwidth 5
-set log [text .console.log.text -width 80 -height 25 \
+frame .mainframe.log -relief groove -borderwidth 5
+set log [text .mainframe.log.text -width 80 -height 25 \
 	-borderwidth 2 -relief sunken -setgrid true \
-	-yscrollcommand {.console.log.scroll set}]
-scrollbar .console.log.scroll -command {.console.log.text yview}
-pack .console.log.scroll -side right -fill y
-pack .console.log.text -side left -fill both -expand true
-pack .console.log -side top -fill both -expand true
+	-yscrollcommand {.mainframe.log.scroll set}]
+scrollbar .mainframe.log.scroll -command {.mainframe.log.text yview}
+pack .mainframe.log.scroll -side right -fill y
+pack .mainframe.log.text -side left -fill both -expand true
+pack .mainframe.log -side top -fill both -expand true
 
 # make the program wait for exit signal
 vwait exit_console

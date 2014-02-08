@@ -22,7 +22,7 @@
 *     devices, or systems.  Use in such applications are expressly             *
 *     prohibited.                                                              *
 *                                                                              *
-*     (c) Copyright 1995-2012 Xilinx, Inc.                                     *
+*     (c) Copyright 1995-2014 Xilinx, Inc.                                     *
 *     All rights reserved.                                                     *
 *******************************************************************************/
 // You must compile the wrapper file scfifo.v when simulating
@@ -50,10 +50,10 @@ module scfifo(
 
 input clk;
 input rst;
-input [81 : 0] din;
+input [97 : 0] din;
 input wr_en;
 input rd_en;
-output [81 : 0] dout;
+output [97 : 0] dout;
 output full;
 output empty;
 output [9 : 0] data_count;
@@ -88,7 +88,7 @@ output [9 : 0] data_count;
     .C_COUNT_TYPE(0),
     .C_DATA_COUNT_WIDTH(10),
     .C_DEFAULT_VALUE("BlankString"),
-    .C_DIN_WIDTH(82),
+    .C_DIN_WIDTH(98),
     .C_DIN_WIDTH_AXIS(1),
     .C_DIN_WIDTH_RACH(32),
     .C_DIN_WIDTH_RDCH(64),
@@ -96,7 +96,7 @@ output [9 : 0] data_count;
     .C_DIN_WIDTH_WDCH(64),
     .C_DIN_WIDTH_WRCH(2),
     .C_DOUT_RST_VAL("0"),
-    .C_DOUT_WIDTH(82),
+    .C_DOUT_WIDTH(98),
     .C_ENABLE_RLOCS(0),
     .C_ENABLE_RST_SYNC(1),
     .C_ERROR_INJECTION_TYPE(0),

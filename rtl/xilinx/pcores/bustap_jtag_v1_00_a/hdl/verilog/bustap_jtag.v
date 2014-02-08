@@ -146,7 +146,7 @@ end
 wire        clk     = ACLK;
 wire        wr_en   = wr_pulse;
 wire        rd_en   = rd_pulse;
-wire [15:2] addr_in = addr_latch[15:2];
+wire [31:0] addr_in = addr_latch[31:0];
 wire [31:0] data_in = data_latch;
 
 up_monitor inst (

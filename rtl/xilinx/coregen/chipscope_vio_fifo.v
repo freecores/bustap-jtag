@@ -1,14 +1,14 @@
 ///////////////////////////////////////////////////////////////////////////////
-// Copyright (c) 2012 Xilinx, Inc.
+// Copyright (c) 2014 Xilinx, Inc.
 // All Rights Reserved
 ///////////////////////////////////////////////////////////////////////////////
 //   ____  ____
 //  /   /\/   /
 // /___/  \  /    Vendor     : Xilinx
-// \   \   \/     Version    : 14.2
+// \   \   \/     Version    : 14.3
 //  \   \         Application: Xilinx CORE Generator
 //  /   /         Filename   : chipscope_vio_fifo.v
-// /___/   /\     Timestamp  : Tue Nov 20 10:35:09 中国标准时间 2012
+// /___/   /\     Timestamp  : Fri Feb 07 17:33:59 中国标准时间 2014
 // \   \  /  \
 //  \___\/\___\
 //
@@ -22,12 +22,12 @@ module chipscope_vio_fifo(
     CONTROL,
     CLK,
     SYNC_IN,
-    SYNC_OUT);
+    SYNC_OUT) /* synthesis syn_black_box syn_noprune=1 */;
 
 
 inout [35 : 0] CONTROL;
 input CLK;
-input [91 : 0] SYNC_IN;
+input [107 : 0] SYNC_IN;
 output [1 : 0] SYNC_OUT;
 
 endmodule

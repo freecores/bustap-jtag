@@ -17,7 +17,7 @@
 
 module chipscope_vio_adda_fifo(clk,wr_in,data_in,rd_in,icon_ctrl);
 
-parameter data_width  = 82,
+parameter data_width  = 98,
           addr_width  = 10,
           al_full_val = 511;
 
@@ -68,7 +68,7 @@ chipscope_vio_fifo VIO_inst (
   .CONTROL(icon_ctrl), // INOUT BUS [35:0]
   .CLK(clk), // IN
   .SYNC_OUT(ctrl_vi), // OUT BUS [1:0]
-  .SYNC_IN(usedw_data_vo) // IN BUS [91:0]
+  .SYNC_IN(usedw_data_vo) // IN BUS [107:0]
 );
 
 endmodule

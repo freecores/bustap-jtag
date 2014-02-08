@@ -29,7 +29,7 @@ module up_monitor (
 
 input        clk;
 input        wr_en,rd_en;
-input [15:2] addr_in;
+input [31:0] addr_in;
 input [31:0] data_in;
 /////////////////////////////////////////////////
 // Registers and wires announcment
@@ -37,7 +37,7 @@ input [31:0] data_in;
 
 // for CPU bus signal buffer
 reg         wr_en_d1,rd_en_d1;
-reg  [15:2] addr_in_d1;
+reg  [31:0] addr_in_d1;
 reg  [31:0] data_in_d1;
 // for capture address mask
 wire [35:0] addr_mask0,addr_mask1,addr_mask2 ,addr_mask3 ,addr_mask4 ,addr_mask5 ,addr_mask6 ,addr_mask7 ,  // inclusive
@@ -50,18 +50,18 @@ wire        addr_wren = addr_mask15[35];
 wire        addr_rden = addr_mask15[34];
 reg         addr_mask_ok;
 // for capture address+data trigger
-wire [55:0] trig_cond;
-wire        trig_aden = trig_cond[55];
-wire        trig_daen = trig_cond[54];
-wire        trig_wren = trig_cond[51];
-wire        trig_rden = trig_cond[50];
-wire        trig_en   = trig_cond[49];
-wire        trig_set  = trig_cond[48];
-wire [15:0] trig_addr = trig_cond[47:32];
+wire [71:0] trig_cond;
+wire        trig_aden = trig_cond[71];
+wire        trig_daen = trig_cond[70];
+wire        trig_wren = trig_cond[67];
+wire        trig_rden = trig_cond[66];
+wire        trig_en   = trig_cond[65];
+wire        trig_set  = trig_cond[64];
+wire [31:0] trig_addr = trig_cond[63:32];
 wire [31:0] trig_data = trig_cond[31:0];
 reg         trig_cond_ok,trig_cond_ok_d1;
 // for capture storage
-wire [81:0] capture_in;
+wire [97:0] capture_in;
 wire        capture_wr;
 // for pretrigger capture
 wire [9:0] pretrig_num;
@@ -88,24 +88,16 @@ end
 // address range based capture enable
 always @(posedge clk)
 begin
-	if (((addr_in[15:2]<=addr_mask0[31:18] && addr_in[15:2]>=addr_mask0[15:2] && addr_mask_en[ 0]) ||
-	     (addr_in[15:2]<=addr_mask1[31:18] && addr_in[15:2]>=addr_mask1[15:2] && addr_mask_en[ 1]) ||
-	     (addr_in[15:2]<=addr_mask2[31:18] && addr_in[15:2]>=addr_mask2[15:2] && addr_mask_en[ 2]) ||
-	     (addr_in[15:2]<=addr_mask3[31:18] && addr_in[15:2]>=addr_mask3[15:2] && addr_mask_en[ 3]) ||
-	     (addr_in[15:2]<=addr_mask4[31:18] && addr_in[15:2]>=addr_mask4[15:2] && addr_mask_en[ 4]) ||
-	     (addr_in[15:2]<=addr_mask5[31:18] && addr_in[15:2]>=addr_mask5[15:2] && addr_mask_en[ 5]) ||
-	     (addr_in[15:2]<=addr_mask6[31:18] && addr_in[15:2]>=addr_mask6[15:2] && addr_mask_en[ 6]) ||
-	     (addr_in[15:2]<=addr_mask7[31:18] && addr_in[15:2]>=addr_mask7[15:2] && addr_mask_en[ 7])
+	if (((addr_in[31:0]<=addr_mask0[31:0] && addr_in[31:0]>=addr_mask1[31:0] && addr_mask_en[ 0]) ||
+	     (addr_in[31:0]<=addr_mask2[31:0] && addr_in[31:0]>=addr_mask3[31:0] && addr_mask_en[ 2]) ||
+	     (addr_in[31:0]<=addr_mask4[31:0] && addr_in[31:0]>=addr_mask5[31:0] && addr_mask_en[ 4]) ||
+	     (addr_in[31:0]<=addr_mask6[31:0] && addr_in[31:0]>=addr_mask7[31:0] && addr_mask_en[ 6])
 	    ) //inclusive address range set with individual enable: addr_mask 0 - 7
 	    &&
-	    ((addr_in[15:2]>addr_mask8 [31:18] || addr_in[15:2]<addr_mask8 [15:2] || !addr_mask_en[ 8]) &&
-	     (addr_in[15:2]>addr_mask9 [31:18] || addr_in[15:2]<addr_mask9 [15:2] || !addr_mask_en[ 9]) &&
-	     (addr_in[15:2]>addr_mask10[31:18] || addr_in[15:2]<addr_mask10[15:2] || !addr_mask_en[10]) &&
-	     (addr_in[15:2]>addr_mask11[31:18] || addr_in[15:2]<addr_mask11[15:2] || !addr_mask_en[11]) &&
-	     (addr_in[15:2]>addr_mask12[31:18] || addr_in[15:2]<addr_mask12[15:2] || !addr_mask_en[12]) &&
-	     (addr_in[15:2]>addr_mask13[31:18] || addr_in[15:2]<addr_mask13[15:2] || !addr_mask_en[13]) &&
-	     (addr_in[15:2]>addr_mask14[31:18] || addr_in[15:2]<addr_mask14[15:2] || !addr_mask_en[14]) &&
-	     (addr_in[15:2]>addr_mask15[31:18] || addr_in[15:2]<addr_mask15[15:2] || !addr_mask_en[15])
+	    ((addr_in[31:0]>addr_mask8 [31:0] || addr_in[31:0]<addr_mask9 [31:0] || !addr_mask_en[ 8]) &&
+	     (addr_in[31:0]>addr_mask10[31:0] || addr_in[31:0]<addr_mask11[31:0] || !addr_mask_en[10]) &&
+	     (addr_in[31:0]>addr_mask12[31:0] || addr_in[31:0]<addr_mask13[31:0] || !addr_mask_en[12]) &&
+	     (addr_in[31:0]>addr_mask14[31:0] || addr_in[31:0]<addr_mask15[31:0] || !addr_mask_en[14])
 	    ) //exclusive address range set with individual enable: addr_mask 8 - 15
 	)
 		addr_mask_ok <= (addr_rden && rd_en) || (addr_wren && wr_en);
@@ -125,7 +117,7 @@ begin
 		trig_cond_ok_d1 <= 0;
 	end
 	else begin                                 // trigger enabled and trigger started, trigger gate conditional open
-		if ((trig_aden? trig_addr[15:2]==addr_in[15:2]: 1) && (trig_daen? trig_data==data_in: 1) &&
+		if ((trig_aden? trig_addr[31:0]==addr_in[31:0]: 1) && (trig_daen? trig_data==data_in: 1) &&
 		    (trig_wren? wr_en                         : 1) && (trig_rden? rd_en             : 1) &&
 	    	    (rd_en || wr_en))
 			trig_cond_ok <= 1;
@@ -136,7 +128,7 @@ end
 wire trig_cond_ok_pulse = trig_cond_ok & !trig_cond_ok_d1;
 
 // generate capture wr_in
-assign capture_in = {trig_cond_ok_pulse,wr_en_d1,inter_cap_cnt,addr_in_d1[15:2],2'b00,data_in_d1[31:0]};
+assign capture_in = {trig_cond_ok_pulse,wr_en_d1,inter_cap_cnt,addr_in_d1[31:0],data_in_d1[31:0]};
 assign capture_wr =  trig_cond_ok_pulse || (addr_mask_ok && trig_cond_ok);
 
 // generate pre-trigger wr_in
@@ -184,7 +176,7 @@ virtual_jtag_adda_fifo u_virtual_jtag_adda_fifo (
 	.rd_in(pretrig_rd)
 	);
 defparam
-	u_virtual_jtag_adda_fifo.data_width	= 82,
+	u_virtual_jtag_adda_fifo.data_width	= 98,
 	u_virtual_jtag_adda_fifo.fifo_depth	= 512,
 	u_virtual_jtag_adda_fifo.addr_width	= 9,
 	u_virtual_jtag_adda_fifo.al_full_val	= 511,
@@ -222,7 +214,7 @@ virtual_jtag_adda_trig u_virtual_jtag_adda_trig (
 	.pnum_out(pretrig_num)
 	);
 defparam
-	u_virtual_jtag_adda_trig.trig_width	= 56,
+	u_virtual_jtag_adda_trig.trig_width	= 72,
 	u_virtual_jtag_adda_trig.pnum_width	= 10;
 `endif
 
@@ -245,7 +237,7 @@ chipscope_vio_adda_fifo u_chipscope_vio_adda_fifo (
 	.icon_ctrl(icontrol0)
 	);
 defparam
-	u_chipscope_vio_adda_fifo.data_width	= 82,
+	u_chipscope_vio_adda_fifo.data_width	= 98,
 	u_chipscope_vio_adda_fifo.addr_width	= 10,
 	u_chipscope_vio_adda_fifo.al_full_val	= 511;
 
@@ -285,7 +277,7 @@ chipscope_vio_adda_trig u_chipscope_vio_adda_trig (
 	.icon_ctrl(icontrol2)
 	);
 defparam
-	u_chipscope_vio_adda_trig.trig_width	= 56,
+	u_chipscope_vio_adda_trig.trig_width	= 72,
 	u_chipscope_vio_adda_trig.pnum_width	= 10;
 
 `ifdef AXI_IP

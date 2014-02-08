@@ -17,7 +17,7 @@
 
 module chipscope_vio_adda_trig(trig_out, pnum_out, clk, icon_ctrl);
 
-parameter trig_width  = 56;
+parameter trig_width  = 72;
 parameter pnum_width  = 10;
 
 output [trig_width-1:0] trig_out;
@@ -39,7 +39,7 @@ end
 chipscope_vio_trig VIO_inst (
   .CONTROL(icon_ctrl), // INOUT BUS [35:0]
   .CLK(clk), // IN
-  .SYNC_OUT(pnum_trig_vi) // OUT BUS [65:0]
+  .SYNC_OUT(pnum_trig_vi) // OUT BUS [81:0]
 );
 
 endmodule

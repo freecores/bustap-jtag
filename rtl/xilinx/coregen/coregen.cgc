@@ -60,7 +60,7 @@
          <spirit:componentRef spirit:vendor="xilinx.com" spirit:library="ip" spirit:name="chipscope_vio" spirit:version="1.05.a" />
          <spirit:configurableElementValues>
             <spirit:configurableElementValue spirit:referenceId="PARAM_VALUE.COMPONENT_NAME">chipscope_vio_fifo</spirit:configurableElementValue>
-            <spirit:configurableElementValue spirit:referenceId="PARAM_VALUE.SYNCHRONOUS_INPUT_PORT_WIDTH">92</spirit:configurableElementValue>
+            <spirit:configurableElementValue spirit:referenceId="PARAM_VALUE.SYNCHRONOUS_INPUT_PORT_WIDTH">108</spirit:configurableElementValue>
             <spirit:configurableElementValue spirit:referenceId="PARAM_VALUE.SYNCHRONOUS_OUTPUT_PORT_WIDTH">2</spirit:configurableElementValue>
             <spirit:configurableElementValue spirit:referenceId="PARAM_VALUE.ENABLE_ASYNCHRONOUS_OUTPUT_PORT">false</spirit:configurableElementValue>
             <spirit:configurableElementValue spirit:referenceId="PARAM_VALUE.ENABLE_ASYNCHRONOUS_INPUT_PORT">false</spirit:configurableElementValue>
@@ -78,10 +78,10 @@
             <spirit:configurableElementValue spirit:referenceId="MODELPARAM_VALUE.C_SRL16_TYPE">2</spirit:configurableElementValue>
             <spirit:configurableElementValue spirit:referenceId="MODELPARAM_VALUE.C_SYNC_OUT_WIDTH">2</spirit:configurableElementValue>
             <spirit:configurableElementValue spirit:referenceId="MODELPARAM_VALUE.C_USE_INV_CLK">0</spirit:configurableElementValue>
-            <spirit:configurableElementValue spirit:referenceId="MODELPARAM_VALUE.C_SYNC_IN_WIDTH">92</spirit:configurableElementValue>
+            <spirit:configurableElementValue spirit:referenceId="MODELPARAM_VALUE.C_SYNC_IN_WIDTH">108</spirit:configurableElementValue>
             <spirit:configurableElementValue spirit:referenceId="MODELPARAM_VALUE.COMPONENT_NAME">chipscope_vio_fifo</spirit:configurableElementValue>
             <spirit:configurableElementValue spirit:referenceId="MODELPARAM_VALUE.C_EXAMPLE_DESIGN">true</spirit:configurableElementValue>
-            <spirit:configurableElementValue spirit:referenceId="MODELPARAM_VALUE.C_XCO_LIST">Component_Name=chipscope_vio_fifo;Enable_Synchronous_Input_Port=true;Enable_Synchronous_Output_Port=true;Enable_Asynchronous_Input_Port=false;Enable_Asynchronous_Output_Port=false;Synchronous_Input_Port_Width=92;Synchronous_Output_Port_Width=2;Asynchronous_Input_Port_Width=8;Asynchronous_Output_Port_Width=8;Invert_Clock_Input=false</spirit:configurableElementValue>
+            <spirit:configurableElementValue spirit:referenceId="MODELPARAM_VALUE.C_XCO_LIST">Component_Name=chipscope_vio_fifo;Enable_Synchronous_Input_Port=true;Enable_Synchronous_Output_Port=true;Enable_Asynchronous_Input_Port=false;Enable_Asynchronous_Output_Port=false;Synchronous_Input_Port_Width=108;Synchronous_Output_Port_Width=2;Asynchronous_Input_Port_Width=8;Asynchronous_Output_Port_Width=8;Invert_Clock_Input=false</spirit:configurableElementValue>
             <spirit:configurableElementValue spirit:referenceId="MODELPARAM_VALUE.C_CONSTRAINT_TYPE">external</spirit:configurableElementValue>
             <spirit:configurableElementValue spirit:referenceId="MODELPARAM_VALUE.C_USE_ASYNC_OUT">0</spirit:configurableElementValue>
             <spirit:configurableElementValue spirit:referenceId="MODELPARAM_VALUE.C_USE_ASYNC_IN">0</spirit:configurableElementValue>
@@ -118,7 +118,7 @@
                   <xilinx:foundationSym>false</xilinx:foundationSym>
                </xilinx:simulationOptions>
                <xilinx:packageInfo>
-                  <xilinx:sourceCoreCreationDate>2012-07-21+03:12</xilinx:sourceCoreCreationDate>
+                  <xilinx:sourceCoreCreationDate>2012-10-12+23:08</xilinx:sourceCoreCreationDate>
                </xilinx:packageInfo>
             </xilinx:instanceProperties>
             <xilinx:generationHistory>
@@ -133,9 +133,9 @@
                   <xilinx:file>
                      <xilinx:name>./chipscope_vio_fifo.xco</xilinx:name>
                      <xilinx:userFileType>xco</xilinx:userFileType>
-                     <xilinx:timeStamp>Tue Nov 20 02:34:08 GMT 2012</xilinx:timeStamp>
-                     <xilinx:checkSum>0x8A36FA63</xilinx:checkSum>
-                     <xilinx:generationId>generationID_4013899584</xilinx:generationId>
+                     <xilinx:timeStamp>Fri Feb 07 09:32:54 GMT 2014</xilinx:timeStamp>
+                     <xilinx:checkSum>0x724012F7</xilinx:checkSum>
+                     <xilinx:generationId>generationID_1879581046</xilinx:generationId>
                   </xilinx:file>
                </xilinx:fileSet>
                <xilinx:fileSet>
@@ -144,179 +144,179 @@
                      <xilinx:name>./chipscope_vio_fifo/example_design/chipscope_vio_fifo_bb_lib.v</xilinx:name>
                      <xilinx:userFileType>ignore</xilinx:userFileType>
                      <xilinx:userFileType>verilogSynthesis</xilinx:userFileType>
-                     <xilinx:timeStamp>Tue Nov 20 02:34:09 GMT 2012</xilinx:timeStamp>
-                     <xilinx:checkSum>0x9770D02F</xilinx:checkSum>
-                     <xilinx:generationId>generationID_4013899584</xilinx:generationId>
+                     <xilinx:timeStamp>Fri Feb 07 09:32:54 GMT 2014</xilinx:timeStamp>
+                     <xilinx:checkSum>0xEC2F0FB0</xilinx:checkSum>
+                     <xilinx:generationId>generationID_1879581046</xilinx:generationId>
                   </xilinx:file>
                   <xilinx:file>
                      <xilinx:name>./chipscope_vio_fifo/example_design/example_chipscope_vio_fifo.ucf</xilinx:name>
                      <xilinx:userFileType>ignore</xilinx:userFileType>
                      <xilinx:userFileType>ucf</xilinx:userFileType>
-                     <xilinx:timeStamp>Tue Nov 20 02:34:11 GMT 2012</xilinx:timeStamp>
+                     <xilinx:timeStamp>Fri Feb 07 09:32:57 GMT 2014</xilinx:timeStamp>
                      <xilinx:checkSum>0x1390C322</xilinx:checkSum>
-                     <xilinx:generationId>generationID_4013899584</xilinx:generationId>
+                     <xilinx:generationId>generationID_1879581046</xilinx:generationId>
                   </xilinx:file>
                   <xilinx:file>
                      <xilinx:name>./chipscope_vio_fifo/example_design/example_chipscope_vio_fifo.v</xilinx:name>
                      <xilinx:userFileType>ignore</xilinx:userFileType>
                      <xilinx:userFileType>verilogSynthesis</xilinx:userFileType>
-                     <xilinx:timeStamp>Tue Nov 20 02:34:11 GMT 2012</xilinx:timeStamp>
-                     <xilinx:checkSum>0x3E0AC7FF</xilinx:checkSum>
-                     <xilinx:generationId>generationID_4013899584</xilinx:generationId>
+                     <xilinx:timeStamp>Fri Feb 07 09:32:56 GMT 2014</xilinx:timeStamp>
+                     <xilinx:checkSum>0x8DB35830</xilinx:checkSum>
+                     <xilinx:generationId>generationID_1879581046</xilinx:generationId>
                   </xilinx:file>
                   <xilinx:file>
                      <xilinx:name>./chipscope_vio_fifo/example_design/example_chipscope_vio_fifo.xdc</xilinx:name>
                      <xilinx:userFileType>ignore</xilinx:userFileType>
                      <xilinx:userFileType>xdc</xilinx:userFileType>
-                     <xilinx:timeStamp>Tue Nov 20 02:34:11 GMT 2012</xilinx:timeStamp>
-                     <xilinx:checkSum>0x90E75716</xilinx:checkSum>
-                     <xilinx:generationId>generationID_4013899584</xilinx:generationId>
+                     <xilinx:timeStamp>Fri Feb 07 09:32:57 GMT 2014</xilinx:timeStamp>
+                     <xilinx:checkSum>0x938BE115</xilinx:checkSum>
+                     <xilinx:generationId>generationID_1879581046</xilinx:generationId>
                   </xilinx:file>
                   <xilinx:file>
                      <xilinx:name>./chipscope_vio_fifo/implement/chipscope_icon.xco</xilinx:name>
                      <xilinx:userFileType>ignore</xilinx:userFileType>
                      <xilinx:userFileType>xco</xilinx:userFileType>
-                     <xilinx:timeStamp>Tue Nov 20 02:34:09 GMT 2012</xilinx:timeStamp>
+                     <xilinx:timeStamp>Fri Feb 07 09:32:55 GMT 2014</xilinx:timeStamp>
                      <xilinx:checkSum>0x1FF80BFB</xilinx:checkSum>
-                     <xilinx:generationId>generationID_4013899584</xilinx:generationId>
+                     <xilinx:generationId>generationID_1879581046</xilinx:generationId>
                   </xilinx:file>
                   <xilinx:file>
                      <xilinx:name>./chipscope_vio_fifo/implement/coregen.cgp</xilinx:name>
                      <xilinx:userFileType>ignore</xilinx:userFileType>
                      <xilinx:userFileType>unknown</xilinx:userFileType>
-                     <xilinx:timeStamp>Tue Nov 20 02:34:09 GMT 2012</xilinx:timeStamp>
+                     <xilinx:timeStamp>Fri Feb 07 09:32:55 GMT 2014</xilinx:timeStamp>
                      <xilinx:checkSum>0x940C30DF</xilinx:checkSum>
-                     <xilinx:generationId>generationID_4013899584</xilinx:generationId>
+                     <xilinx:generationId>generationID_1879581046</xilinx:generationId>
                   </xilinx:file>
                   <xilinx:file>
                      <xilinx:name>./chipscope_vio_fifo/implement/example_chipscope_vio_fifo.prj</xilinx:name>
                      <xilinx:userFileType>ignore</xilinx:userFileType>
                      <xilinx:userFileType>unknown</xilinx:userFileType>
-                     <xilinx:timeStamp>Tue Nov 20 02:34:10 GMT 2012</xilinx:timeStamp>
+                     <xilinx:timeStamp>Fri Feb 07 09:32:56 GMT 2014</xilinx:timeStamp>
                      <xilinx:checkSum>0xAE724F77</xilinx:checkSum>
-                     <xilinx:generationId>generationID_4013899584</xilinx:generationId>
+                     <xilinx:generationId>generationID_1879581046</xilinx:generationId>
                   </xilinx:file>
                   <xilinx:file>
                      <xilinx:name>./chipscope_vio_fifo/implement/example_chipscope_vio_fifo.xst</xilinx:name>
                      <xilinx:userFileType>ignore</xilinx:userFileType>
                      <xilinx:userFileType>unknown</xilinx:userFileType>
-                     <xilinx:timeStamp>Tue Nov 20 02:34:13 GMT 2012</xilinx:timeStamp>
+                     <xilinx:timeStamp>Fri Feb 07 09:32:58 GMT 2014</xilinx:timeStamp>
                      <xilinx:checkSum>0xEBBE356D</xilinx:checkSum>
-                     <xilinx:generationId>generationID_4013899584</xilinx:generationId>
+                     <xilinx:generationId>generationID_1879581046</xilinx:generationId>
                   </xilinx:file>
                   <xilinx:file>
                      <xilinx:name>./chipscope_vio_fifo/implement/ise_implement.bat</xilinx:name>
                      <xilinx:userFileType>ignore</xilinx:userFileType>
                      <xilinx:userFileType>unknown</xilinx:userFileType>
-                     <xilinx:timeStamp>Tue Nov 20 02:34:10 GMT 2012</xilinx:timeStamp>
+                     <xilinx:timeStamp>Fri Feb 07 09:32:55 GMT 2014</xilinx:timeStamp>
                      <xilinx:checkSum>0xEE86AB45</xilinx:checkSum>
-                     <xilinx:generationId>generationID_4013899584</xilinx:generationId>
+                     <xilinx:generationId>generationID_1879581046</xilinx:generationId>
                   </xilinx:file>
                   <xilinx:file>
                      <xilinx:name>./chipscope_vio_fifo/implement/ise_implement.sh</xilinx:name>
                      <xilinx:userFileType>ignore</xilinx:userFileType>
                      <xilinx:userFileType>unknown</xilinx:userFileType>
-                     <xilinx:timeStamp>Tue Nov 20 02:34:13 GMT 2012</xilinx:timeStamp>
+                     <xilinx:timeStamp>Fri Feb 07 09:32:58 GMT 2014</xilinx:timeStamp>
                      <xilinx:checkSum>0x32780610</xilinx:checkSum>
-                     <xilinx:generationId>generationID_4013899584</xilinx:generationId>
+                     <xilinx:generationId>generationID_1879581046</xilinx:generationId>
                   </xilinx:file>
                   <xilinx:file>
                      <xilinx:name>./chipscope_vio_fifo/implement/pa_ise_implement.tcl</xilinx:name>
                      <xilinx:userFileType>ignore</xilinx:userFileType>
                      <xilinx:userFileType>tcl</xilinx:userFileType>
-                     <xilinx:timeStamp>Tue Nov 20 02:34:11 GMT 2012</xilinx:timeStamp>
+                     <xilinx:timeStamp>Fri Feb 07 09:32:56 GMT 2014</xilinx:timeStamp>
                      <xilinx:checkSum>0xC8D9F8F9</xilinx:checkSum>
-                     <xilinx:generationId>generationID_4013899584</xilinx:generationId>
+                     <xilinx:generationId>generationID_1879581046</xilinx:generationId>
                   </xilinx:file>
                   <xilinx:file>
                      <xilinx:name>./chipscope_vio_fifo/implement/rdi_implement.tcl</xilinx:name>
                      <xilinx:userFileType>ignore</xilinx:userFileType>
                      <xilinx:userFileType>tcl</xilinx:userFileType>
-                     <xilinx:timeStamp>Tue Nov 20 02:34:12 GMT 2012</xilinx:timeStamp>
+                     <xilinx:timeStamp>Fri Feb 07 09:32:57 GMT 2014</xilinx:timeStamp>
                      <xilinx:checkSum>0xBD351EB6</xilinx:checkSum>
-                     <xilinx:generationId>generationID_4013899584</xilinx:generationId>
+                     <xilinx:generationId>generationID_1879581046</xilinx:generationId>
                   </xilinx:file>
                   <xilinx:file>
                      <xilinx:name>./chipscope_vio_fifo/implement/v_rdi_implement.tcl</xilinx:name>
                      <xilinx:userFileType>ignore</xilinx:userFileType>
                      <xilinx:userFileType>tcl</xilinx:userFileType>
-                     <xilinx:timeStamp>Tue Nov 20 02:34:12 GMT 2012</xilinx:timeStamp>
+                     <xilinx:timeStamp>Fri Feb 07 09:32:58 GMT 2014</xilinx:timeStamp>
                      <xilinx:checkSum>0x74FFDD3B</xilinx:checkSum>
-                     <xilinx:generationId>generationID_4013899584</xilinx:generationId>
+                     <xilinx:generationId>generationID_1879581046</xilinx:generationId>
                   </xilinx:file>
                   <xilinx:file>
                      <xilinx:name>./chipscope_vio_fifo/read_me.txt</xilinx:name>
                      <xilinx:userFileType>ignore</xilinx:userFileType>
                      <xilinx:userFileType>txt</xilinx:userFileType>
-                     <xilinx:timeStamp>Tue Nov 20 02:34:12 GMT 2012</xilinx:timeStamp>
-                     <xilinx:checkSum>0x4A2AE78B</xilinx:checkSum>
-                     <xilinx:generationId>generationID_4013899584</xilinx:generationId>
+                     <xilinx:timeStamp>Fri Feb 07 09:32:58 GMT 2014</xilinx:timeStamp>
+                     <xilinx:checkSum>0xCE4AA0B8</xilinx:checkSum>
+                     <xilinx:generationId>generationID_1879581046</xilinx:generationId>
                   </xilinx:file>
                   <xilinx:file>
                      <xilinx:name>./chipscope_vio_fifo.cdc</xilinx:name>
                      <xilinx:userFileType>unknown</xilinx:userFileType>
-                     <xilinx:timeStamp>Tue Nov 20 02:35:09 GMT 2012</xilinx:timeStamp>
-                     <xilinx:checkSum>0xB3886A39</xilinx:checkSum>
-                     <xilinx:generationId>generationID_4013899584</xilinx:generationId>
+                     <xilinx:timeStamp>Fri Feb 07 09:33:59 GMT 2014</xilinx:timeStamp>
+                     <xilinx:checkSum>0x4CA21057</xilinx:checkSum>
+                     <xilinx:generationId>generationID_1879581046</xilinx:generationId>
                   </xilinx:file>
                   <xilinx:file>
                      <xilinx:name>./chipscope_vio_fifo.constraints/chipscope_vio_fifo.ucf</xilinx:name>
                      <xilinx:userFileType>ucf</xilinx:userFileType>
-                     <xilinx:timeStamp>Tue Nov 20 02:35:09 GMT 2012</xilinx:timeStamp>
+                     <xilinx:timeStamp>Fri Feb 07 09:33:59 GMT 2014</xilinx:timeStamp>
                      <xilinx:checkSum>0x46D4F328</xilinx:checkSum>
-                     <xilinx:generationId>generationID_4013899584</xilinx:generationId>
+                     <xilinx:generationId>generationID_1879581046</xilinx:generationId>
                   </xilinx:file>
                   <xilinx:file>
                      <xilinx:name>./chipscope_vio_fifo.constraints/chipscope_vio_fifo.xdc</xilinx:name>
                      <xilinx:userFileType>xdc</xilinx:userFileType>
-                     <xilinx:timeStamp>Tue Nov 20 02:35:09 GMT 2012</xilinx:timeStamp>
+                     <xilinx:timeStamp>Fri Feb 07 09:33:59 GMT 2014</xilinx:timeStamp>
                      <xilinx:checkSum>0xC2D11607</xilinx:checkSum>
-                     <xilinx:generationId>generationID_4013899584</xilinx:generationId>
+                     <xilinx:generationId>generationID_1879581046</xilinx:generationId>
                   </xilinx:file>
                   <xilinx:file>
                      <xilinx:name>./chipscope_vio_fifo.ngc</xilinx:name>
                      <xilinx:userFileType>ngc</xilinx:userFileType>
-                     <xilinx:timeStamp>Tue Nov 20 02:35:08 GMT 2012</xilinx:timeStamp>
-                     <xilinx:checkSum>0xB712EB26</xilinx:checkSum>
-                     <xilinx:generationId>generationID_4013899584</xilinx:generationId>
+                     <xilinx:timeStamp>Fri Feb 07 09:33:57 GMT 2014</xilinx:timeStamp>
+                     <xilinx:checkSum>0xD2121D98</xilinx:checkSum>
+                     <xilinx:generationId>generationID_1879581046</xilinx:generationId>
                   </xilinx:file>
                   <xilinx:file>
                      <xilinx:name>./chipscope_vio_fifo.ucf</xilinx:name>
                      <xilinx:userFileType>ignore</xilinx:userFileType>
                      <xilinx:userFileType>ucf</xilinx:userFileType>
-                     <xilinx:timeStamp>Tue Nov 20 02:35:09 GMT 2012</xilinx:timeStamp>
+                     <xilinx:timeStamp>Fri Feb 07 09:33:59 GMT 2014</xilinx:timeStamp>
                      <xilinx:checkSum>0x46D4F328</xilinx:checkSum>
-                     <xilinx:generationId>generationID_4013899584</xilinx:generationId>
+                     <xilinx:generationId>generationID_1879581046</xilinx:generationId>
                   </xilinx:file>
                   <xilinx:file>
                      <xilinx:name>./chipscope_vio_fifo.v</xilinx:name>
                      <xilinx:userFileType>verilog</xilinx:userFileType>
                      <xilinx:userFileType>verilogSynthesis</xilinx:userFileType>
-                     <xilinx:timeStamp>Tue Nov 20 02:35:09 GMT 2012</xilinx:timeStamp>
-                     <xilinx:checkSum>0x84C0DD82</xilinx:checkSum>
-                     <xilinx:generationId>generationID_4013899584</xilinx:generationId>
+                     <xilinx:timeStamp>Fri Feb 07 09:33:59 GMT 2014</xilinx:timeStamp>
+                     <xilinx:checkSum>0x81491EFF</xilinx:checkSum>
+                     <xilinx:generationId>generationID_1879581046</xilinx:generationId>
                   </xilinx:file>
                   <xilinx:file>
                      <xilinx:name>./chipscope_vio_fifo.veo</xilinx:name>
                      <xilinx:userFileType>veo</xilinx:userFileType>
-                     <xilinx:timeStamp>Tue Nov 20 02:35:09 GMT 2012</xilinx:timeStamp>
-                     <xilinx:checkSum>0xEA70F2E8</xilinx:checkSum>
-                     <xilinx:generationId>generationID_4013899584</xilinx:generationId>
+                     <xilinx:timeStamp>Fri Feb 07 09:33:59 GMT 2014</xilinx:timeStamp>
+                     <xilinx:checkSum>0x9DE1BF59</xilinx:checkSum>
+                     <xilinx:generationId>generationID_1879581046</xilinx:generationId>
                   </xilinx:file>
                   <xilinx:file>
                      <xilinx:name>./chipscope_vio_fifo.xdc</xilinx:name>
                      <xilinx:userFileType>ignore</xilinx:userFileType>
                      <xilinx:userFileType>xdc</xilinx:userFileType>
-                     <xilinx:timeStamp>Tue Nov 20 02:35:09 GMT 2012</xilinx:timeStamp>
+                     <xilinx:timeStamp>Fri Feb 07 09:33:59 GMT 2014</xilinx:timeStamp>
                      <xilinx:checkSum>0xC2D11607</xilinx:checkSum>
-                     <xilinx:generationId>generationID_4013899584</xilinx:generationId>
+                     <xilinx:generationId>generationID_1879581046</xilinx:generationId>
                   </xilinx:file>
                   <xilinx:file>
                      <xilinx:name>./chipscope_vio_fifo_xmdf.tcl</xilinx:name>
                      <xilinx:userFileType>tcl</xilinx:userFileType>
-                     <xilinx:timeStamp>Tue Nov 20 02:34:12 GMT 2012</xilinx:timeStamp>
+                     <xilinx:timeStamp>Fri Feb 07 09:32:58 GMT 2014</xilinx:timeStamp>
                      <xilinx:checkSum>0x136E503B</xilinx:checkSum>
-                     <xilinx:generationId>generationID_4013899584</xilinx:generationId>
+                     <xilinx:generationId>generationID_1879581046</xilinx:generationId>
                   </xilinx:file>
                </xilinx:fileSet>
                <xilinx:fileSet>
@@ -327,9 +327,9 @@
                   <xilinx:file>
                      <xilinx:name>./chipscope_vio_fifo.asy</xilinx:name>
                      <xilinx:userFileType>asy</xilinx:userFileType>
-                     <xilinx:timeStamp>Tue Nov 20 02:35:10 GMT 2012</xilinx:timeStamp>
-                     <xilinx:checkSum>0xEE4A2520</xilinx:checkSum>
-                     <xilinx:generationId>generationID_4013899584</xilinx:generationId>
+                     <xilinx:timeStamp>Fri Feb 07 09:33:59 GMT 2014</xilinx:timeStamp>
+                     <xilinx:checkSum>0x42C0F37B</xilinx:checkSum>
+                     <xilinx:generationId>generationID_1879581046</xilinx:generationId>
                   </xilinx:file>
                </xilinx:fileSet>
                <xilinx:fileSet>
@@ -341,17 +341,17 @@
                      <xilinx:name>./chipscope_vio_fifo.gise</xilinx:name>
                      <xilinx:userFileType>ignore</xilinx:userFileType>
                      <xilinx:userFileType>gise</xilinx:userFileType>
-                     <xilinx:timeStamp>Tue Nov 20 02:35:14 GMT 2012</xilinx:timeStamp>
+                     <xilinx:timeStamp>Fri Feb 07 09:34:07 GMT 2014</xilinx:timeStamp>
                      <xilinx:checkSum>0xE46738AE</xilinx:checkSum>
-                     <xilinx:generationId>generationID_4013899584</xilinx:generationId>
+                     <xilinx:generationId>generationID_1879581046</xilinx:generationId>
                   </xilinx:file>
                   <xilinx:file>
                      <xilinx:name>./chipscope_vio_fifo.xise</xilinx:name>
                      <xilinx:userFileType>ignore</xilinx:userFileType>
                      <xilinx:userFileType>xise</xilinx:userFileType>
-                     <xilinx:timeStamp>Tue Nov 20 02:35:14 GMT 2012</xilinx:timeStamp>
-                     <xilinx:checkSum>0x78819C93</xilinx:checkSum>
-                     <xilinx:generationId>generationID_4013899584</xilinx:generationId>
+                     <xilinx:timeStamp>Fri Feb 07 09:34:07 GMT 2014</xilinx:timeStamp>
+                     <xilinx:checkSum>0x0BED329B</xilinx:checkSum>
+                     <xilinx:generationId>generationID_1879581046</xilinx:generationId>
                   </xilinx:file>
                </xilinx:fileSet>
                <xilinx:fileSet>
@@ -361,9 +361,9 @@
                      <xilinx:userFileType>ignore</xilinx:userFileType>
                      <xilinx:userFileType>txtReadme</xilinx:userFileType>
                      <xilinx:userFileType>txt</xilinx:userFileType>
-                     <xilinx:timeStamp>Tue Nov 20 02:35:14 GMT 2012</xilinx:timeStamp>
-                     <xilinx:checkSum>0x8A5D60C8</xilinx:checkSum>
-                     <xilinx:generationId>generationID_4013899584</xilinx:generationId>
+                     <xilinx:timeStamp>Fri Feb 07 09:34:07 GMT 2014</xilinx:timeStamp>
+                     <xilinx:checkSum>0xEA5F9500</xilinx:checkSum>
+                     <xilinx:generationId>generationID_1879581046</xilinx:generationId>
                   </xilinx:file>
                </xilinx:fileSet>
                <xilinx:fileSet>
@@ -373,9 +373,9 @@
                      <xilinx:userFileType>ignore</xilinx:userFileType>
                      <xilinx:userFileType>txtFlist</xilinx:userFileType>
                      <xilinx:userFileType>txt</xilinx:userFileType>
-                     <xilinx:timeStamp>Tue Nov 20 02:35:14 GMT 2012</xilinx:timeStamp>
+                     <xilinx:timeStamp>Fri Feb 07 09:34:07 GMT 2014</xilinx:timeStamp>
                      <xilinx:checkSum>0x2E57030C</xilinx:checkSum>
-                     <xilinx:generationId>generationID_4013899584</xilinx:generationId>
+                     <xilinx:generationId>generationID_1879581046</xilinx:generationId>
                   </xilinx:file>
                </xilinx:fileSet>
                <xilinx:fileSet>
@@ -400,21 +400,6 @@
             <spirit:configurableElementValue spirit:referenceId="PARAM_VALUE.ASYNCHRONOUS_INPUT_PORT_WIDTH">8</spirit:configurableElementValue>
             <spirit:configurableElementValue spirit:referenceId="PARAM_VALUE.ENABLE_SYNCHRONOUS_INPUT_PORT">false</spirit:configurableElementValue>
             <spirit:configurableElementValue spirit:referenceId="PARAM_VALUE.EXAMPLE_DESIGN">true</spirit:configurableElementValue>
-            <spirit:configurableElementValue spirit:referenceId="MODELPARAM_VALUE.C_ASYNC_IN_WIDTH">8</spirit:configurableElementValue>
-            <spirit:configurableElementValue spirit:referenceId="MODELPARAM_VALUE.C_USE_SYNC_CLK">1</spirit:configurableElementValue>
-            <spirit:configurableElementValue spirit:referenceId="MODELPARAM_VALUE.C_ASYNC_OUT_WIDTH">8</spirit:configurableElementValue>
-            <spirit:configurableElementValue spirit:referenceId="MODELPARAM_VALUE.C_USE_SYNC_IN">0</spirit:configurableElementValue>
-            <spirit:configurableElementValue spirit:referenceId="MODELPARAM_VALUE.C_SRL16_TYPE">2</spirit:configurableElementValue>
-            <spirit:configurableElementValue spirit:referenceId="MODELPARAM_VALUE.C_SYNC_OUT_WIDTH">40</spirit:configurableElementValue>
-            <spirit:configurableElementValue spirit:referenceId="MODELPARAM_VALUE.C_USE_INV_CLK">0</spirit:configurableElementValue>
-            <spirit:configurableElementValue spirit:referenceId="MODELPARAM_VALUE.C_SYNC_IN_WIDTH">8</spirit:configurableElementValue>
-            <spirit:configurableElementValue spirit:referenceId="MODELPARAM_VALUE.COMPONENT_NAME">chipscope_vio_mask</spirit:configurableElementValue>
-            <spirit:configurableElementValue spirit:referenceId="MODELPARAM_VALUE.C_EXAMPLE_DESIGN">true</spirit:configurableElementValue>
-            <spirit:configurableElementValue spirit:referenceId="MODELPARAM_VALUE.C_XCO_LIST">Component_Name=chipscope_vio_mask;Enable_Synchronous_Input_Port=false;Enable_Synchronous_Output_Port=true;Enable_Asynchronous_Input_Port=false;Enable_Asynchronous_Output_Port=false;Synchronous_Input_Port_Width=8;Synchronous_Output_Port_Width=40;Asynchronous_Input_Port_Width=8;Asynchronous_Output_Port_Width=8;Invert_Clock_Input=false</spirit:configurableElementValue>
-            <spirit:configurableElementValue spirit:referenceId="MODELPARAM_VALUE.C_CONSTRAINT_TYPE">external</spirit:configurableElementValue>
-            <spirit:configurableElementValue spirit:referenceId="MODELPARAM_VALUE.C_USE_ASYNC_OUT">0</spirit:configurableElementValue>
-            <spirit:configurableElementValue spirit:referenceId="MODELPARAM_VALUE.C_USE_ASYNC_IN">0</spirit:configurableElementValue>
-            <spirit:configurableElementValue spirit:referenceId="MODELPARAM_VALUE.C_USE_SYNC_OUT">1</spirit:configurableElementValue>
          </spirit:configurableElementValues>
          <spirit:vendorExtensions>
             <xilinx:instanceProperties xmlns:xilinx="http://www.xilinx.com">
@@ -450,267 +435,6 @@
                   <xilinx:sourceCoreCreationDate>2012-07-21+03:12</xilinx:sourceCoreCreationDate>
                </xilinx:packageInfo>
             </xilinx:instanceProperties>
-            <xilinx:generationHistory>
-               <xilinx:fileSet>
-                  <xilinx:name>customization_generator</xilinx:name>
-               </xilinx:fileSet>
-               <xilinx:fileSet>
-                  <xilinx:name>model_parameter_resolution_generator</xilinx:name>
-               </xilinx:fileSet>
-               <xilinx:fileSet>
-                  <xilinx:name>ip_xco_generator</xilinx:name>
-                  <xilinx:file>
-                     <xilinx:name>./chipscope_vio_mask.xco</xilinx:name>
-                     <xilinx:userFileType>xco</xilinx:userFileType>
-                     <xilinx:timeStamp>Tue Nov 20 02:35:57 GMT 2012</xilinx:timeStamp>
-                     <xilinx:checkSum>0xE543A821</xilinx:checkSum>
-                     <xilinx:generationId>generationID_1879581046</xilinx:generationId>
-                  </xilinx:file>
-               </xilinx:fileSet>
-               <xilinx:fileSet>
-                  <xilinx:name>ngc_netlist_generator</xilinx:name>
-                  <xilinx:file>
-                     <xilinx:name>./chipscope_vio_mask/example_design/chipscope_vio_mask_bb_lib.v</xilinx:name>
-                     <xilinx:userFileType>ignore</xilinx:userFileType>
-                     <xilinx:userFileType>verilogSynthesis</xilinx:userFileType>
-                     <xilinx:timeStamp>Tue Nov 20 02:35:57 GMT 2012</xilinx:timeStamp>
-                     <xilinx:checkSum>0x8C39E98A</xilinx:checkSum>
-                     <xilinx:generationId>generationID_1879581046</xilinx:generationId>
-                  </xilinx:file>
-                  <xilinx:file>
-                     <xilinx:name>./chipscope_vio_mask/example_design/example_chipscope_vio_mask.ucf</xilinx:name>
-                     <xilinx:userFileType>ignore</xilinx:userFileType>
-                     <xilinx:userFileType>ucf</xilinx:userFileType>
-                     <xilinx:timeStamp>Tue Nov 20 02:36:00 GMT 2012</xilinx:timeStamp>
-                     <xilinx:checkSum>0x8A99C5D7</xilinx:checkSum>
-                     <xilinx:generationId>generationID_1879581046</xilinx:generationId>
-                  </xilinx:file>
-                  <xilinx:file>
-                     <xilinx:name>./chipscope_vio_mask/example_design/example_chipscope_vio_mask.v</xilinx:name>
-                     <xilinx:userFileType>ignore</xilinx:userFileType>
-                     <xilinx:userFileType>verilogSynthesis</xilinx:userFileType>
-                     <xilinx:timeStamp>Tue Nov 20 02:35:59 GMT 2012</xilinx:timeStamp>
-                     <xilinx:checkSum>0x75E2D857</xilinx:checkSum>
-                     <xilinx:generationId>generationID_1879581046</xilinx:generationId>
-                  </xilinx:file>
-                  <xilinx:file>
-                     <xilinx:name>./chipscope_vio_mask/example_design/example_chipscope_vio_mask.xdc</xilinx:name>
-                     <xilinx:userFileType>ignore</xilinx:userFileType>
-                     <xilinx:userFileType>xdc</xilinx:userFileType>
-                     <xilinx:timeStamp>Tue Nov 20 02:36:00 GMT 2012</xilinx:timeStamp>
-                     <xilinx:checkSum>0xED983B09</xilinx:checkSum>
-                     <xilinx:generationId>generationID_1879581046</xilinx:generationId>
-                  </xilinx:file>
-                  <xilinx:file>
-                     <xilinx:name>./chipscope_vio_mask/implement/chipscope_icon.xco</xilinx:name>
-                     <xilinx:userFileType>ignore</xilinx:userFileType>
-                     <xilinx:userFileType>xco</xilinx:userFileType>
-                     <xilinx:timeStamp>Tue Nov 20 02:35:58 GMT 2012</xilinx:timeStamp>
-                     <xilinx:checkSum>0x1FF80BFB</xilinx:checkSum>
-                     <xilinx:generationId>generationID_1879581046</xilinx:generationId>
-                  </xilinx:file>
-                  <xilinx:file>
-                     <xilinx:name>./chipscope_vio_mask/implement/coregen.cgp</xilinx:name>
-                     <xilinx:userFileType>ignore</xilinx:userFileType>
-                     <xilinx:userFileType>unknown</xilinx:userFileType>
-                     <xilinx:timeStamp>Tue Nov 20 02:35:58 GMT 2012</xilinx:timeStamp>
-                     <xilinx:checkSum>0x940C30DF</xilinx:checkSum>
-                     <xilinx:generationId>generationID_1879581046</xilinx:generationId>
-                  </xilinx:file>
-                  <xilinx:file>
-                     <xilinx:name>./chipscope_vio_mask/implement/example_chipscope_vio_mask.prj</xilinx:name>
-                     <xilinx:userFileType>ignore</xilinx:userFileType>
-                     <xilinx:userFileType>unknown</xilinx:userFileType>
-                     <xilinx:timeStamp>Tue Nov 20 02:35:59 GMT 2012</xilinx:timeStamp>
-                     <xilinx:checkSum>0xDD5C1574</xilinx:checkSum>
-                     <xilinx:generationId>generationID_1879581046</xilinx:generationId>
-                  </xilinx:file>
-                  <xilinx:file>
-                     <xilinx:name>./chipscope_vio_mask/implement/example_chipscope_vio_mask.xst</xilinx:name>
-                     <xilinx:userFileType>ignore</xilinx:userFileType>
-                     <xilinx:userFileType>unknown</xilinx:userFileType>
-                     <xilinx:timeStamp>Tue Nov 20 02:36:01 GMT 2012</xilinx:timeStamp>
-                     <xilinx:checkSum>0x95BB138E</xilinx:checkSum>
-                     <xilinx:generationId>generationID_1879581046</xilinx:generationId>
-                  </xilinx:file>
-                  <xilinx:file>
-                     <xilinx:name>./chipscope_vio_mask/implement/ise_implement.bat</xilinx:name>
-                     <xilinx:userFileType>ignore</xilinx:userFileType>
-                     <xilinx:userFileType>unknown</xilinx:userFileType>
-                     <xilinx:timeStamp>Tue Nov 20 02:35:58 GMT 2012</xilinx:timeStamp>
-                     <xilinx:checkSum>0xEF02D4FF</xilinx:checkSum>
-                     <xilinx:generationId>generationID_1879581046</xilinx:generationId>
-                  </xilinx:file>
-                  <xilinx:file>
-                     <xilinx:name>./chipscope_vio_mask/implement/ise_implement.sh</xilinx:name>
-                     <xilinx:userFileType>ignore</xilinx:userFileType>
-                     <xilinx:userFileType>unknown</xilinx:userFileType>
-                     <xilinx:timeStamp>Tue Nov 20 02:36:01 GMT 2012</xilinx:timeStamp>
-                     <xilinx:checkSum>0x9A745C3F</xilinx:checkSum>
-                     <xilinx:generationId>generationID_1879581046</xilinx:generationId>
-                  </xilinx:file>
-                  <xilinx:file>
-                     <xilinx:name>./chipscope_vio_mask/implement/pa_ise_implement.tcl</xilinx:name>
-                     <xilinx:userFileType>ignore</xilinx:userFileType>
-                     <xilinx:userFileType>tcl</xilinx:userFileType>
-                     <xilinx:timeStamp>Tue Nov 20 02:35:59 GMT 2012</xilinx:timeStamp>
-                     <xilinx:checkSum>0xF047984E</xilinx:checkSum>
-                     <xilinx:generationId>generationID_1879581046</xilinx:generationId>
-                  </xilinx:file>
-                  <xilinx:file>
-                     <xilinx:name>./chipscope_vio_mask/implement/rdi_implement.tcl</xilinx:name>
-                     <xilinx:userFileType>ignore</xilinx:userFileType>
-                     <xilinx:userFileType>tcl</xilinx:userFileType>
-                     <xilinx:timeStamp>Tue Nov 20 02:36:00 GMT 2012</xilinx:timeStamp>
-                     <xilinx:checkSum>0x5B9127B8</xilinx:checkSum>
-                     <xilinx:generationId>generationID_1879581046</xilinx:generationId>
-                  </xilinx:file>
-                  <xilinx:file>
-                     <xilinx:name>./chipscope_vio_mask/implement/v_rdi_implement.tcl</xilinx:name>
-                     <xilinx:userFileType>ignore</xilinx:userFileType>
-                     <xilinx:userFileType>tcl</xilinx:userFileType>
-                     <xilinx:timeStamp>Tue Nov 20 02:36:00 GMT 2012</xilinx:timeStamp>
-                     <xilinx:checkSum>0x94CF2579</xilinx:checkSum>
-                     <xilinx:generationId>generationID_1879581046</xilinx:generationId>
-                  </xilinx:file>
-                  <xilinx:file>
-                     <xilinx:name>./chipscope_vio_mask/read_me.txt</xilinx:name>
-                     <xilinx:userFileType>ignore</xilinx:userFileType>
-                     <xilinx:userFileType>txt</xilinx:userFileType>
-                     <xilinx:timeStamp>Tue Nov 20 02:36:01 GMT 2012</xilinx:timeStamp>
-                     <xilinx:checkSum>0x4A2AE78B</xilinx:checkSum>
-                     <xilinx:generationId>generationID_1879581046</xilinx:generationId>
-                  </xilinx:file>
-                  <xilinx:file>
-                     <xilinx:name>./chipscope_vio_mask.cdc</xilinx:name>
-                     <xilinx:userFileType>unknown</xilinx:userFileType>
-                     <xilinx:timeStamp>Tue Nov 20 02:36:39 GMT 2012</xilinx:timeStamp>
-                     <xilinx:checkSum>0xA96F5278</xilinx:checkSum>
-                     <xilinx:generationId>generationID_1879581046</xilinx:generationId>
-                  </xilinx:file>
-                  <xilinx:file>
-                     <xilinx:name>./chipscope_vio_mask.constraints/chipscope_vio_mask.ucf</xilinx:name>
-                     <xilinx:userFileType>ucf</xilinx:userFileType>
-                     <xilinx:timeStamp>Tue Nov 20 02:36:39 GMT 2012</xilinx:timeStamp>
-                     <xilinx:checkSum>0x46D4F328</xilinx:checkSum>
-                     <xilinx:generationId>generationID_1879581046</xilinx:generationId>
-                  </xilinx:file>
-                  <xilinx:file>
-                     <xilinx:name>./chipscope_vio_mask.constraints/chipscope_vio_mask.xdc</xilinx:name>
-                     <xilinx:userFileType>xdc</xilinx:userFileType>
-                     <xilinx:timeStamp>Tue Nov 20 02:36:39 GMT 2012</xilinx:timeStamp>
-                     <xilinx:checkSum>0xC2D11607</xilinx:checkSum>
-                     <xilinx:generationId>generationID_1879581046</xilinx:generationId>
-                  </xilinx:file>
-                  <xilinx:file>
-                     <xilinx:name>./chipscope_vio_mask.ngc</xilinx:name>
-                     <xilinx:userFileType>ngc</xilinx:userFileType>
-                     <xilinx:timeStamp>Tue Nov 20 02:36:38 GMT 2012</xilinx:timeStamp>
-                     <xilinx:checkSum>0xE1997330</xilinx:checkSum>
-                     <xilinx:generationId>generationID_1879581046</xilinx:generationId>
-                  </xilinx:file>
-                  <xilinx:file>
-                     <xilinx:name>./chipscope_vio_mask.ucf</xilinx:name>
-                     <xilinx:userFileType>ignore</xilinx:userFileType>
-                     <xilinx:userFileType>ucf</xilinx:userFileType>
-                     <xilinx:timeStamp>Tue Nov 20 02:36:39 GMT 2012</xilinx:timeStamp>
-                     <xilinx:checkSum>0x46D4F328</xilinx:checkSum>
-                     <xilinx:generationId>generationID_1879581046</xilinx:generationId>
-                  </xilinx:file>
-                  <xilinx:file>
-                     <xilinx:name>./chipscope_vio_mask.v</xilinx:name>
-                     <xilinx:userFileType>verilog</xilinx:userFileType>
-                     <xilinx:userFileType>verilogSynthesis</xilinx:userFileType>
-                     <xilinx:timeStamp>Tue Nov 20 02:36:39 GMT 2012</xilinx:timeStamp>
-                     <xilinx:checkSum>0x78FBC74D</xilinx:checkSum>
-                     <xilinx:generationId>generationID_1879581046</xilinx:generationId>
-                  </xilinx:file>
-                  <xilinx:file>
-                     <xilinx:name>./chipscope_vio_mask.veo</xilinx:name>
-                     <xilinx:userFileType>veo</xilinx:userFileType>
-                     <xilinx:timeStamp>Tue Nov 20 02:36:39 GMT 2012</xilinx:timeStamp>
-                     <xilinx:checkSum>0xAF798824</xilinx:checkSum>
-                     <xilinx:generationId>generationID_1879581046</xilinx:generationId>
-                  </xilinx:file>
-                  <xilinx:file>
-                     <xilinx:name>./chipscope_vio_mask.xdc</xilinx:name>
-                     <xilinx:userFileType>ignore</xilinx:userFileType>
-                     <xilinx:userFileType>xdc</xilinx:userFileType>
-                     <xilinx:timeStamp>Tue Nov 20 02:36:39 GMT 2012</xilinx:timeStamp>
-                     <xilinx:checkSum>0xC2D11607</xilinx:checkSum>
-                     <xilinx:generationId>generationID_1879581046</xilinx:generationId>
-                  </xilinx:file>
-                  <xilinx:file>
-                     <xilinx:name>./chipscope_vio_mask_xmdf.tcl</xilinx:name>
-                     <xilinx:userFileType>tcl</xilinx:userFileType>
-                     <xilinx:timeStamp>Tue Nov 20 02:36:01 GMT 2012</xilinx:timeStamp>
-                     <xilinx:checkSum>0xBADC42BD</xilinx:checkSum>
-                     <xilinx:generationId>generationID_1879581046</xilinx:generationId>
-                  </xilinx:file>
-               </xilinx:fileSet>
-               <xilinx:fileSet>
-                  <xilinx:name>instantiation_template_generator</xilinx:name>
-               </xilinx:fileSet>
-               <xilinx:fileSet>
-                  <xilinx:name>asy_generator</xilinx:name>
-                  <xilinx:file>
-                     <xilinx:name>./chipscope_vio_mask.asy</xilinx:name>
-                     <xilinx:userFileType>asy</xilinx:userFileType>
-                     <xilinx:timeStamp>Tue Nov 20 02:36:40 GMT 2012</xilinx:timeStamp>
-                     <xilinx:checkSum>0xB7DFDEC6</xilinx:checkSum>
-                     <xilinx:generationId>generationID_1879581046</xilinx:generationId>
-                  </xilinx:file>
-               </xilinx:fileSet>
-               <xilinx:fileSet>
-                  <xilinx:name>xmdf_generator</xilinx:name>
-               </xilinx:fileSet>
-               <xilinx:fileSet>
-                  <xilinx:name>ise_generator</xilinx:name>
-                  <xilinx:file>
-                     <xilinx:name>./chipscope_vio_mask.gise</xilinx:name>
-                     <xilinx:userFileType>ignore</xilinx:userFileType>
-                     <xilinx:userFileType>gise</xilinx:userFileType>
-                     <xilinx:timeStamp>Tue Nov 20 02:36:44 GMT 2012</xilinx:timeStamp>
-                     <xilinx:checkSum>0x81874387</xilinx:checkSum>
-                     <xilinx:generationId>generationID_1879581046</xilinx:generationId>
-                  </xilinx:file>
-                  <xilinx:file>
-                     <xilinx:name>./chipscope_vio_mask.xise</xilinx:name>
-                     <xilinx:userFileType>ignore</xilinx:userFileType>
-                     <xilinx:userFileType>xise</xilinx:userFileType>
-                     <xilinx:timeStamp>Tue Nov 20 02:36:44 GMT 2012</xilinx:timeStamp>
-                     <xilinx:checkSum>0xD0AB24F1</xilinx:checkSum>
-                     <xilinx:generationId>generationID_1879581046</xilinx:generationId>
-                  </xilinx:file>
-               </xilinx:fileSet>
-               <xilinx:fileSet>
-                  <xilinx:name>deliver_readme_generator</xilinx:name>
-                  <xilinx:file>
-                     <xilinx:name>./chipscope_vio_mask_readme.txt</xilinx:name>
-                     <xilinx:userFileType>ignore</xilinx:userFileType>
-                     <xilinx:userFileType>txtReadme</xilinx:userFileType>
-                     <xilinx:userFileType>txt</xilinx:userFileType>
-                     <xilinx:timeStamp>Tue Nov 20 02:36:44 GMT 2012</xilinx:timeStamp>
-                     <xilinx:checkSum>0x736C765D</xilinx:checkSum>
-                     <xilinx:generationId>generationID_1879581046</xilinx:generationId>
-                  </xilinx:file>
-               </xilinx:fileSet>
-               <xilinx:fileSet>
-                  <xilinx:name>flist_generator</xilinx:name>
-                  <xilinx:file>
-                     <xilinx:name>./chipscope_vio_mask_flist.txt</xilinx:name>
-                     <xilinx:userFileType>ignore</xilinx:userFileType>
-                     <xilinx:userFileType>txtFlist</xilinx:userFileType>
-                     <xilinx:userFileType>txt</xilinx:userFileType>
-                     <xilinx:timeStamp>Tue Nov 20 02:36:44 GMT 2012</xilinx:timeStamp>
-                     <xilinx:checkSum>0x1CC0385A</xilinx:checkSum>
-                     <xilinx:generationId>generationID_1879581046</xilinx:generationId>
-                  </xilinx:file>
-               </xilinx:fileSet>
-               <xilinx:fileSet>
-                  <xilinx:name>view_readme_generator</xilinx:name>
-               </xilinx:fileSet>
-            </xilinx:generationHistory>
          </spirit:vendorExtensions>
       </spirit:componentInstance>
       <spirit:componentInstance>
@@ -719,7 +443,7 @@
          <spirit:configurableElementValues>
             <spirit:configurableElementValue spirit:referenceId="PARAM_VALUE.COMPONENT_NAME">chipscope_vio_trig</spirit:configurableElementValue>
             <spirit:configurableElementValue spirit:referenceId="PARAM_VALUE.SYNCHRONOUS_INPUT_PORT_WIDTH">8</spirit:configurableElementValue>
-            <spirit:configurableElementValue spirit:referenceId="PARAM_VALUE.SYNCHRONOUS_OUTPUT_PORT_WIDTH">66</spirit:configurableElementValue>
+            <spirit:configurableElementValue spirit:referenceId="PARAM_VALUE.SYNCHRONOUS_OUTPUT_PORT_WIDTH">82</spirit:configurableElementValue>
             <spirit:configurableElementValue spirit:referenceId="PARAM_VALUE.ENABLE_ASYNCHRONOUS_OUTPUT_PORT">false</spirit:configurableElementValue>
             <spirit:configurableElementValue spirit:referenceId="PARAM_VALUE.ENABLE_ASYNCHRONOUS_INPUT_PORT">false</spirit:configurableElementValue>
             <spirit:configurableElementValue spirit:referenceId="PARAM_VALUE.CONSTRAINT_TYPE">external</spirit:configurableElementValue>
@@ -729,21 +453,6 @@
             <spirit:configurableElementValue spirit:referenceId="PARAM_VALUE.ASYNCHRONOUS_INPUT_PORT_WIDTH">8</spirit:configurableElementValue>
             <spirit:configurableElementValue spirit:referenceId="PARAM_VALUE.ENABLE_SYNCHRONOUS_INPUT_PORT">false</spirit:configurableElementValue>
             <spirit:configurableElementValue spirit:referenceId="PARAM_VALUE.EXAMPLE_DESIGN">true</spirit:configurableElementValue>
-            <spirit:configurableElementValue spirit:referenceId="MODELPARAM_VALUE.C_ASYNC_IN_WIDTH">8</spirit:configurableElementValue>
-            <spirit:configurableElementValue spirit:referenceId="MODELPARAM_VALUE.C_USE_SYNC_CLK">1</spirit:configurableElementValue>
-            <spirit:configurableElementValue spirit:referenceId="MODELPARAM_VALUE.C_ASYNC_OUT_WIDTH">8</spirit:configurableElementValue>
-            <spirit:configurableElementValue spirit:referenceId="MODELPARAM_VALUE.C_USE_SYNC_IN">0</spirit:configurableElementValue>
-            <spirit:configurableElementValue spirit:referenceId="MODELPARAM_VALUE.C_SRL16_TYPE">2</spirit:configurableElementValue>
-            <spirit:configurableElementValue spirit:referenceId="MODELPARAM_VALUE.C_SYNC_OUT_WIDTH">66</spirit:configurableElementValue>
-            <spirit:configurableElementValue spirit:referenceId="MODELPARAM_VALUE.C_USE_INV_CLK">0</spirit:configurableElementValue>
-            <spirit:configurableElementValue spirit:referenceId="MODELPARAM_VALUE.C_SYNC_IN_WIDTH">8</spirit:configurableElementValue>
-            <spirit:configurableElementValue spirit:referenceId="MODELPARAM_VALUE.COMPONENT_NAME">chipscope_vio_trig</spirit:configurableElementValue>
-            <spirit:configurableElementValue spirit:referenceId="MODELPARAM_VALUE.C_EXAMPLE_DESIGN">true</spirit:configurableElementValue>
-            <spirit:configurableElementValue spirit:referenceId="MODELPARAM_VALUE.C_XCO_LIST">Component_Name=chipscope_vio_trig;Enable_Synchronous_Input_Port=false;Enable_Synchronous_Output_Port=true;Enable_Asynchronous_Input_Port=false;Enable_Asynchronous_Output_Port=false;Synchronous_Input_Port_Width=8;Synchronous_Output_Port_Width=66;Asynchronous_Input_Port_Width=8;Asynchronous_Output_Port_Width=8;Invert_Clock_Input=false</spirit:configurableElementValue>
-            <spirit:configurableElementValue spirit:referenceId="MODELPARAM_VALUE.C_CONSTRAINT_TYPE">external</spirit:configurableElementValue>
-            <spirit:configurableElementValue spirit:referenceId="MODELPARAM_VALUE.C_USE_ASYNC_OUT">0</spirit:configurableElementValue>
-            <spirit:configurableElementValue spirit:referenceId="MODELPARAM_VALUE.C_USE_ASYNC_IN">0</spirit:configurableElementValue>
-            <spirit:configurableElementValue spirit:referenceId="MODELPARAM_VALUE.C_USE_SYNC_OUT">1</spirit:configurableElementValue>
          </spirit:configurableElementValues>
          <spirit:vendorExtensions>
             <xilinx:instanceProperties xmlns:xilinx="http://www.xilinx.com">
@@ -776,270 +485,9 @@
                   <xilinx:foundationSym>false</xilinx:foundationSym>
                </xilinx:simulationOptions>
                <xilinx:packageInfo>
-                  <xilinx:sourceCoreCreationDate>2012-07-21+03:12</xilinx:sourceCoreCreationDate>
+                  <xilinx:sourceCoreCreationDate>2012-10-12+23:08</xilinx:sourceCoreCreationDate>
                </xilinx:packageInfo>
             </xilinx:instanceProperties>
-            <xilinx:generationHistory>
-               <xilinx:fileSet>
-                  <xilinx:name>customization_generator</xilinx:name>
-               </xilinx:fileSet>
-               <xilinx:fileSet>
-                  <xilinx:name>model_parameter_resolution_generator</xilinx:name>
-               </xilinx:fileSet>
-               <xilinx:fileSet>
-                  <xilinx:name>ip_xco_generator</xilinx:name>
-                  <xilinx:file>
-                     <xilinx:name>./chipscope_vio_trig.xco</xilinx:name>
-                     <xilinx:userFileType>xco</xilinx:userFileType>
-                     <xilinx:timeStamp>Tue Nov 20 02:37:14 GMT 2012</xilinx:timeStamp>
-                     <xilinx:checkSum>0x1C211B73</xilinx:checkSum>
-                     <xilinx:generationId>generationID_3673615094</xilinx:generationId>
-                  </xilinx:file>
-               </xilinx:fileSet>
-               <xilinx:fileSet>
-                  <xilinx:name>ngc_netlist_generator</xilinx:name>
-                  <xilinx:file>
-                     <xilinx:name>./chipscope_vio_trig/example_design/chipscope_vio_trig_bb_lib.v</xilinx:name>
-                     <xilinx:userFileType>ignore</xilinx:userFileType>
-                     <xilinx:userFileType>verilogSynthesis</xilinx:userFileType>
-                     <xilinx:timeStamp>Tue Nov 20 02:37:15 GMT 2012</xilinx:timeStamp>
-                     <xilinx:checkSum>0x4FF83256</xilinx:checkSum>
-                     <xilinx:generationId>generationID_3673615094</xilinx:generationId>
-                  </xilinx:file>
-                  <xilinx:file>
-                     <xilinx:name>./chipscope_vio_trig/example_design/example_chipscope_vio_trig.ucf</xilinx:name>
-                     <xilinx:userFileType>ignore</xilinx:userFileType>
-                     <xilinx:userFileType>ucf</xilinx:userFileType>
-                     <xilinx:timeStamp>Tue Nov 20 02:37:17 GMT 2012</xilinx:timeStamp>
-                     <xilinx:checkSum>0xB859E54F</xilinx:checkSum>
-                     <xilinx:generationId>generationID_3673615094</xilinx:generationId>
-                  </xilinx:file>
-                  <xilinx:file>
-                     <xilinx:name>./chipscope_vio_trig/example_design/example_chipscope_vio_trig.v</xilinx:name>
-                     <xilinx:userFileType>ignore</xilinx:userFileType>
-                     <xilinx:userFileType>verilogSynthesis</xilinx:userFileType>
-                     <xilinx:timeStamp>Tue Nov 20 02:37:17 GMT 2012</xilinx:timeStamp>
-                     <xilinx:checkSum>0x604E80B9</xilinx:checkSum>
-                     <xilinx:generationId>generationID_3673615094</xilinx:generationId>
-                  </xilinx:file>
-                  <xilinx:file>
-                     <xilinx:name>./chipscope_vio_trig/example_design/example_chipscope_vio_trig.xdc</xilinx:name>
-                     <xilinx:userFileType>ignore</xilinx:userFileType>
-                     <xilinx:userFileType>xdc</xilinx:userFileType>
-                     <xilinx:timeStamp>Tue Nov 20 02:37:17 GMT 2012</xilinx:timeStamp>
-                     <xilinx:checkSum>0x2338DEFF</xilinx:checkSum>
-                     <xilinx:generationId>generationID_3673615094</xilinx:generationId>
-                  </xilinx:file>
-                  <xilinx:file>
-                     <xilinx:name>./chipscope_vio_trig/implement/chipscope_icon.xco</xilinx:name>
-                     <xilinx:userFileType>ignore</xilinx:userFileType>
-                     <xilinx:userFileType>xco</xilinx:userFileType>
-                     <xilinx:timeStamp>Tue Nov 20 02:37:15 GMT 2012</xilinx:timeStamp>
-                     <xilinx:checkSum>0x1FF80BFB</xilinx:checkSum>
-                     <xilinx:generationId>generationID_3673615094</xilinx:generationId>
-                  </xilinx:file>
-                  <xilinx:file>
-                     <xilinx:name>./chipscope_vio_trig/implement/coregen.cgp</xilinx:name>
-                     <xilinx:userFileType>ignore</xilinx:userFileType>
-                     <xilinx:userFileType>unknown</xilinx:userFileType>
-                     <xilinx:timeStamp>Tue Nov 20 02:37:15 GMT 2012</xilinx:timeStamp>
-                     <xilinx:checkSum>0x940C30DF</xilinx:checkSum>
-                     <xilinx:generationId>generationID_3673615094</xilinx:generationId>
-                  </xilinx:file>
-                  <xilinx:file>
-                     <xilinx:name>./chipscope_vio_trig/implement/example_chipscope_vio_trig.prj</xilinx:name>
-                     <xilinx:userFileType>ignore</xilinx:userFileType>
-                     <xilinx:userFileType>unknown</xilinx:userFileType>
-                     <xilinx:timeStamp>Tue Nov 20 02:37:16 GMT 2012</xilinx:timeStamp>
-                     <xilinx:checkSum>0x34375C50</xilinx:checkSum>
-                     <xilinx:generationId>generationID_3673615094</xilinx:generationId>
-                  </xilinx:file>
-                  <xilinx:file>
-                     <xilinx:name>./chipscope_vio_trig/implement/example_chipscope_vio_trig.xst</xilinx:name>
-                     <xilinx:userFileType>ignore</xilinx:userFileType>
-                     <xilinx:userFileType>unknown</xilinx:userFileType>
-                     <xilinx:timeStamp>Tue Nov 20 02:37:18 GMT 2012</xilinx:timeStamp>
-                     <xilinx:checkSum>0x8A9B51FF</xilinx:checkSum>
-                     <xilinx:generationId>generationID_3673615094</xilinx:generationId>
-                  </xilinx:file>
-                  <xilinx:file>
-                     <xilinx:name>./chipscope_vio_trig/implement/ise_implement.bat</xilinx:name>
-                     <xilinx:userFileType>ignore</xilinx:userFileType>
-                     <xilinx:userFileType>unknown</xilinx:userFileType>
-                     <xilinx:timeStamp>Tue Nov 20 02:37:15 GMT 2012</xilinx:timeStamp>
-                     <xilinx:checkSum>0xD215B1A8</xilinx:checkSum>
-                     <xilinx:generationId>generationID_3673615094</xilinx:generationId>
-                  </xilinx:file>
-                  <xilinx:file>
-                     <xilinx:name>./chipscope_vio_trig/implement/ise_implement.sh</xilinx:name>
-                     <xilinx:userFileType>ignore</xilinx:userFileType>
-                     <xilinx:userFileType>unknown</xilinx:userFileType>
-                     <xilinx:timeStamp>Tue Nov 20 02:37:18 GMT 2012</xilinx:timeStamp>
-                     <xilinx:checkSum>0x2A4B1B2C</xilinx:checkSum>
-                     <xilinx:generationId>generationID_3673615094</xilinx:generationId>
-                  </xilinx:file>
-                  <xilinx:file>
-                     <xilinx:name>./chipscope_vio_trig/implement/pa_ise_implement.tcl</xilinx:name>
-                     <xilinx:userFileType>ignore</xilinx:userFileType>
-                     <xilinx:userFileType>tcl</xilinx:userFileType>
-                     <xilinx:timeStamp>Tue Nov 20 02:37:16 GMT 2012</xilinx:timeStamp>
-                     <xilinx:checkSum>0x2C7947C8</xilinx:checkSum>
-                     <xilinx:generationId>generationID_3673615094</xilinx:generationId>
-                  </xilinx:file>
-                  <xilinx:file>
-                     <xilinx:name>./chipscope_vio_trig/implement/rdi_implement.tcl</xilinx:name>
-                     <xilinx:userFileType>ignore</xilinx:userFileType>
-                     <xilinx:userFileType>tcl</xilinx:userFileType>
-                     <xilinx:timeStamp>Tue Nov 20 02:37:17 GMT 2012</xilinx:timeStamp>
-                     <xilinx:checkSum>0x3BC95413</xilinx:checkSum>
-                     <xilinx:generationId>generationID_3673615094</xilinx:generationId>
-                  </xilinx:file>
-                  <xilinx:file>
-                     <xilinx:name>./chipscope_vio_trig/implement/v_rdi_implement.tcl</xilinx:name>
-                     <xilinx:userFileType>ignore</xilinx:userFileType>
-                     <xilinx:userFileType>tcl</xilinx:userFileType>
-                     <xilinx:timeStamp>Tue Nov 20 02:37:18 GMT 2012</xilinx:timeStamp>
-                     <xilinx:checkSum>0x7F500418</xilinx:checkSum>
-                     <xilinx:generationId>generationID_3673615094</xilinx:generationId>
-                  </xilinx:file>
-                  <xilinx:file>
-                     <xilinx:name>./chipscope_vio_trig/read_me.txt</xilinx:name>
-                     <xilinx:userFileType>ignore</xilinx:userFileType>
-                     <xilinx:userFileType>txt</xilinx:userFileType>
-                     <xilinx:timeStamp>Tue Nov 20 02:37:18 GMT 2012</xilinx:timeStamp>
-                     <xilinx:checkSum>0x4A2AE78B</xilinx:checkSum>
-                     <xilinx:generationId>generationID_3673615094</xilinx:generationId>
-                  </xilinx:file>
-                  <xilinx:file>
-                     <xilinx:name>./chipscope_vio_trig.cdc</xilinx:name>
-                     <xilinx:userFileType>unknown</xilinx:userFileType>
-                     <xilinx:timeStamp>Tue Nov 20 02:37:58 GMT 2012</xilinx:timeStamp>
-                     <xilinx:checkSum>0x97DAF80B</xilinx:checkSum>
-                     <xilinx:generationId>generationID_3673615094</xilinx:generationId>
-                  </xilinx:file>
-                  <xilinx:file>
-                     <xilinx:name>./chipscope_vio_trig.constraints/chipscope_vio_trig.ucf</xilinx:name>
-                     <xilinx:userFileType>ucf</xilinx:userFileType>
-                     <xilinx:timeStamp>Tue Nov 20 02:37:58 GMT 2012</xilinx:timeStamp>
-                     <xilinx:checkSum>0x46D4F328</xilinx:checkSum>
-                     <xilinx:generationId>generationID_3673615094</xilinx:generationId>
-                  </xilinx:file>
-                  <xilinx:file>
-                     <xilinx:name>./chipscope_vio_trig.constraints/chipscope_vio_trig.xdc</xilinx:name>
-                     <xilinx:userFileType>xdc</xilinx:userFileType>
-                     <xilinx:timeStamp>Tue Nov 20 02:37:58 GMT 2012</xilinx:timeStamp>
-                     <xilinx:checkSum>0xC2D11607</xilinx:checkSum>
-                     <xilinx:generationId>generationID_3673615094</xilinx:generationId>
-                  </xilinx:file>
-                  <xilinx:file>
-                     <xilinx:name>./chipscope_vio_trig.ngc</xilinx:name>
-                     <xilinx:userFileType>ngc</xilinx:userFileType>
-                     <xilinx:timeStamp>Tue Nov 20 02:37:56 GMT 2012</xilinx:timeStamp>
-                     <xilinx:checkSum>0xE667CCD8</xilinx:checkSum>
-                     <xilinx:generationId>generationID_3673615094</xilinx:generationId>
-                  </xilinx:file>
-                  <xilinx:file>
-                     <xilinx:name>./chipscope_vio_trig.ucf</xilinx:name>
-                     <xilinx:userFileType>ignore</xilinx:userFileType>
-                     <xilinx:userFileType>ucf</xilinx:userFileType>
-                     <xilinx:timeStamp>Tue Nov 20 02:37:58 GMT 2012</xilinx:timeStamp>
-                     <xilinx:checkSum>0x46D4F328</xilinx:checkSum>
-                     <xilinx:generationId>generationID_3673615094</xilinx:generationId>
-                  </xilinx:file>
-                  <xilinx:file>
-                     <xilinx:name>./chipscope_vio_trig.v</xilinx:name>
-                     <xilinx:userFileType>verilog</xilinx:userFileType>
-                     <xilinx:userFileType>verilogSynthesis</xilinx:userFileType>
-                     <xilinx:timeStamp>Tue Nov 20 02:37:58 GMT 2012</xilinx:timeStamp>
-                     <xilinx:checkSum>0x22E2DC33</xilinx:checkSum>
-                     <xilinx:generationId>generationID_3673615094</xilinx:generationId>
-                  </xilinx:file>
-                  <xilinx:file>
-                     <xilinx:name>./chipscope_vio_trig.veo</xilinx:name>
-                     <xilinx:userFileType>veo</xilinx:userFileType>
-                     <xilinx:timeStamp>Tue Nov 20 02:37:58 GMT 2012</xilinx:timeStamp>
-                     <xilinx:checkSum>0x4BA52A8E</xilinx:checkSum>
-                     <xilinx:generationId>generationID_3673615094</xilinx:generationId>
-                  </xilinx:file>
-                  <xilinx:file>
-                     <xilinx:name>./chipscope_vio_trig.xdc</xilinx:name>
-                     <xilinx:userFileType>ignore</xilinx:userFileType>
-                     <xilinx:userFileType>xdc</xilinx:userFileType>
-                     <xilinx:timeStamp>Tue Nov 20 02:37:58 GMT 2012</xilinx:timeStamp>
-                     <xilinx:checkSum>0xC2D11607</xilinx:checkSum>
-                     <xilinx:generationId>generationID_3673615094</xilinx:generationId>
-                  </xilinx:file>
-                  <xilinx:file>
-                     <xilinx:name>./chipscope_vio_trig_xmdf.tcl</xilinx:name>
-                     <xilinx:userFileType>tcl</xilinx:userFileType>
-                     <xilinx:timeStamp>Tue Nov 20 02:37:18 GMT 2012</xilinx:timeStamp>
-                     <xilinx:checkSum>0x0BB32865</xilinx:checkSum>
-                     <xilinx:generationId>generationID_3673615094</xilinx:generationId>
-                  </xilinx:file>
-               </xilinx:fileSet>
-               <xilinx:fileSet>
-                  <xilinx:name>instantiation_template_generator</xilinx:name>
-               </xilinx:fileSet>
-               <xilinx:fileSet>
-                  <xilinx:name>asy_generator</xilinx:name>
-                  <xilinx:file>
-                     <xilinx:name>./chipscope_vio_trig.asy</xilinx:name>
-                     <xilinx:userFileType>asy</xilinx:userFileType>
-                     <xilinx:timeStamp>Tue Nov 20 02:37:58 GMT 2012</xilinx:timeStamp>
-                     <xilinx:checkSum>0x7C5E1854</xilinx:checkSum>
-                     <xilinx:generationId>generationID_3673615094</xilinx:generationId>
-                  </xilinx:file>
-               </xilinx:fileSet>
-               <xilinx:fileSet>
-                  <xilinx:name>xmdf_generator</xilinx:name>
-               </xilinx:fileSet>
-               <xilinx:fileSet>
-                  <xilinx:name>ise_generator</xilinx:name>
-                  <xilinx:file>
-                     <xilinx:name>./chipscope_vio_trig.gise</xilinx:name>
-                     <xilinx:userFileType>ignore</xilinx:userFileType>
-                     <xilinx:userFileType>gise</xilinx:userFileType>
-                     <xilinx:timeStamp>Tue Nov 20 02:38:02 GMT 2012</xilinx:timeStamp>
-                     <xilinx:checkSum>0xD388EB56</xilinx:checkSum>
-                     <xilinx:generationId>generationID_3673615094</xilinx:generationId>
-                  </xilinx:file>
-                  <xilinx:file>
-                     <xilinx:name>./chipscope_vio_trig.xise</xilinx:name>
-                     <xilinx:userFileType>ignore</xilinx:userFileType>
-                     <xilinx:userFileType>xise</xilinx:userFileType>
-                     <xilinx:timeStamp>Tue Nov 20 02:38:02 GMT 2012</xilinx:timeStamp>
-                     <xilinx:checkSum>0x20B90E56</xilinx:checkSum>
-                     <xilinx:generationId>generationID_3673615094</xilinx:generationId>
-                  </xilinx:file>
-               </xilinx:fileSet>
-               <xilinx:fileSet>
-                  <xilinx:name>deliver_readme_generator</xilinx:name>
-                  <xilinx:file>
-                     <xilinx:name>./chipscope_vio_trig_readme.txt</xilinx:name>
-                     <xilinx:userFileType>ignore</xilinx:userFileType>
-                     <xilinx:userFileType>txtReadme</xilinx:userFileType>
-                     <xilinx:userFileType>txt</xilinx:userFileType>
-                     <xilinx:timeStamp>Tue Nov 20 02:38:02 GMT 2012</xilinx:timeStamp>
-                     <xilinx:checkSum>0x7BAD3427</xilinx:checkSum>
-                     <xilinx:generationId>generationID_3673615094</xilinx:generationId>
-                  </xilinx:file>
-               </xilinx:fileSet>
-               <xilinx:fileSet>
-                  <xilinx:name>flist_generator</xilinx:name>
-                  <xilinx:file>
-                     <xilinx:name>./chipscope_vio_trig_flist.txt</xilinx:name>
-                     <xilinx:userFileType>ignore</xilinx:userFileType>
-                     <xilinx:userFileType>txtFlist</xilinx:userFileType>
-                     <xilinx:userFileType>txt</xilinx:userFileType>
-                     <xilinx:timeStamp>Tue Nov 20 02:38:02 GMT 2012</xilinx:timeStamp>
-                     <xilinx:checkSum>0x4B4A8590</xilinx:checkSum>
-                     <xilinx:generationId>generationID_3673615094</xilinx:generationId>
-                  </xilinx:file>
-               </xilinx:fileSet>
-               <xilinx:fileSet>
-                  <xilinx:name>view_readme_generator</xilinx:name>
-               </xilinx:fileSet>
-            </xilinx:generationHistory>
          </spirit:vendorExtensions>
       </spirit:componentInstance>
       <spirit:componentInstance>
@@ -1052,9 +500,9 @@
             <spirit:configurableElementValue spirit:referenceId="PARAM_VALUE.SYNCHRONIZATION_STAGES_AXI">2</spirit:configurableElementValue>
             <spirit:configurableElementValue spirit:referenceId="PARAM_VALUE.INTERFACE_TYPE">Native</spirit:configurableElementValue>
             <spirit:configurableElementValue spirit:referenceId="PARAM_VALUE.PERFORMANCE_OPTIONS">Standard_FIFO</spirit:configurableElementValue>
-            <spirit:configurableElementValue spirit:referenceId="PARAM_VALUE.INPUT_DATA_WIDTH">82</spirit:configurableElementValue>
+            <spirit:configurableElementValue spirit:referenceId="PARAM_VALUE.INPUT_DATA_WIDTH">98</spirit:configurableElementValue>
             <spirit:configurableElementValue spirit:referenceId="PARAM_VALUE.INPUT_DEPTH">1024</spirit:configurableElementValue>
-            <spirit:configurableElementValue spirit:referenceId="PARAM_VALUE.OUTPUT_DATA_WIDTH">82</spirit:configurableElementValue>
+            <spirit:configurableElementValue spirit:referenceId="PARAM_VALUE.OUTPUT_DATA_WIDTH">98</spirit:configurableElementValue>
             <spirit:configurableElementValue spirit:referenceId="PARAM_VALUE.OUTPUT_DEPTH">1024</spirit:configurableElementValue>
             <spirit:configurableElementValue spirit:referenceId="PARAM_VALUE.ENABLE_ECC">false</spirit:configurableElementValue>
             <spirit:configurableElementValue spirit:referenceId="PARAM_VALUE.USE_EMBEDDED_REGISTERS">false</spirit:configurableElementValue>

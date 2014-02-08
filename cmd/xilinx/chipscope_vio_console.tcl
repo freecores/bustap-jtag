@@ -3,8 +3,8 @@
 ## Platform           : Windows xp sp2
 ## Author             : Bibo Yang  (ash_riple@hotmail.com)
 ## Organization       : www.opencores.org
-## Revision           : 2.3
-## Date               : 2012/11/22
+## Revision           : 2.5
+## Date               : 2014/02/08
 ## Description        : Tcl/Tk GUI for the up_monitor
 ##**************************************************************
 
@@ -269,7 +269,7 @@ proc query_usedw {} {
 	set coreRef [list $deviceIndex $userRegNumber $coreIndex]
 
 	csevio_init_core $handle $coreRef
-	csevio_define_bus $handle $coreRef "usedWord" $CSEVIO_SYNC_INPUT [list 82 83 84 85 86 87 88 89 90 91]
+	csevio_define_bus $handle $coreRef "usedWord" $CSEVIO_SYNC_INPUT [list 98 99 100 101 102 103 104 105 106 107]
 	csevio_read_values $handle $coreRef inputTclArray
 	set usedw $inputTclArray(usedWord)
 	csevio_terminate_core $handle $coreRef
@@ -308,7 +308,8 @@ proc read_fifo {} {
                                                                                   50 51 52 53 54 55 56 57 58 59\
                                                                                   60 61 62 63 64 65 66 67 68 69\
                                                                                   70 71 72 73 74 75 76 77 78 79\
-                                                                                  80 81]
+                                                                                  80 81 82 83 84 85 86 87 88 89\
+                                                                                  90 91 92 93 94 95 96 97]
 	csevio_read_values $handle $coreRef inputTclArray
 	set fifo_data $inputTclArray(fifoContent)
 	csevio_terminate_core $handle $coreRef
@@ -356,8 +357,8 @@ proc config_trig {{trig 00000000000000} {pnum 000}} {
 	set coreRef [list $deviceIndex $userRegNumber $coreIndex]
 
 	set trig_leng [string length $trig]
-	if {$trig_leng!=14} {
-		$log insert end "\nError: Wrong trigger condition length: [expr $trig_leng-2]. Expects: 4+8.\n"
+	if {$trig_leng!=18} {
+		$log insert end "\nError: Wrong trigger condition length: [expr $trig_leng-2]. Expects: 8+8.\n"
 	} else {
         if {[format "%d" 0x$pnum]>=511} {
 		$log insert end "\nError: Wrong trigger pre-capture value: [format "%d" 0x$pnum]. Expects: 0~510.\n"
@@ -369,7 +370,9 @@ proc config_trig {{trig 00000000000000} {pnum 000}} {
 										    30 31 32 33 34 35 36 37 38 39\
 										    40 41 42 43 44 45 46 47 48 49\
 										    50 51 52 53 54 55 56 57 58 59\
-										    60 61 62 63 64 65]
+										    60 61 62 63 64 65 66 67 68 69\
+                                                                                    70 71 72 73 74 75 76 77 78 79\
+                                                                                    80 81]
 		set outputTclArray(trig) [append pnum $trig]
 		csevio_write_values $handle $coreRef outputTclArray
 		csevio_terminate_core $handle $coreRef
@@ -442,16 +445,21 @@ proc initAddrConfig {} {
 	global address_span14
 	global address_span15
 	global address_span16
-	for {set i 1} {$i<=8} {incr i} {
+	for {set i 1} {$i<=8} {set i [expr $i+2]} {
 		if {[set address_span$i]==""} {
-			set address_span$i ffff0000
+			set address_span$i fffffffc
+	}
+        }
+	for {set i 2} {$i<=8} {set i [expr $i+2]} {
+		if {[set address_span$i]==""} {
+			set address_span$i 00000000
 	}
 	}
 	for {set i 9} {$i<=16} {incr i} {
 		if {[set address_span$i]==""} {
-			set address_span$i 00000000
+			set address_span$i ffffffff
 	}
-}
+        }
 }
 
 proc initTrigConfig {} {
@@ -459,7 +467,7 @@ proc initTrigConfig {} {
 	global triggerData
 	global triggerPnum
 	if {[set triggerAddr]==""} {
-		set triggerAddr ffff
+		set triggerAddr 00000000
 	}
 	if {[set triggerData]==""} {
 		set triggerData a5a5a5a5
@@ -522,15 +530,15 @@ proc read_fifo_content {} {
 		set ok_trig [expr [format "%d" 0x[string index $fifoContent 0]]/2]
 		set wr_cptr [expr [format "%d" 0x[string index $fifoContent 0]]%2]
 		set tm_cptr [format "%d"       0x[string range $fifoContent  1  8]]
-		set ad_cptr                      [string range $fifoContent  9 12]
-		set da_cptr                      [string range $fifoContent 13 20]
+		set ad_cptr                      [string range $fifoContent  9 16]
+		set da_cptr                      [string range $fifoContent 17 24]
 		if $ok_trig {
 			$log insert end "@@@@@@@@@@@@@@@@@@@@\n"
 		}
 		if $wr_cptr {
-			$log insert end "WR 0x8000$ad_cptr 0x$da_cptr @$tm_cptr\n"
+			$log insert end "wr 0x$ad_cptr 0x$da_cptr @$tm_cptr\n"
 		} else {
-			$log insert end "RD 0x8000$ad_cptr 0x$da_cptr @$tm_cptr\n"
+			$log insert end "rd 0x$ad_cptr 0x$da_cptr @$tm_cptr\n"
 		}
 	}
 	query_usedw
@@ -619,15 +627,19 @@ checkbutton .mainframe.f1.address_span_en5 -variable address_span_en5
 checkbutton .mainframe.f1.address_span_en6 -variable address_span_en6
 checkbutton .mainframe.f1.address_span_en7 -variable address_span_en7
 checkbutton .mainframe.f1.address_span_en8 -variable address_span_en8
+label .mainframe.f1.address_span_text1 -text {H:}
+label .mainframe.f1.address_span_text2 -text {L:}
+label .mainframe.f1.address_span_text3 -text {H:}
+label .mainframe.f1.address_span_text4 -text {L:}
+label .mainframe.f1.address_span_text5 -text {H:}
+label .mainframe.f1.address_span_text6 -text {L:}
+label .mainframe.f1.address_span_text7 -text {H:}
+label .mainframe.f1.address_span_text8 -text {L:}
 pack .mainframe.f1.incl_addr \
-     .mainframe.f1.address_span_en1 .mainframe.f1.address_span1 \
-     .mainframe.f1.address_span_en2 .mainframe.f1.address_span2 \
-     .mainframe.f1.address_span_en3 .mainframe.f1.address_span3 \
-     .mainframe.f1.address_span_en4 .mainframe.f1.address_span4 \
-     .mainframe.f1.address_span_en5 .mainframe.f1.address_span5 \
-     .mainframe.f1.address_span_en6 .mainframe.f1.address_span6 \
-     .mainframe.f1.address_span_en7 .mainframe.f1.address_span7 \
-     .mainframe.f1.address_span_en8 .mainframe.f1.address_span8 \
+     .mainframe.f1.address_span_en1 .mainframe.f1.address_span_text1 .mainframe.f1.address_span1 .mainframe.f1.address_span_text2 .mainframe.f1.address_span2 \
+     .mainframe.f1.address_span_en3 .mainframe.f1.address_span_text3 .mainframe.f1.address_span3 .mainframe.f1.address_span_text4 .mainframe.f1.address_span4 \
+     .mainframe.f1.address_span_en5 .mainframe.f1.address_span_text5 .mainframe.f1.address_span5 .mainframe.f1.address_span_text6 .mainframe.f1.address_span6 \
+     .mainframe.f1.address_span_en7 .mainframe.f1.address_span_text7 .mainframe.f1.address_span7 .mainframe.f1.address_span_text8 .mainframe.f1.address_span8 \
      -side left -ipadx 0
 
 # set the exclusive address entries
@@ -650,15 +662,19 @@ checkbutton .mainframe.f2.address_span_en13 -variable address_span_en13
 checkbutton .mainframe.f2.address_span_en14 -variable address_span_en14
 checkbutton .mainframe.f2.address_span_en15 -variable address_span_en15
 checkbutton .mainframe.f2.address_span_en16 -variable address_span_en16
+label .mainframe.f2.address_span_text1 -text {H:}
+label .mainframe.f2.address_span_text2 -text {L:}
+label .mainframe.f2.address_span_text3 -text {H:}
+label .mainframe.f2.address_span_text4 -text {L:}
+label .mainframe.f2.address_span_text5 -text {H:}
+label .mainframe.f2.address_span_text6 -text {L:}
+label .mainframe.f2.address_span_text7 -text {H:}
+label .mainframe.f2.address_span_text8 -text {L:}
 pack .mainframe.f2.excl_addr \
-     .mainframe.f2.address_span_en9  .mainframe.f2.address_span9  \
-     .mainframe.f2.address_span_en10 .mainframe.f2.address_span10 \
-     .mainframe.f2.address_span_en11 .mainframe.f2.address_span11 \
-     .mainframe.f2.address_span_en12 .mainframe.f2.address_span12 \
-     .mainframe.f2.address_span_en13 .mainframe.f2.address_span13 \
-     .mainframe.f2.address_span_en14 .mainframe.f2.address_span14 \
-     .mainframe.f2.address_span_en15 .mainframe.f2.address_span15 \
-     .mainframe.f2.address_span_en16 .mainframe.f2.address_span16 \
+     .mainframe.f2.address_span_en9  .mainframe.f2.address_span_text1 .mainframe.f2.address_span9  .mainframe.f2.address_span_text2 .mainframe.f2.address_span10 \
+     .mainframe.f2.address_span_en11 .mainframe.f2.address_span_text3 .mainframe.f2.address_span11 .mainframe.f2.address_span_text4 .mainframe.f2.address_span12 \
+     .mainframe.f2.address_span_en13 .mainframe.f2.address_span_text5 .mainframe.f2.address_span13 .mainframe.f2.address_span_text6 .mainframe.f2.address_span14 \
+     .mainframe.f2.address_span_en15 .mainframe.f2.address_span_text7 .mainframe.f2.address_span15 .mainframe.f2.address_span_text8 .mainframe.f2.address_span16 \
      -side left -ipadx 0
 initAddrConfig
 
@@ -675,7 +691,7 @@ pack .mainframe.addr_cnfg.wren .mainframe.addr_cnfg.rden .mainframe.addr_cnfg.co
 frame .mainframe.trig -relief groove -borderwidth 5
 pack .mainframe.trig
 button .mainframe.trig.starttrig -text {Apply Trigger Condition} -command {startTrigger}
-entry .mainframe.trig.trigvalue_addr -textvar triggerAddr -width 4
+entry .mainframe.trig.trigvalue_addr -textvar triggerAddr -width 8
 entry .mainframe.trig.trigvalue_data -textvar triggerData -width 8
 checkbutton .mainframe.trig.trigaddr -text {@Addr:} -variable trig_aden
 checkbutton .mainframe.trig.trigdata -text {@Data:} -variable trig_daen
